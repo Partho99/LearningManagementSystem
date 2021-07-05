@@ -1,5 +1,7 @@
 package com.xyz.enterprise.learningmanagementsystem.entities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -15,6 +17,8 @@ import java.util.Optional;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditableEntity<U> implements Serializable {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(AuditableEntity.class);
     @CreatedDate
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
