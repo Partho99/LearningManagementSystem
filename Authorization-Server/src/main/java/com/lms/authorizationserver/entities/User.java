@@ -1,7 +1,5 @@
 package com.lms.authorizationserver.entities;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-public class User extends BaseEntity implements UserDetails {
+public class User extends AuditableEntity implements UserDetails {
 
     private static Logger LOGGER = LoggerFactory.getLogger(User.class);
 

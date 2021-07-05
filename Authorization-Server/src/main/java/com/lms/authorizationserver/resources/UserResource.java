@@ -35,6 +35,7 @@ public class UserResource {
     public ResponseEntity<User> register(@Validated @RequestBody User user) {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setActiveStatus(true);
         List<Role> role = roleRepository.findAll();
         System.out.println(role);
         List<Role> uRole = new ArrayList<>();

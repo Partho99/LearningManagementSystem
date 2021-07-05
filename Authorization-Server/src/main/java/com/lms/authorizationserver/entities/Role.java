@@ -1,13 +1,10 @@
 package com.lms.authorizationserver.entities;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Role extends BaseEntity {
+public class Role extends AuditableEntity {
 
     private String name;
 

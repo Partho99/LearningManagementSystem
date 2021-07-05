@@ -21,6 +21,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
 	implementation 'org.springframework.cloud:spring-cloud-starter-security'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.0'
+	implementation group: 'dnsjava', name: 'dnsjava', version: '3.3.1'
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.9'
+
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

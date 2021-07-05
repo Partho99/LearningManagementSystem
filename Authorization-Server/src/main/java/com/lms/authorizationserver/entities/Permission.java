@@ -3,7 +3,7 @@ package com.lms.authorizationserver.entities;
 import javax.persistence.Entity;
 
 @Entity
-public class Permission extends BaseEntity {
+public class Permission extends AuditableEntity {
 
 
     private String name;
