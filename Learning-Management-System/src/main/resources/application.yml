@@ -1,0 +1,16 @@
+server:
+  port: 8080
+security:
+    oauth2:
+      resource:
+        jwt:
+          key-value: |
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlhuhzfBWqaJja7UU6G6E
+            vHitmm4JoMglksP0jCZnFXMrmG/SiDPrRlcugReHDf6lRfSI9ab2EA7bUF91dTop
+            kaMqaQf3roVZvsKBRUKATRjnSQ6bgLtQNK/4TMZ4V7HlxJkzyR4X1NHrA4bxJCot
+            iW5ZabdI+Hc9IJFcZqBNZ/yiCMW6Yorg3d1rZCnraiFGk1zKZAUTZ5uyB+wts4ZL
+            4dICn93m6f3jAWHH++d0vvqomfUpNE5zGH667DObNw8r9LuYgunXfJd9wYWL/cRz
+            365T/IUPlkeleFV5+rHl9tDYUMLCauaSRCS9GTUPZUzOS+S7G5upmVTaVxtD3aCo
+            UQIDAQAB
+            -----END PUBLIC KEY-----
