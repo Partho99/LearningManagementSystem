@@ -15,6 +15,7 @@ import java.util.Map;
 public class CustomUserAuthenticationConverter implements UserAuthenticationConverter {
 
     private final String EMAIL = "email";
+    private final String SCOPE = "scope";
     private Collection<? extends GrantedAuthority> defaultAuthorities;
 
     public void setDefaultAuthorities(String[] defaultAuthorities) {
@@ -37,7 +38,7 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(USERNAME))
             return new UsernamePasswordAuthenticationToken(
-                    new CustomPrincipal(map.get(USERNAME).toString(), map.get(EMAIL).toString()), "N/A",
+                    new CustomPrincipal(map.get(USERNAME).toString(), map.get(EMAIL).toString(), map.get(SCOPE).toString()), "N/A",
                     getAuthorities(map));
         return null;
     }

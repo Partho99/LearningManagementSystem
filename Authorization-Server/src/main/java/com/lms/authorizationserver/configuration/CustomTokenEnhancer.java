@@ -19,10 +19,8 @@ public class CustomTokenEnhancer extends JwtAccessTokenConverter {
 
         info.put("email", user.getEmail());
         info.put("enabled", user.isEnabled());
-        info.put("username", user.getUsername());
-        info.put("lastmodifieddate", user.getLastModifiedDate());
-        info.put("createddate", user.getCreatedDate());
-
+        info.put("last_modified_date", user.getLastModifiedDate());
+        info.put("created_date", user.getCreatedDate());
 
         DefaultOAuth2AccessToken customAccessToken = new DefaultOAuth2AccessToken(accessToken);
         customAccessToken.setAdditionalInformation(info);

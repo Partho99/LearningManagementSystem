@@ -15,13 +15,13 @@ public class ResourceController {
         CustomPrincipal principal = (CustomPrincipal) SecurityContextHolder
                 .getContext().getAuthentication()
                 .getPrincipal();
-        return principal.getUsername() + "  " + principal.getEmail();
+        return principal.getUsername() + "  " + principal.getEmail() + "  " + principal.getScope() + "  " + principal.isEnabled();
     }
 
     @GetMapping("/users")
     @PreAuthorize("hasAnyAuthority('role_admin','role_user')")
     public String secured(CustomPrincipal principal) {
-        return principal.getUsername() + "  " + principal.getEmail();
+        return principal.getUsername() + "  " + principal.getEmail() + "  " + principal.getScope() + "  " + principal.isEnabled();
     }
 
     @GetMapping("/common")
