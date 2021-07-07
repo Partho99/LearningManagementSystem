@@ -1,17 +1,14 @@
 package com.xyz.enterprise.learningmanagementsystem.entities;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Entity
-public class Subject extends AuditableEntity{
+public class VideoContent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-
-    @OneToMany
-    private List<Topic> topics;
 
 }
