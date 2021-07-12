@@ -20,7 +20,7 @@
     "react-id-swiper": "^3.0.0",
     "react-modal-video": "^1.2.3",
     "react-visibility-sensor": "^5.1.1",
-    "swiper": "^5.3.6"
+    "swiper": "^6.5.1"
   },
   "devDependencies": {
     "url-loader": "^4.0.0"
