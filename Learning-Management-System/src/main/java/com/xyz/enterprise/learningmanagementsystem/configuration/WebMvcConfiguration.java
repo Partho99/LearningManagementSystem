@@ -1,6 +1,6 @@
 package com.xyz.enterprise.learningmanagementsystem.configuration;
 
-import com.xyz.enterprise.learningmanagementsystem.entities.CustomPrincipal;
+import com.xyz.enterprise.learningmanagementsystem.entities.UserPrincipal;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.MethodParameter;
@@ -29,13 +29,13 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         return new HandlerMethodArgumentResolver() {
             @Override
             public boolean supportsParameter(MethodParameter parameter) {
-                return parameter.getParameterType().equals(CustomPrincipal.class);
+                return parameter.getParameterType().equals(UserPrincipal.class);
             }
 
             @Override
             public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
                 try {
-                    return (CustomPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                    return (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
                             .getPrincipal();
                 } catch (Exception e) {
                     return null;

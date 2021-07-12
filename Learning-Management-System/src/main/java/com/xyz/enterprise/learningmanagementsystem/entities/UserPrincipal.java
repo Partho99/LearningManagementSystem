@@ -2,17 +2,17 @@ package com.xyz.enterprise.learningmanagementsystem.entities;
 
 import java.io.Serializable;
 
-public class CustomPrincipal implements Serializable {
+public class UserPrincipal implements Serializable {
 
     private String username;
     private String email;
     public String scope;
     public boolean enabled;
 
-    public CustomPrincipal() {
+    public UserPrincipal() {
     }
 
-    public CustomPrincipal(String username, String email, String scope) {
+    public UserPrincipal(String username, String email, String scope) {
         this.username = username;
         this.email = email;
         this.scope = scope;

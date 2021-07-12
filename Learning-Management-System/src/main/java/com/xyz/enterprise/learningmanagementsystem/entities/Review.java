@@ -1,9 +1,6 @@
 package com.xyz.enterprise.learningmanagementsystem.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Review {
@@ -13,4 +10,9 @@ public class Review {
     private int id;
     private String comment;
     private double rating;
+
+    @ManyToOne
+    @JoinTable(name = "course_review", joinColumns = {@JoinColumn(name = "review_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "id")})
+    private Course course;
 }

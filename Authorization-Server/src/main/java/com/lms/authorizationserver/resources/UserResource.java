@@ -9,10 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +29,9 @@ public class UserResource {
     }
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> register(@RequestBody User user) {
+    public ResponseEntity<?> registeringUser(@RequestBody User user) {
 
-        if (userRepository.findByUsername(user.getUsername())  != null) {
+        if (userRepository.findByUsername(user.getUsername()) != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -50,5 +47,13 @@ public class UserResource {
         user.setRoles(uRole);
         User savedUser = userRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updatingUser(@RequestBody User user) {
+        User principal = (User) SecurityContextHolder
+                .getContext().getAuthentication()
+                .getPrincipal();
+        return null;
     }
 }

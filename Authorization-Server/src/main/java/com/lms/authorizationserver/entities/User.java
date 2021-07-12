@@ -34,9 +34,11 @@ public class User extends AuditableEntity implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "role_user", joinColumns = {
-            @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
-            @JoinColumn(name = "role_id", referencedColumnName = "id") })
+            @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "id")})
     private List<Role> roles;
+
+    private String imageUrl;
 
     @Override
     public boolean isEnabled() {
@@ -99,5 +101,13 @@ public class User extends AuditableEntity implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -1,6 +1,6 @@
 package com.xyz.enterprise.learningmanagementsystem.utils;
 
-import com.xyz.enterprise.learningmanagementsystem.entities.CustomPrincipal;
+import com.xyz.enterprise.learningmanagementsystem.entities.UserPrincipal;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,7 +38,7 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(USERNAME))
             return new UsernamePasswordAuthenticationToken(
-                    new CustomPrincipal(map.get(USERNAME).toString(), map.get(EMAIL).toString(), map.get(SCOPE).toString()), "N/A",
+                    new UserPrincipal(map.get(USERNAME).toString(), map.get(EMAIL).toString(), map.get(SCOPE).toString()), "N/A",
                     getAuthorities(map));
         return null;
     }

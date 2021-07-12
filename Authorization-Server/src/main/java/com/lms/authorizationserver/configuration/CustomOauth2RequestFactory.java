@@ -1,5 +1,6 @@
 package com.lms.authorizationserver.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,13 +23,17 @@ public class CustomOauth2RequestFactory extends DefaultOAuth2RequestFactory {
         super(clientDetailsService);
     }
 
+    @Autowired
     public void setTokenStore(TokenStore tokenStore) {
         this.tokenStore = tokenStore;
     }
 
+    @Autowired
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
+
+
 
     @Override
     public TokenRequest createTokenRequest(Map<String, String> requestParameters,
