@@ -12,7 +12,41 @@ public class Section extends AuditableEntity{
 
     private String name;
 
-    @OneToMany
+    @Lob
+    private String overview;
+
+    @OneToMany(cascade = CascadeType.ALL)
     private List<VideoContent> videoContents;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public List<VideoContent> getVideoContents() {
+        return videoContents;
+    }
+
+    public void setVideoContents(List<VideoContent> videoContents) {
+        this.videoContents = videoContents;
+    }
 }

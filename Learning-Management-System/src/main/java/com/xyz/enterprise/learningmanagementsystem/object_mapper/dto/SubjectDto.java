@@ -1,4 +1,4 @@
-package com.xyz.enterprise.learningmanagementsystem.dto;
+package com.xyz.enterprise.learningmanagementsystem.object_mapper.dto;
 
 import com.xyz.enterprise.learningmanagementsystem.entities.SubjectDescription;
 import com.xyz.enterprise.learningmanagementsystem.entities.Topic;

@@ -14,23 +14,22 @@ public class Topic extends AuditableEntity {
     private String name;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "topic",cascade = CascadeType.DETACH)
     private List<Course> courses;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "description_id")
     private TopicDescription description;
 
-    @OneToMany(mappedBy = "topic",fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "topic")
     private List<Tag> tags;
 
     @JsonIgnore
-    @JoinColumn(nullable = false)
-    @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinTable(name = "subject_topics", joinColumns = {@JoinColumn(name = "topic_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "subject_id", referencedColumnName = "id")})
+    @ManyToOne(optional = false)
     private Subject subject;
 
+    private int parentId;
 
     public int getId() {
         return id;
@@ -78,5 +77,13 @@ public class Topic extends AuditableEntity {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
     }
 }

@@ -1,6 +1,6 @@
 package com.xyz.enterprise.learningmanagementsystem.resources;
 
-import com.xyz.enterprise.learningmanagementsystem.dto.SubjectDto;
+import com.xyz.enterprise.learningmanagementsystem.object_mapper.dto.SubjectDto;
 import com.xyz.enterprise.learningmanagementsystem.entities.Subject;
 import com.xyz.enterprise.learningmanagementsystem.object_mapper.SubjectMapper;
 import com.xyz.enterprise.learningmanagementsystem.service.SubjectService;

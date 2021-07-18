@@ -88,7 +88,7 @@
 .kipso-icon-camera:before {
   content: "\e90d";
 }
-.kipso-icon-menu:before {
+.kipso-icon-menu:after {
   content: "\e90e";
 }
 .kipso-icon-black-graduation-cap-tool-of-university-student-for-head:before {

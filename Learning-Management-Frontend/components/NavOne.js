@@ -4,6 +4,7 @@ import Link from 'next/link';
 const NavOne = () => {
 
     const [sticky, setSticky] = useState(false);
+    const [navElement, setNavElement] = useState([]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -12,11 +13,20 @@ const NavOne = () => {
         mobileMenu();
 
         //Search Toggle
-        serachButton();
+        searchButton();
 
         window.removeEventListener('scroll', handleScroll);
-    })
+    },[])
 
+
+    useEffect( () => {
+
+         fetch('http://localhost:8080/category/api/find-all')
+            .then(response => response.json())
+            .then(data => setNavElement(data))
+
+
+    }, [])
     const handleScroll = () => {
 
         if (window.scrollY > 70) {
@@ -41,7 +51,7 @@ const NavOne = () => {
         });
     }
 
-    const serachButton = () => {
+    const searchButton = () => {
         let searchToggle = document.querySelector(".search-toggle");
         let searchPopup = document.querySelector(".search-popup");
         let searchClose = document.querySelector(".cancel");
@@ -65,120 +75,40 @@ const NavOne = () => {
                 className={`navbar navbar-expand-lg navbar-light header-navigation stricky ${sticky ? 'stricked-menu stricky-fixed' : ''}`}>
                 <div className="container clearfix">
                     <div className="logo-box clearfix">
+                        <Link href="/">
+                            <a className="navbar-brand">
+                                <img src="/assets/images/logo-dark.png" className="main-logo" width="128"
+                                     alt="Awesome Image"/>
+                            </a>
+                        </Link>
                         <button className="menu-toggler">
                             <span className="kipso-icon-menu"></span>
                         </button>
                     </div>
                     <div className="main-navigation">
                         <ul className=" navigation-box">
-                            <li className="current">
-                                <Link href="/"><a>Development</a></Link>
-                                <ul className="sub-menu">
-                                    <li><Link href="/"><a>Web Development</a></Link>
-                                        <ul className="sub-menu">
-                                            <li><Link href="/"><a>Java</a></Link></li>
-                                            <li><Link href="/index-2"><a>PHP</a></Link></li>
-                                            <li><Link href="/index-3"><a>Javascript</a></Link></li>
-                                            <li><Link href="/index-3"><a>Angular</a></Link></li>
-                                            <li><Link href="/index-3"><a>React</a></Link></li>
-                                            <li><Link href="/index-3"><a>Spring Framework</a></Link></li>
-                                        </ul>
-                                    </li>
+                            {navElement?.map((category, id) => (
+                                <li className="current" key={id}>
+                                    <Link href="/"><a>{category.name}</a></Link>
+                                    <ul className="sub-menu">
 
-                                    <li><Link href="/index-2"><a>Programming Languages</a></Link>
-                                        <ul className="sub-menu">
-                                            <li><Link href="/"><a>Java</a></Link></li>
-                                            <li><Link href="/index-2"><a>Python</a></Link></li>
-                                            <li><Link href="/index-3"><a>Javascript</a></Link></li>
-                                            <li><Link href="/index-3"><a>c#</a></Link></li>
-                                            <li><Link href="/index-3"><a>React</a></Link></li>
-                                            <li><Link href="/index-3"><a>Spring Framework</a></Link></li>
-                                        </ul>
-                                    </li>
-                                    <li><Link href="/index-3"><a>Mobile Development</a></Link>
-                                        <ul className="sub-menu">
-                                            <li><Link href="/"><a>Java</a></Link></li>
-                                            <li><Link href="/index-2"><a>Python</a></Link></li>
-                                            <li><Link href="/index-3"><a>Javascript</a></Link></li>
-                                            <li><Link href="/index-3"><a>c#</a></Link></li>
-                                            <li><Link href="/index-3"><a>React</a></Link></li>
-                                            <li><Link href="/index-3"><a>Spring Framework</a></Link></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Mobile Development</a>
-                                        <ul className="sub-menu">
-                                            <li><Link href="/"><a>Android</a></Link></li>
-                                            <li><Link href="/index-2"><a>Google Flutter</a></Link></li>
-                                            <li><Link href="/index-3"><a>React Native</a></Link></li>
-                                            <li><Link href="/index-3"><a>IOS</a></Link></li>
-                                            <li><Link href="/index-3"><a>Swift</a></Link></li>
-                                            <li><Link href="/index-3"><a>Dart</a></Link></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">Business</a>
-                                <ul className="sub-menu">
-                                    <li><Link href="/about"><a>About Page</a></Link></li>
-                                    <li><Link href="/gallery"><a>Gallery</a></Link></li>
-                                    <li><Link href="/pricing"><a>Pricing Plans</a></Link></li>
-                                    <li><Link href="/faq"><a>FAQ'S</a></Link></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">Design</a>
-                                <ul className="sub-menu">
-                                    <li><Link href="/about"><a>About Page</a></Link></li>
-                                    <li><Link href="/gallery"><a>Gallery</a></Link></li>
-                                    <li><Link href="/pricing"><a>Pricing Plans</a></Link></li>
-                                    <li><Link href="/faq"><a>FAQ'S</a></Link></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">Pages</a>
-                                <ul className="sub-menu">
-                                    <li><Link href="/about"><a>About Page</a></Link></li>
-                                    <li><Link href="/gallery"><a>Gallery</a></Link></li>
-                                    <li><Link href="/pricing"><a>Pricing Plans</a></Link></li>
-                                    <li><Link href="/faq"><a>FAQ'S</a></Link></li>
-                                </ul>
-                            </li>
+                                        {category.subjects?.map((subject, id) => (
+                                            <li key={id}><Link href="/"><a>{subject.name}</a></Link>
+                                                <ul className="sub-menu">
 
-                            <li>
-                                <a href="#">Pages</a>
-                                <ul className="sub-menu">
-                                    <li><Link href="/about"><a>About Page</a></Link></li>
-                                    <li><Link href="/gallery"><a>Gallery</a></Link></li>
-                                    <li><Link href="/pricing"><a>Pricing Plans</a></Link></li>
-                                    <li><Link href="/faq"><a>FAQ'S</a></Link></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/courses">Courses</a>
-                                <ul className="sub-menu">
-                                    <li><Link href="/courses"><a>Courses</a></Link></li>
-                                    <li><Link href="/course-details"><a>Courses Details</a></Link></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <Link href="/teachers"><a>Teachers</a></Link>
-                                <ul className="sub-menu">
-                                    <li><Link href="/teachers"><a>Teachers</a></Link></li>
-                                    <li><Link href="/teacher-details"><a>Teachers Details</a></Link></li>
-                                    <li><Link href="/become-teacher"><a>Become Teacher</a></Link></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <Link href="/news"><a>News</a></Link>
-                                <ul className="sub-menu">
-                                    <li><Link href="/news"><a>News Page</a></Link></li>
-                                    <li><Link href="/news-details"><a>News Details</a></Link></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <Link href="/contact"><a>Contact</a></Link>
-                            </li>
+                                                    {subject.topics?.map((topic, id) => (
+                                                        <li key={id}><Link href="/"><a>{topic.name}</a></Link></li>
+                                                    ))}
+
+                                                </ul>
+                                            </li>
+                                        ))}
+
+                                    </ul>
+                                </li>
+
+                            ))}
+
                         </ul>
                     </div>
                     <div className="right-side-box">

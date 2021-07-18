@@ -15,12 +15,17 @@ public class Subject extends AuditableEntity {
     @Column(unique = true)
     private String name;
 
-    @OneToMany(cascade = CascadeType.DETACH, mappedBy = "subject",fetch = FetchType.EAGER)
-    private List<Topic> topics;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "description_id")
     private SubjectDescription description;
+
+    @JsonIgnore
+    @ManyToOne(optional = false)
+    private Category category;
+
+    @OneToMany(orphanRemoval = true,
+            mappedBy = "subject", fetch = FetchType.EAGER)
+    private List<Topic> topics;
 
     @JsonIgnore
     @OneToMany(mappedBy = "subject")
@@ -42,14 +47,6 @@ public class Subject extends AuditableEntity {
         this.name = name;
     }
 
-    public List<Topic> getTopics() {
-        return topics;
-    }
-
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
-    }
-
     public SubjectDescription getDescription() {
         return description;
     }
@@ -64,5 +61,21 @@ public class Subject extends AuditableEntity {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
     }
 }

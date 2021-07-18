@@ -1,6 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const CourseDetails = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openModal = () => {
+        setIsOpen(!isOpen);
+    }
+
     return (
         <section className="course-details">
             <div className="container">
@@ -49,6 +56,7 @@ const CourseDetails = () => {
                             </ul>
                             <div className="tab-content course-details__tab-content ">
                                 <div className="tab-pane show active  animated fadeInUp" role="tabpanel" id="overview">
+                                    <h3>What you will learn from this course?</h3>
                                     <p className="course-details__tab-text">Aelltes port lacus quis enim var sed
                                         efficitur turpis
                                         gilla
@@ -63,6 +71,7 @@ const CourseDetails = () => {
                                         remaining
                                         essentially unchanged.</p>
                                     <br />
+                                    <h3>Who this course is for:</h3>
                                         <p className="course-details__tab-text">It was popularised in the 1960s with the
                                             release of
                                             Letraset

@@ -6,6 +6,8 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,7 +16,6 @@ public class CustomTokenEnhancer extends JwtAccessTokenConverter {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-
         Map<String, Object> info = new LinkedHashMap<String, Object>(accessToken.getAdditionalInformation());
 
         info.put("email", user.getEmail());
@@ -23,7 +24,13 @@ public class CustomTokenEnhancer extends JwtAccessTokenConverter {
         info.put("created_date", user.getCreatedDate());
         info.put("image_url", user.getImageUrl());
 
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.HOUR, 8);
+        cal.getTime();
+
         DefaultOAuth2AccessToken customAccessToken = new DefaultOAuth2AccessToken(accessToken);
+        customAccessToken.setExpiration(cal.getTime());
         customAccessToken.setAdditionalInformation(info);
 
         return super.enhance(customAccessToken, authentication);
