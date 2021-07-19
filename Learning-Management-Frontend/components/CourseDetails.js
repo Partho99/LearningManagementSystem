@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 const CourseDetails = () => {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [course, setCourse] = useState({});
+
+    useEffect(() => {
+
+    }, [])
 
     const openModal = () => {
         setIsOpen(!isOpen);
@@ -15,8 +20,8 @@ const CourseDetails = () => {
                     <div className="col-lg-8">
                         <div className="course-details__content">
                             <p className="course-details__author">
-                                <img src="/assets/images/team-1-1.jpg" alt="" />
-                                    by <a href="#">Addie Walters</a>
+                                <img src="/assets/images/team-1-1.jpg" alt=""/>
+                                by <a href="#">Addie Walters</a>
                             </p>
 
                             <div className="course-details__top">
@@ -39,8 +44,8 @@ const CourseDetails = () => {
                                 </div>
                             </div>
                             <div className="course-one__image">
-                                <img src="/assets/images/course-d-1.jpg" alt="" />
-                                    <i className="far fa-heart"></i>
+                                <img src="/assets/images/course-d-1.jpg" alt=""/>
+                                <i className="far fa-heart"></i>
                             </div>
 
                             <ul className="course-details__tab-navs list-unstyled nav nav-tabs" role="tablist">
@@ -70,130 +75,130 @@ const CourseDetails = () => {
                                         not only five centuries, but also the leap into electronic typesetting,
                                         remaining
                                         essentially unchanged.</p>
-                                    <br />
+                                    <br/>
                                     <h3>Who this course is for:</h3>
-                                        <p className="course-details__tab-text">It was popularised in the 1960s with the
-                                            release of
-                                            Letraset
-                                            sheets containing Lorem Ipsum passages, and more recently with desktop
-                                            publishing
-                                            software
-                                            like Aldus PageMaker including versions of lorem ipsum amet finibus eros.
-                                            Lorem Ipsum is
-                                            simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                                            been the
-                                            industry’s standard dummy text ever since the 1500s, when an unknown printer
-                                            took a
-                                            galley
-                                            of type and scrambled it to make a type specimen book. It has survived not
-                                            only five
-                                            centuries, but also the leap into electronic typesetting.</p>
-                                        <br />
-                                            <ul className="list-unstyled course-details__overview-list">
-                                                <li>It has survived not only five centuries</li>
-                                                <li>Lorem Ipsum is simply dummy text of the new design</li>
-                                                <li>Printng and type setting ipsum</li>
-                                                <li>Take a look at our round up of the best shows</li>
-                                            </ul>
+                                    <p className="course-details__tab-text">It was popularised in the 1960s with the
+                                        release of
+                                        Letraset
+                                        sheets containing Lorem Ipsum passages, and more recently with desktop
+                                        publishing
+                                        software
+                                        like Aldus PageMaker including versions of lorem ipsum amet finibus eros.
+                                        Lorem Ipsum is
+                                        simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                                        been the
+                                        industry’s standard dummy text ever since the 1500s, when an unknown printer
+                                        took a
+                                        galley
+                                        of type and scrambled it to make a type specimen book. It has survived not
+                                        only five
+                                        centuries, but also the leap into electronic typesetting.</p>
+                                    <br/>
+                                    <ul className="list-unstyled course-details__overview-list">
+                                        <li>It has survived not only five centuries</li>
+                                        <li>Lorem Ipsum is simply dummy text of the new design</li>
+                                        <li>Printng and type setting ipsum</li>
+                                        <li>Take a look at our round up of the best shows</li>
+                                    </ul>
                                 </div>
                                 <div className="tab-pane  animated fadeInUp" role="tabpanel" id="curriculum">
                                     <h3 className="course-details__tab-title">Starting beginners level course</h3>
-                                    <br />
-                                        <p className="course-details__tab-text">Aelltes port lacus quis enim var sed
-                                            efficitur turpis
-                                            gilla
-                                            sed sit Lorem Ipsum is simply dummy text of the printing and typesetting
-                                            industry. Lorem
-                                            Ipsum has been the industry’s standard dummy text ever since.</p>
-                                        <br />
-                                            <ul className="course-details__curriculum-list list-unstyled">
-                                                <li>
-                                                    <div className="course-details__curriculum-list-left">
-                                                        <div className="course-details__meta-icon video-icon">
-                                                            <i className="fas fa-play"></i>
-                                                        </div>
-                                                        <a href="#">Introduction to Editing</a> <span>Preview</span>
-                                                    </div>
-                                                    <div className="course-details__curriculum-list-right">16 minutes
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div className="course-details__curriculum-list-left">
-                                                        <div className="course-details__meta-icon video-icon">
-                                                            <i className="fas fa-play"></i>
-                                                        </div>
-                                                        <a href="#">Overview of Editing</a> <span>Preview</span>
-                                                    </div>
-                                                    <div className="course-details__curriculum-list-right">10 minutes
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div className="course-details__curriculum-list-left">
-                                                        <div className="course-details__meta-icon file-icon">
-                                                            <i className="fas fa-folder"></i>
-                                                        </div>
-                                                        <a href="#">Basic Editing Technology</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div className="course-details__curriculum-list-left">
-                                                        <div className="course-details__meta-icon quiz-icon">
-                                                            <i className="fas fa-comment"></i>
-                                                        </div>
-                                                        <a href="#">Quiz</a>
-                                                    </div>
-                                                    <div className="course-details__curriculum-list-right">6 questions
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <br /><br />
-                                                <h3 className="course-details__tab-title">Intermediate Level</h3>
-                                                <br />
-                                                    <p className="course-details__tab-text">Aelltes port lacus quis enim
-                                                        var sed efficitur turpis
-                                                        gilla
-                                                        sed sit Lorem Ipsum is simply dummy text of the printing and
-                                                        typesetting industry. Lorem
-                                                        Ipsum has been the industry’s standard dummy text ever
-                                                        since.</p>
-                                                    <br />
-                                                        <ul className="course-details__curriculum-list list-unstyled">
-                                                            <li>
-                                                                <div className="course-details__curriculum-list-left">
-                                                                    <div
-                                                                        className="course-details__meta-icon video-icon">
-                                                                        <i className="fas fa-play"></i>
-                                                                    </div>
-                                                                    <a href="#">Introduction to Editing</a>
-                                                                    <span>Preview</span>
-                                                                </div>
-                                                                <div
-                                                                    className="course-details__curriculum-list-right">16
-                                                                    minutes
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div className="course-details__curriculum-list-left">
-                                                                    <div
-                                                                        className="course-details__meta-icon file-icon">
-                                                                        <i className="fas fa-folder"></i>
-                                                                    </div>
-                                                                    <a href="#">Basic Editing Technology</a>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div className="course-details__curriculum-list-left">
-                                                                    <div
-                                                                        className="course-details__meta-icon quiz-icon">
-                                                                        <i className="fas fa-comment"></i>
-                                                                    </div>
-                                                                    <a href="#">Quiz</a>
-                                                                </div>
-                                                                <div className="course-details__curriculum-list-right">6
-                                                                    questions
-                                                                </div>
-                                                            </li>
-                                                        </ul>
+                                    <br/>
+                                    <p className="course-details__tab-text">Aelltes port lacus quis enim var sed
+                                        efficitur turpis
+                                        gilla
+                                        sed sit Lorem Ipsum is simply dummy text of the printing and typesetting
+                                        industry. Lorem
+                                        Ipsum has been the industry’s standard dummy text ever since.</p>
+                                    <br/>
+                                    <ul className="course-details__curriculum-list list-unstyled">
+                                        <li>
+                                            <div className="course-details__curriculum-list-left">
+                                                <div className="course-details__meta-icon video-icon">
+                                                    <i className="fas fa-play"></i>
+                                                </div>
+                                                <a href="#">Introduction to Editing</a> <span>Preview</span>
+                                            </div>
+                                            <div className="course-details__curriculum-list-right">16 minutes
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="course-details__curriculum-list-left">
+                                                <div className="course-details__meta-icon video-icon">
+                                                    <i className="fas fa-play"></i>
+                                                </div>
+                                                <a href="#">Overview of Editing</a> <span>Preview</span>
+                                            </div>
+                                            <div className="course-details__curriculum-list-right">10 minutes
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="course-details__curriculum-list-left">
+                                                <div className="course-details__meta-icon file-icon">
+                                                    <i className="fas fa-folder"></i>
+                                                </div>
+                                                <a href="#">Basic Editing Technology</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="course-details__curriculum-list-left">
+                                                <div className="course-details__meta-icon quiz-icon">
+                                                    <i className="fas fa-comment"></i>
+                                                </div>
+                                                <a href="#">Quiz</a>
+                                            </div>
+                                            <div className="course-details__curriculum-list-right">6 questions
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <br/><br/>
+                                    <h3 className="course-details__tab-title">Intermediate Level</h3>
+                                    <br/>
+                                    <p className="course-details__tab-text">Aelltes port lacus quis enim
+                                        var sed efficitur turpis
+                                        gilla
+                                        sed sit Lorem Ipsum is simply dummy text of the printing and
+                                        typesetting industry. Lorem
+                                        Ipsum has been the industry’s standard dummy text ever
+                                        since.</p>
+                                    <br/>
+                                    <ul className="course-details__curriculum-list list-unstyled">
+                                        <li>
+                                            <div className="course-details__curriculum-list-left">
+                                                <div
+                                                    className="course-details__meta-icon video-icon">
+                                                    <i className="fas fa-play"></i>
+                                                </div>
+                                                <a href="#">Introduction to Editing</a>
+                                                <span>Preview</span>
+                                            </div>
+                                            <div
+                                                className="course-details__curriculum-list-right">16
+                                                minutes
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="course-details__curriculum-list-left">
+                                                <div
+                                                    className="course-details__meta-icon file-icon">
+                                                    <i className="fas fa-folder"></i>
+                                                </div>
+                                                <a href="#">Basic Editing Technology</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className="course-details__curriculum-list-left">
+                                                <div
+                                                    className="course-details__meta-icon quiz-icon">
+                                                    <i className="fas fa-comment"></i>
+                                                </div>
+                                                <a href="#">Quiz</a>
+                                            </div>
+                                            <div className="course-details__curriculum-list-right">6
+                                                questions
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                                 <div className="tab-pane  animated fadeInUp" role="tabpanel" id="review">
                                     <div className="row">
@@ -255,7 +260,7 @@ const CourseDetails = () => {
                                         <div className="course-details__comment-single">
                                             <div className="course-details__comment-top">
                                                 <div className="course-details__comment-img">
-                                                    <img src="/assets/images/team-1-1.jpg" alt="" />
+                                                    <img src="/assets/images/team-1-1.jpg" alt=""/>
                                                 </div>
                                                 <div className="course-details__comment-right">
                                                     <h2 className="course-details__comment-name">Steven Meyer</h2>
@@ -280,7 +285,7 @@ const CourseDetails = () => {
                                         <div className="course-details__comment-single">
                                             <div className="course-details__comment-top">
                                                 <div className="course-details__comment-img">
-                                                    <img src="/assets/images/team-1-2.jpg" alt="" />
+                                                    <img src="/assets/images/team-1-2.jpg" alt=""/>
                                                 </div>
                                                 <div className="course-details__comment-right">
                                                     <h2 className="course-details__comment-name">Lina Kelley</h2>
@@ -315,8 +320,8 @@ const CourseDetails = () => {
                                         </p>
                                         <div className="row">
                                             <div className="col-lg-6">
-                                                <input type="text" placeholder="Your Name" />
-                                                <input type="text" placeholder="Email Address" />
+                                                <input type="text" placeholder="Your Name"/>
+                                                <input type="text" placeholder="Email Address"/>
                                             </div>
                                             <div className="col-lg-12">
                                                 <textarea placeholder="Write Message"></textarea>
@@ -382,7 +387,7 @@ const CourseDetails = () => {
                                 Courses</h2>
                             <div className="course-details__list-item">
                                 <div className="course-details__list-img">
-                                    <img src="/assets/images/lc-1-1.jpg" alt="" />
+                                    <img src="/assets/images/lc-1-1.jpg" alt=""/>
                                 </div>
                                 <div className="course-details__list-content">
                                     <a className="course-details__list-author" href="#">by <span>Lydia Byrd</span></a>
@@ -399,7 +404,7 @@ const CourseDetails = () => {
                             </div>
                             <div className="course-details__list-item">
                                 <div className="course-details__list-img">
-                                    <img src="/assets/images/lc-1-2.jpg" alt="" />
+                                    <img src="/assets/images/lc-1-2.jpg" alt=""/>
                                 </div>
                                 <div className="course-details__list-content">
                                     <a className="course-details__list-author" href="#">by <span>Lydia Byrd</span></a>
@@ -416,7 +421,7 @@ const CourseDetails = () => {
                             </div>
                             <div className="course-details__list-item">
                                 <div className="course-details__list-img">
-                                    <img src="/assets/images/lc-1-3.jpg" alt="" />
+                                    <img src="/assets/images/lc-1-3.jpg" alt=""/>
                                 </div>
                                 <div className="course-details__list-content">
                                     <a className="course-details__list-author" href="#">by <span>Lydia Byrd</span></a>
