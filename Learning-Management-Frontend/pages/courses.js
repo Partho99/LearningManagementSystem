@@ -9,7 +9,7 @@ const CoursesPage = () => {
     return (
         <Layout pageTitle="Kipso | Courses">
             <NavOne />
-            <PageHeader title="Courses" />
+            {/*<PageHeader title="Courses" />*/}
             <Courses />
             <Footer />
         </Layout>

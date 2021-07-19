@@ -8,8 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/course/api/")
 public class CourseResource {
 
@@ -25,26 +27,19 @@ public class CourseResource {
     @PreAuthorize("hasAnyAuthority('role_admin','role_user')")
     public Course saveCourse(@RequestBody Course course) {
         User user = new User();
-        List<Section> sections = course.getSections();
         UserPrincipal principal = (UserPrincipal) SecurityContextHolder
                 .getContext().getAuthentication()
                 .getPrincipal();
         Topic topic = new Topic();
         topic.setId(2);
         course.setTopic(topic);
-
-        try {
-            if (!userService.findByUsername(principal.getUsername()).equals(principal.getUsername())) {
-                user.setUsername(principal.getUsername());
-                user.setScope(principal.getScope());
-                user.setEnabled(principal.isEnabled());
-                userService.saveUser(user);
-            }
-        } catch (NullPointerException ex) {
+        if (userService.findByUsername(principal.getUsername()).isEmpty()) {
             user.setUsername(principal.getUsername());
-            user.setScope(principal.getScope());
             user.setEnabled(principal.isEnabled());
+            user.setScope(principal.getScope());
             userService.saveUser(user);
+        } else if (userService.findByUsername(principal.getUsername()).get().getUsername().equals(principal.getUsername())) {
+            user.setId(userService.findByUsername(principal.getUsername()).get().getId());
         }
 
         user.setId(user.getId());
@@ -57,6 +52,16 @@ public class CourseResource {
     @PreAuthorize("hasAnyAuthority('role_admin','role_user')")
     public String deleteCourseById(@PathVariable long id) {
         courseService.deleteById(id);
-        return "id no : " + id + "is deleted";
+        return "id no : " + id + " is deleted";
+    }
+
+    @GetMapping("show-all-courses")
+    public List<Course> showAllCourses() {
+        return courseService.findAll();
+    }
+
+    @GetMapping("show-one/{id}")
+    public Optional<Course> showOne(@PathVariable long id) {
+        return courseService.findById(id);
     }
 }
