@@ -55,6 +55,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .permitAll()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/course/api/**")
+                .permitAll()
+                .and()
+                .authorizeRequests()
                 .antMatchers("/api/**").access("hasAnyAuthority('role_admin', 'role_user')")
                 .anyRequest().permitAll();
     }
