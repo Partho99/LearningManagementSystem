@@ -1,5 +1,7 @@
 package com.xyz.enterprise.learningmanagementsystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,11 +12,17 @@ public class User extends AuditableEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
     private String scope;
     private boolean enabled;
     private String imageUrl;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Course> courses;
+
+    @JsonIgnore
     @OneToMany
     private List<Review> reviews;
 

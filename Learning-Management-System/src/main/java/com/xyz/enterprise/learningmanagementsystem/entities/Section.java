@@ -15,7 +15,7 @@ public class Section extends AuditableEntity{
     @Lob
     private String overview;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<VideoContent> videoContents;
 
     public int getId() {
