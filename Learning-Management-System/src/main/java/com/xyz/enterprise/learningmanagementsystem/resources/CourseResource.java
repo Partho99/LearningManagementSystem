@@ -3,6 +3,8 @@ package com.xyz.enterprise.learningmanagementsystem.resources;
 import com.xyz.enterprise.learningmanagementsystem.entities.*;
 import com.xyz.enterprise.learningmanagementsystem.service.CourseService;
 import com.xyz.enterprise.learningmanagementsystem.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -63,5 +65,10 @@ public class CourseResource {
     @GetMapping("show-one/{id}")
     public Optional<Course> showOne(@PathVariable long id) {
         return courseService.findById(id);
+    }
+
+    @GetMapping("show-course-by-page")
+    public Page<Course> showPageByPage(Pageable pageable) {
+        return courseService.findAll(pageable);
     }
 }

@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
-
-const CourseDetails = () => {
+import {useRouter} from "next/router";
+const CourseDetails = ({id}) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [course, setCourse] = useState({});
 
     useEffect(() => {
-
-    }, [])
+        fetch(`http://localhost:8080/course/api/show-one/${id}`)
+            .then(response => response.json())
+            .then(data => setCourse(data))
+    }, [id])
 
     const openModal = () => {
         setIsOpen(!isOpen);
@@ -21,12 +23,12 @@ const CourseDetails = () => {
                         <div className="course-details__content">
                             <p className="course-details__author">
                                 <img src="/assets/images/team-1-1.jpg" alt=""/>
-                                by <a href="#">Addie Walters</a>
+                                by <a href="#">{course.user?.username}</a>
                             </p>
 
                             <div className="course-details__top">
                                 <div className="course-details__top-left">
-                                    <h2 className="course-details__title">Improve editing skills</h2>
+                                    <h2 className="course-details__title">{course.name}</h2>
                                     <div className="course-one__stars">
                                         <span className="course-one__stars-wrap">
                                             <i className="fa fa-star"></i>
@@ -40,7 +42,7 @@ const CourseDetails = () => {
                                     </div>
                                 </div>
                                 <div className="course-details__top-right">
-                                    <a href="#" className="course-one__category">marketing</a>
+                                    <a href="#" className="course-one__category">{course.topic?.name}</a>
                                 </div>
                             </div>
                             <div className="course-one__image">
@@ -62,37 +64,10 @@ const CourseDetails = () => {
                             <div className="tab-content course-details__tab-content ">
                                 <div className="tab-pane show active  animated fadeInUp" role="tabpanel" id="overview">
                                     <h3>What you will learn from this course?</h3>
-                                    <p className="course-details__tab-text">Aelltes port lacus quis enim var sed
-                                        efficitur turpis
-                                        gilla
-                                        sed sit Lorem Ipsum is simply dummy text of the printing and typesetting
-                                        industry. Lorem
-                                        Ipsum has been the industry’s standard dummy text ever since the 1500s, when an
-                                        unknown
-                                        printer took a galley of type and scrambled it to make a type specimen book. It
-                                        has
-                                        survived
-                                        not only five centuries, but also the leap into electronic typesetting,
-                                        remaining
-                                        essentially unchanged.</p>
+                                    <p className="course-details__tab-text">{course.overview?.learningFromThisCourse}</p>
                                     <br/>
                                     <h3>Who this course is for:</h3>
-                                    <p className="course-details__tab-text">It was popularised in the 1960s with the
-                                        release of
-                                        Letraset
-                                        sheets containing Lorem Ipsum passages, and more recently with desktop
-                                        publishing
-                                        software
-                                        like Aldus PageMaker including versions of lorem ipsum amet finibus eros.
-                                        Lorem Ipsum is
-                                        simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                                        been the
-                                        industry’s standard dummy text ever since the 1500s, when an unknown printer
-                                        took a
-                                        galley
-                                        of type and scrambled it to make a type specimen book. It has survived not
-                                        only five
-                                        centuries, but also the leap into electronic typesetting.</p>
+                                    <p className="course-details__tab-text">{course.overview?.eligibleForThisCourse}</p>
                                     <br/>
                                     <ul className="list-unstyled course-details__overview-list">
                                         <li>It has survived not only five centuries</li>
@@ -101,104 +76,44 @@ const CourseDetails = () => {
                                         <li>Take a look at our round up of the best shows</li>
                                     </ul>
                                 </div>
+
                                 <div className="tab-pane  animated fadeInUp" role="tabpanel" id="curriculum">
-                                    <h3 className="course-details__tab-title">Starting beginners level course</h3>
-                                    <br/>
-                                    <p className="course-details__tab-text">Aelltes port lacus quis enim var sed
-                                        efficitur turpis
-                                        gilla
-                                        sed sit Lorem Ipsum is simply dummy text of the printing and typesetting
-                                        industry. Lorem
-                                        Ipsum has been the industry’s standard dummy text ever since.</p>
-                                    <br/>
-                                    <ul className="course-details__curriculum-list list-unstyled">
-                                        <li>
-                                            <div className="course-details__curriculum-list-left">
-                                                <div className="course-details__meta-icon video-icon">
-                                                    <i className="fas fa-play"></i>
-                                                </div>
-                                                <a href="#">Introduction to Editing</a> <span>Preview</span>
-                                            </div>
-                                            <div className="course-details__curriculum-list-right">16 minutes
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="course-details__curriculum-list-left">
-                                                <div className="course-details__meta-icon video-icon">
-                                                    <i className="fas fa-play"></i>
-                                                </div>
-                                                <a href="#">Overview of Editing</a> <span>Preview</span>
-                                            </div>
-                                            <div className="course-details__curriculum-list-right">10 minutes
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="course-details__curriculum-list-left">
-                                                <div className="course-details__meta-icon file-icon">
-                                                    <i className="fas fa-folder"></i>
-                                                </div>
-                                                <a href="#">Basic Editing Technology</a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="course-details__curriculum-list-left">
-                                                <div className="course-details__meta-icon quiz-icon">
-                                                    <i className="fas fa-comment"></i>
-                                                </div>
-                                                <a href="#">Quiz</a>
-                                            </div>
-                                            <div className="course-details__curriculum-list-right">6 questions
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <br/><br/>
-                                    <h3 className="course-details__tab-title">Intermediate Level</h3>
-                                    <br/>
-                                    <p className="course-details__tab-text">Aelltes port lacus quis enim
-                                        var sed efficitur turpis
-                                        gilla
-                                        sed sit Lorem Ipsum is simply dummy text of the printing and
-                                        typesetting industry. Lorem
-                                        Ipsum has been the industry’s standard dummy text ever
-                                        since.</p>
-                                    <br/>
-                                    <ul className="course-details__curriculum-list list-unstyled">
-                                        <li>
-                                            <div className="course-details__curriculum-list-left">
-                                                <div
-                                                    className="course-details__meta-icon video-icon">
-                                                    <i className="fas fa-play"></i>
-                                                </div>
-                                                <a href="#">Introduction to Editing</a>
-                                                <span>Preview</span>
-                                            </div>
-                                            <div
-                                                className="course-details__curriculum-list-right">16
-                                                minutes
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="course-details__curriculum-list-left">
-                                                <div
-                                                    className="course-details__meta-icon file-icon">
-                                                    <i className="fas fa-folder"></i>
-                                                </div>
-                                                <a href="#">Basic Editing Technology</a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="course-details__curriculum-list-left">
-                                                <div
-                                                    className="course-details__meta-icon quiz-icon">
-                                                    <i className="fas fa-comment"></i>
-                                                </div>
-                                                <a href="#">Quiz</a>
-                                            </div>
-                                            <div className="course-details__curriculum-list-right">6
-                                                questions
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    {course?.sections?.map(item => (
+                                        <>
+                                            <h3 key={item.id} className="course-details__tab-title">{item.name}</h3>
+                                            <br/>
+                                            <p className="course-details__tab-text">{item.overview}</p>
+                                            <br/>
+                                            <ul className="course-details__curriculum-list list-unstyled">
+                                                {item?.videoContents?.map(vid => (
+                                                    <li key={vid.id}>
+                                                        <div className="course-details__curriculum-list-left">
+                                                            <div className="course-details__meta-icon video-icon">
+                                                                <i className="fas fa-play"></i>
+                                                            </div>
+                                                            <a href="#">{vid.name}</a> <span>Preview</span>
+                                                        </div>
+                                                        <div className="course-details__curriculum-list-right">16
+                                                            minutes
+                                                        </div>
+                                                    </li>
+                                                ))}
+
+                                                <li>
+                                                    <div className="course-details__curriculum-list-left">
+                                                        <div className="course-details__meta-icon quiz-icon">
+                                                            <i className="fas fa-comment"></i>
+                                                        </div>
+                                                        <a href="#">Quiz</a>
+                                                    </div>
+                                                    <div className="course-details__curriculum-list-right">6 questions
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <br/><br/>
+                                        </>
+                                    ))}
+
                                 </div>
                                 <div className="tab-pane  animated fadeInUp" role="tabpanel" id="review">
                                     <div className="row">

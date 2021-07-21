@@ -12,28 +12,26 @@ import BrandsTwo from "../components/BrandsTwo";
 import BlogTwo from "../components/BlogTwo";
 import CallToActionFour from "../components/CallToActionFour";
 import SubscribeOne from "../components/SubscribeOne";
-import TopBar from "../components/TopBar";
 
 
-const HomePage = () => (
+const HomePage = () => {
 
-    <Layout pageTitle="Kipso - React Next Online Education Learning & LMS Template">
-        <TopBar/>
-        <NavOne/>
-        <SliderOne/>
-        <AboutTwo/>
-        <CourseOne/>
-        <VideoTwo/>
-        <CountdownKipso/>
-        <CourseCatOne/>
-        <CallToActionThree/>
-        <BrandsTwo/>
-        <BlogTwo/>
-        <CallToActionFour/>
-        <SubscribeOne/>
-        <Footer/>
-    </Layout>
+    return (
+        <>
+            <SliderOne/>
+            <AboutTwo/>
+            <CourseOne/>
+            <VideoTwo/>
+            <CountdownKipso/>
+            <CourseCatOne/>
+            <CallToActionThree/>
+            <BrandsTwo/>
+            <BlogTwo/>
+            <CallToActionFour/>
+            <SubscribeOne/>
+        </>
+    );
 
-)
+}
 
 export default HomePage;

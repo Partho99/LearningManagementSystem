@@ -87,11 +87,11 @@ const NavOne = () => {
                     </div>
                     <div className="main-navigation">
                         <ul className=" navigation-box">
+                            <li className="current" ><Link href="/courses"><a>Courses</a></Link></li>
                             {navElement?.map((category, id) => (
                                 <li className="current" key={id}>
                                     <Link href="/"><a>{category.name}</a></Link>
                                     <ul className="sub-menu">
-
                                         {category.subjects?.map((subject, id) => (
                                             <li key={id}><Link href="/"><a>{subject.name}</a></Link>
                                                 <ul className="sub-menu">
@@ -103,6 +103,8 @@ const NavOne = () => {
                                                 </ul>
                                             </li>
                                         ))}
+
+                                        <li ><Link href="/courses"><a>Courses</a></Link></li>
 
                                     </ul>
                                 </li>

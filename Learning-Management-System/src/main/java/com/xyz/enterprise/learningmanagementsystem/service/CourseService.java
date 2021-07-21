@@ -1,7 +1,8 @@
 package com.xyz.enterprise.learningmanagementsystem.service;
 
 import com.xyz.enterprise.learningmanagementsystem.entities.Course;
-import com.xyz.enterprise.learningmanagementsystem.entities.Subject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +19,6 @@ public interface CourseService {
     Optional<Course> findByName(String courseName);
 
     void deleteById(long id);
+
+    Page<Course> findAll(Pageable pageable);
 }

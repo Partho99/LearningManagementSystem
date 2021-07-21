@@ -1,11 +1,10 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import ModalVideo from 'react-modal-video';
 
 
 const VideoTwo = () => {
 
     const [isOpen, setIsOpen] = useState(false);
-
     const openModal = () => {
         setIsOpen(!isOpen);
     }

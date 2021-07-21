@@ -1,8 +1,10 @@
 import React from 'react';
 import Head from 'next/head';
+import TopBar from "./TopBar";
+import NavOne from "./NavOne";
+import Footer from "./Footer";
 
 const Layout = (props) => {
-
     return (
         <div>
             <Head>
@@ -28,12 +30,12 @@ const Layout = (props) => {
                 <link rel="stylesheet" href="/assets/css/responsive.css" />
 
             </Head>
-
+            <TopBar/>
+            <NavOne/>
             <div className="page-wrapper">
-
             {props.children}
-
             </div>
+            <Footer/>
 
             <script src="/assets/plugins/bootstrap/jquery.min.js"></script>
             <script src="/assets/plugins/bootstrap/bootstrap.min.js"></script>

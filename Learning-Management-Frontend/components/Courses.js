@@ -46,7 +46,7 @@ const Courses = () => {
                                         <a href="/course-details"><i className="far fa-folder-open"></i> {item.sections.length} Lectures</a>
                                         <a href="/course-details">$18</a>
                                     </div>
-                                    <Link href={"/course-details/"+item.id}><a href="#" className="course-one__link">See Preview</a></Link>
+                                    <Link href={"/courses/[course_details]"} as={`/courses/${item.id}`}><a href="#" className="course-one__link">See Preview</a></Link>
 
                                 </div>
                             </div>
