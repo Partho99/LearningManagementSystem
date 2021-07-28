@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import ModalVideo from 'react-modal-video';
 import CountUp from 'react-countup';
 import VisibilitySensor from 'react-visibility-sensor';
+import dynamic from "next/dynamic";
+
+const ModalVideo = dynamic(() => import('react-modal-video').then(), {ssr: false});
 
 class VideoThree extends Component {
     constructor(){

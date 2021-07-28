@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import AuthService from "../auth/auth.service";
 import { useRouter } from "next/router";
 import Login from "./login";
+import "../components/styles/register.css"
+import 'swiper/swiper.scss';
 
 
 export default function MyApp({ Component, pageProps }) {
@@ -19,7 +21,6 @@ export default function MyApp({ Component, pageProps }) {
     },[])
 
     const role = currentUser?.scope;
-    console.log(router.pathname)
 
     // if( router.pathname.startsWith("/courses") && role !== "role_admin role_user") {
     //     allowed = false;

@@ -1,7 +1,5 @@
 import React from 'react';
 import Swiper from 'react-id-swiper';
-import 'swiper/swiper.scss';
-import Link from 'next/link';
 
 const CourseOne = () => {
 

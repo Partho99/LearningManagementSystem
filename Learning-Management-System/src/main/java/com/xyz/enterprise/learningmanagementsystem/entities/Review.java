@@ -11,10 +11,15 @@ public class Review {
     private String comment;
     private double rating;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinTable(name = "course_review", joinColumns = {@JoinColumn(name = "review_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "id")})
     private Course course;
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_review", joinColumns = {@JoinColumn(name = "review_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    private User user;
 
     public int getId() {
         return id;
@@ -46,5 +51,13 @@ public class Review {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

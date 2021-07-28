@@ -23,7 +23,7 @@ public class User extends AuditableEntity{
     private List<Course> courses;
 
     @JsonIgnore
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews;
 
     public Long getId() {

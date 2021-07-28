@@ -25,15 +25,15 @@ public class CourseResource {
         this.userService = userService;
     }
 
-    @PostMapping("save")
-    @PreAuthorize("hasAnyAuthority('role_admin','role_user')")
-    public Course saveCourse(@RequestBody Course course) {
+    @PostMapping("save/{id}")
+    @PreAuthorize("hasAnyAuthority('role_admin','role_user','role_instructor')")
+    public Course saveCourse(@RequestBody Course course, @PathVariable int id) {
         User user = new User();
         UserPrincipal principal = (UserPrincipal) SecurityContextHolder
                 .getContext().getAuthentication()
                 .getPrincipal();
         Topic topic = new Topic();
-        topic.setId(2);
+        topic.setId(id);
         course.setTopic(topic);
         if (userService.findByUsername(principal.getUsername()).isEmpty()) {
             user.setUsername(principal.getUsername());
@@ -70,5 +70,20 @@ public class CourseResource {
     @GetMapping("show-course-by-page")
     public Page<Course> showPageByPage(Pageable pageable) {
         return courseService.findAll(pageable);
+    }
+
+    @GetMapping("show-course-by-category/{categoryName}")
+    public List<Course> findByCategory(@PathVariable String categoryName) {
+        return courseService.findByCategoryName(categoryName);
+    }
+
+    @GetMapping("show-course-by-subject/{subjectName}")
+    public List<Course> findBySubject(@PathVariable String subjectName) {
+        return courseService.findBySubjectName(subjectName);
+    }
+
+    @GetMapping("show-course-by-topic/{topicName}")
+    public List<Course> findByTopic(@PathVariable String topicName) {
+        return courseService.findByTopic(topicName);
     }
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import Swiper from 'react-id-swiper';
-import 'swiper/swiper.scss';
 
 const BrandsTwo = () => {
 

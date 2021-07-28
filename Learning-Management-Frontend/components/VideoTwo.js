@@ -1,5 +1,7 @@
 import React, {Component, useEffect, useState} from 'react';
-import ModalVideo from 'react-modal-video';
+import dynamic from 'next/dynamic'
+
+const ModalVideo = dynamic(() => import('react-modal-video').then(), {ssr: false});
 
 
 const VideoTwo = () => {
@@ -21,7 +23,7 @@ const VideoTwo = () => {
                             <a href="#" className="thm-btn">Learn More</a>
                         </div>
                     </div>
-                    <div className="col-lg-5 d-flex justify-content-lg-end justify-content-sm-start">
+                        <div className="col-lg-5 d-flex justify-content-lg-end justify-content-sm-start">
                         <div className="my-auto">
                             <ModalVideo channel='youtube' isOpen={isOpen} videoId='aitb---aDYM' onClose={() => setIsOpen(!isOpen)} />
                             <div onClick={openModal} className="video-two__popup"><i className="fa fa-play"></i>

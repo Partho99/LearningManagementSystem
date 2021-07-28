@@ -1,7 +1,4 @@
-import Layout from "../components/Layout";
-import NavOne from "../components/NavOne";
 import SliderOne from "../components/SliderOne";
-import Footer from "../components/Footer";
 import AboutTwo from "../components/AboutTwo";
 import CourseOne from "../components/CourseOne";
 import VideoTwo from "../components/VideoTwo";

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Swiper from 'react-id-swiper';
-import 'swiper/swiper.scss';
 
 const SliderTwo = () => {
 

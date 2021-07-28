@@ -60,7 +60,7 @@ const login = async (username, password) => {
             if (response.ok) {
                 return response.json()
             } else {
-                throw new Error("Username or Password is Wrong");
+                throw new Error("Username or Password is wrong try again.");
             }
         })
         .then(result => {

@@ -40,7 +40,7 @@ public class UserResource {
         System.out.println(role);
         List<Role> uRole = new ArrayList<>();
         for (Role userRole : role) {
-            if (userRole.getName().equalsIgnoreCase("role_user")) {
+            if (userRole.getName().equalsIgnoreCase("role_instructor")) {
                 uRole.add(userRole);
             }
         }

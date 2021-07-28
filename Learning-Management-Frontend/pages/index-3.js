@@ -1,5 +1,4 @@
 import React from 'react';
-import Layout from "../components/Layout";
 import Footer from "../components/Footer";
 import NavThree from "../components/NavThree";
 import SliderOne from "../components/SliderOne";
@@ -16,20 +15,21 @@ import CallToActionFive from "../components/CallToActionFive";
 
 const HomePageThree = () => {
     return (
-        <Layout pageTitle="Kipso | Home 3">
-            <NavThree />
-            <SliderOne />
-            <CourseCatThree />
-            <CallToActionOne />
-            <TeamTab />
-            <CourseThree />
-            <CallToActionSix />
-            <TestimonialOne />
-            <VideoThree />
-            <BrandsTwo />
-            <CallToActionFive />
-            <Footer />
-        </Layout>
+
+        <>
+            <NavThree/>
+            <SliderOne/>
+            <CourseCatThree/>
+            <CallToActionOne/>
+            <TeamTab/>
+            <CourseThree/>
+            <CallToActionSix/>
+            <TestimonialOne/>
+            <VideoThree/>
+            <BrandsTwo/>
+            <CallToActionFive/>
+            <Footer/>
+        </>
     );
 };
 

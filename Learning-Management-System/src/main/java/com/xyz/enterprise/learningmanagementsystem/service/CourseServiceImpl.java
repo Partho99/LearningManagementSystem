@@ -54,4 +54,19 @@ public class CourseServiceImpl implements CourseService{
     public Page<Course> findAll(Pageable pageable) {
         return courseRepository.findAll(pageable);
     }
+
+    @Override
+    public List<Course> findByCategoryName(String categoryName) {
+        return courseRepository.findByCategoryName(categoryName);
+    }
+
+    @Override
+    public List<Course> findBySubjectName(String subjectName) {
+        return courseRepository.findBySubjectName(subjectName);
+    }
+
+    @Override
+    public List<Course> findByTopic(String topicName) {
+        return courseRepository.findByTopic(topicName);
+    }
 }

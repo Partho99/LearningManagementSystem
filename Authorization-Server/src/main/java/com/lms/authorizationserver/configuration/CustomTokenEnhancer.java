@@ -16,7 +16,7 @@ public class CustomTokenEnhancer extends JwtAccessTokenConverter {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        Map<String, Object> info = new LinkedHashMap<String, Object>(accessToken.getAdditionalInformation());
+        Map<String, Object> info = new LinkedHashMap<>(accessToken.getAdditionalInformation());
 
         info.put("email", user.getEmail());
         info.put("enabled", user.isEnabled());
