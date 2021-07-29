@@ -12,6 +12,7 @@
     "@material-ui/icons": "^4.11.2",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.21.1",
+    "formik": "^2.2.9",
     "next": "^11.0.1",
     "react": "^17.0.2",
     "react-countdown": "^2.2.1",

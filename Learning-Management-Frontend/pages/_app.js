@@ -5,6 +5,7 @@ import AuthService from "../auth/auth.service";
 import { useRouter } from "next/router";
 import Login from "./login";
 import "../components/styles/register.css"
+import "../components/styles/form-demo.css"
 import 'swiper/swiper.scss';
 
 
