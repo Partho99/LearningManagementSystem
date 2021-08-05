@@ -1,7 +1,6 @@
 package com.xyz.enterprise.learningmanagementsystem.service;
 
 import com.xyz.enterprise.learningmanagementsystem.entities.Review;
-import com.xyz.enterprise.learningmanagementsystem.entities.Subject;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +16,6 @@ public interface ReviewService {
     void saveAll(List<Review> subjects);
 
     Optional<Review> findByName(String subjectName);
+
+    List<Review> findAllByCourse_Id(long id);
 }

@@ -1,5 +1,6 @@
 package com.xyz.enterprise.learningmanagementsystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.CreatedBy;
@@ -22,6 +23,7 @@ public abstract class AuditableEntity<U> implements Serializable {
     @CreatedDate
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date createdDate;
 
     @CreatedBy
@@ -35,6 +37,7 @@ public abstract class AuditableEntity<U> implements Serializable {
     @LastModifiedDate
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date lastModifiedDate;
 
     @Column(name = "ACTIVE_STATUS")

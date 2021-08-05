@@ -11,8 +11,9 @@ const NavTwo = () => {
         //Mobile Menu
         mobileMenu();
 
-        window.removeEventListener('scroll', handleScroll);
-
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
     }, [])
 
 

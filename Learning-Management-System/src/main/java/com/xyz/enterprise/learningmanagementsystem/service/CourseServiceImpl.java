@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class CourseServiceImpl implements CourseService{
+public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
 
@@ -61,12 +61,28 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
+    public Page<Course> findByCategoryNameByPage(String categoryName, Pageable pageable) {
+        return courseRepository.findByCategoryNameByPage(categoryName, pageable);
+    }
+
+
+    @Override
     public List<Course> findBySubjectName(String subjectName) {
         return courseRepository.findBySubjectName(subjectName);
     }
 
     @Override
+    public Page<Course> findBySubjectNameByPage(String subjectName, Pageable pageable) {
+        return courseRepository.findBySubjectNameByPage(subjectName, pageable);
+    }
+
+    @Override
     public List<Course> findByTopic(String topicName) {
         return courseRepository.findByTopic(topicName);
+    }
+
+    @Override
+    public Page<Course> findByTopicByPage(String topicName, Pageable pageable) {
+        return courseRepository.findByTopicByPage(topicName, pageable);
     }
 }

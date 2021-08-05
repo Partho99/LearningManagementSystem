@@ -1,10 +1,15 @@
 package com.xyz.enterprise.learningmanagementsystem.resources;
 
 import com.xyz.enterprise.learningmanagementsystem.entities.*;
+import com.xyz.enterprise.learningmanagementsystem.object_mapper.CourseMapper;
+import com.xyz.enterprise.learningmanagementsystem.object_mapper.dto.CourseDto;
 import com.xyz.enterprise.learningmanagementsystem.service.CourseService;
 import com.xyz.enterprise.learningmanagementsystem.service.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +24,12 @@ public class CourseResource {
 
     private final CourseService courseService;
     private final UserService userService;
+    private final CourseMapper courseMapper;
 
-    public CourseResource(CourseService courseService, UserService userService) {
+    public CourseResource(CourseService courseService, UserService userService, CourseMapper courseMapper) {
         this.courseService = courseService;
         this.userService = userService;
+        this.courseMapper = courseMapper;
     }
 
     @PostMapping("save/{id}")
@@ -62,13 +69,19 @@ public class CourseResource {
         return courseService.findAll();
     }
 
+    @GetMapping("show-all-courses-only")
+    public ResponseEntity<List<CourseDto>> showAllCoursesOnly() {
+        return new ResponseEntity<>(courseMapper.modelsToDto(courseService.findAll()), HttpStatus.OK);
+    }
+
     @GetMapping("show-one/{id}")
     public Optional<Course> showOne(@PathVariable long id) {
         return courseService.findById(id);
     }
 
-    @GetMapping("show-course-by-page")
-    public Page<Course> showPageByPage(Pageable pageable) {
+    @GetMapping("show-course-by-page/{page}")
+    public Page<Course> showPageByPage(@PathVariable("page") int page) {
+        Pageable pageable = PageRequest.of(page, 9);
         return courseService.findAll(pageable);
     }
 
@@ -77,13 +90,31 @@ public class CourseResource {
         return courseService.findByCategoryName(categoryName);
     }
 
+    @GetMapping("show-course-by-category/{categoryName}/{page}")
+    public Page<Course> findByCategoryByPage(@PathVariable("categoryName") String categoryName, @PathVariable("page") int page) {
+        Pageable pageable = PageRequest.of(page, 6);
+        return courseService.findByCategoryNameByPage(categoryName, pageable);
+    }
+
     @GetMapping("show-course-by-subject/{subjectName}")
     public List<Course> findBySubject(@PathVariable String subjectName) {
         return courseService.findBySubjectName(subjectName);
     }
 
+    @GetMapping("show-course-by-subject/{subjectName}/{page}")
+    public Page<Course> findBySubjectByPage(@PathVariable String subjectName, @PathVariable("page") int page) {
+        Pageable pageable = PageRequest.of(page, 6);
+        return courseService.findBySubjectNameByPage(subjectName, pageable);
+    }
+
     @GetMapping("show-course-by-topic/{topicName}")
     public List<Course> findByTopic(@PathVariable String topicName) {
         return courseService.findByTopic(topicName);
+    }
+
+    @GetMapping("show-course-by-topic/{topicName}/{page}")
+    public Page<Course> findByTopicByPage(@PathVariable String topicName, @PathVariable("page") int page) {
+        Pageable pageable = PageRequest.of(page, 6);
+        return courseService.findByTopicByPage(topicName, pageable);
     }
 }

@@ -25,7 +25,13 @@ public interface CourseService {
 
     List<Course> findByCategoryName(@Param("categoryName") String categoryName);
 
+    Page<Course> findByCategoryNameByPage(@Param("categoryName") String categoryName, Pageable pageable);
+
     List<Course> findBySubjectName(@Param("subjectName") String subjectName);
 
+    Page<Course> findBySubjectNameByPage(@Param("subjectName") String subjectName, Pageable pageable);
+
     List<Course> findByTopic(@Param("topicName") String topicName);
+
+    Page<Course> findByTopicByPage(@Param("topicName") String topicName, Pageable pageable);
 }

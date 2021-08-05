@@ -1,6 +1,6 @@
 // next.config.js
 module.exports = {
-    webpack5: true,
+    webpack5: false,
     webpack(config, options) {
         config.module.rules.push({
             test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,

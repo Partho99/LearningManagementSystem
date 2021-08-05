@@ -33,6 +33,19 @@ public class Tag extends AuditableEntity {
             inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
     private Category category;
 
+    @ManyToOne
+    @JoinTable(name = "blog_tags", joinColumns = {@JoinColumn(name = "tag_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "blog_id", referencedColumnName = "id")})
+    private Blog blog;
+
+    public Blog getBlog() {
+        return blog;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
+    }
+
 
     public int getId() {
         return id;

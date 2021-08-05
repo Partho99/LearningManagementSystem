@@ -11,7 +11,10 @@ const NavThree = () => {
         //Mobile Menu
         mobileMenu();
 
-        window.removeEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+
     }, [])
 
     const handleScroll = () => {

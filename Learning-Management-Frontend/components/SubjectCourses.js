@@ -7,6 +7,7 @@ const SubjectCourses = () => {
 
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(0);
 
     const router = useRouter();
     const {slug} = router.query;
@@ -14,14 +15,19 @@ const SubjectCourses = () => {
 
     useEffect(() => {
         const subjectData = async () => {
-            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-course-by-subject/${realSlug}`)
+            setLoading(true)
+            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-course-by-subject/${realSlug}/${page}`)
                 .then(response => response.json())
                 .then(data => setCourses(data))
             setLoading(false);
         }
         subjectData().then(r => r);
 
-    }, [slug])
+    }, [slug,page])
+
+    const handleClick = (page) =>{
+        setPage(page)
+    }
 
     return (
         <section className="course-one course-page">
@@ -30,7 +36,7 @@ const SubjectCourses = () => {
                 </div> :
                 <div className="container">
                     <div className="row">
-                        {courses?.map(item => (
+                        {courses.content?.map(item => (
                             <div className="col-lg-4" key={item.id}>
                                 <div className="course-one__single">
                                     <div className="course-one__image">
@@ -74,12 +80,26 @@ const SubjectCourses = () => {
 
                     </div>
                     <div className="post-pagination">
-                        <a href="#"><i className="fa fa-angle-double-left"></i></a>
-                        <a className="active" href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#"><i className="fa fa-angle-double-right"></i></a>
+                        {/*{*/}
+                        {/*    Array.from({ length: courses.totalPages }, (_, k) => (*/}
+                        {/*        <a className="active" href="#" onClick={() => handleClick(k)}>{k+1}</a>*/}
+                        {/*    ))*/}
+                        {/*}*/}
+
+                        {page <= 0 ?
+                            <div></div>
+                            :
+                            <a className={'bg-warning'} href="#" onClick={() => handleClick(page - 1)}>
+                                <i className="fa fa-angle-double-left text-primary"></i></a>
+                        }
+
+                        {page + 1 >= courses.totalPages ?
+                            <div></div>
+                            :
+                            <a className={'bg-warning'} href="#" onClick={() => handleClick(page + 1)}>
+                                <i className="fa fa-angle-double-right text-primary"></i></a>
+                        }
+
                     </div>
 
                 </div>

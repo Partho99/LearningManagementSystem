@@ -15,7 +15,10 @@ const NavOne = () => {
         //Search Toggle
         searchButton();
 
-        window.removeEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+
     }, [])
 
 
@@ -118,7 +121,7 @@ const NavOne = () => {
                                 <ul className="sub-menu">
                                     <li><Link href="/teachers"><a>Instructor</a></Link></li>
                                     <li><Link href="/pricing"><a>Pricing</a></Link></li>
-                                    <li><Link href="/news"><a>News</a></Link></li>
+                                    <li><Link href="/blogs"><a>Blogs</a></Link></li>
                                     <li><Link href="/gallery"><a>Gallery</a></Link></li>
                                     <li><Link href="/faq"><a>FAQ</a></Link></li>
                                     <li><Link href="/courses"><a>Courses</a></Link></li>

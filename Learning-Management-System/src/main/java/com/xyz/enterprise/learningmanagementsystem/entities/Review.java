@@ -3,7 +3,7 @@ package com.xyz.enterprise.learningmanagementsystem.entities;
 import javax.persistence.*;
 
 @Entity
-public class Review {
+public class Review extends AuditableEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,11 @@ public class Review {
     @JoinTable(name = "user_review", joinColumns = {@JoinColumn(name = "review_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     private User user;
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinTable(name = "blog_review", joinColumns = {@JoinColumn(name = "review_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "blog_id", referencedColumnName = "id")})
+    private Blog blog;
 
     public int getId() {
         return id;
@@ -59,5 +64,13 @@ public class Review {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Blog getBlog() {
+        return blog;
+    }
+
+    public void setBlog(Blog blog) {
+        this.blog = blog;
     }
 }

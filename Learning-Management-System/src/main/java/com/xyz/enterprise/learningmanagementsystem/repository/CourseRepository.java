@@ -24,10 +24,22 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
             " inner join category ca on ca.id = s.category_id where ca.name = :categoryName", nativeQuery = true)
     List<Course> findByCategoryName(@Param("categoryName") String categoryName);
 
+    @Query(value = "select * from course c inner join topic t on c.topic_id = t.id inner join subject s on s.id = t.subject_id" +
+            " inner join category ca on ca.id = s.category_id where ca.name = :categoryName", nativeQuery = true)
+    Page<Course> findByCategoryNameByPage(@Param("categoryName") String categoryName, Pageable pageable);
+
     @Query(value = "select * from course c inner join topic t on c.topic_id = t.id inner join subject s " +
             "on s.id = t.subject_id where s.name = :subjectName", nativeQuery = true)
     List<Course> findBySubjectName(@Param("subjectName") String subjectName);
 
+
+    @Query(value = "select * from course c inner join topic t on c.topic_id = t.id inner join subject s " +
+            "on s.id = t.subject_id where s.name = :subjectName", nativeQuery = true)
+    Page<Course> findBySubjectNameByPage(@Param("subjectName") String subjectName, Pageable pageable);
+
     @Query(value = "select * from course c inner join topic t on c.topic_id = t.id where t.name = :topicName", nativeQuery = true)
     List<Course> findByTopic(@Param("topicName") String topicName);
+
+    @Query(value = "select * from course c inner join topic t on c.topic_id = t.id where t.name = :topicName", nativeQuery = true)
+    Page<Course> findByTopicByPage(@Param("topicName") String topicName, Pageable pageable);
 }

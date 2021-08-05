@@ -2,24 +2,23 @@ import '../node_modules/react-modal-video/scss/modal-video.scss';
 import Layout from "../components/Layout";
 import {useEffect, useState} from "react";
 import AuthService from "../auth/auth.service";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import Login from "./login";
 import "../components/styles/register.css"
-import "../components/styles/form-demo.css"
 import 'swiper/swiper.scss';
 
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({Component, pageProps}) {
 
     const router = useRouter();
     let allowed = true;
 
     const [currentUser, setCurrentUser] = useState(undefined);
-    useEffect(() =>{
+    useEffect(() => {
         const user = AuthService.getCurrentUser();
 
         setCurrentUser(user)
-    },[])
+    }, [])
 
     const role = currentUser?.scope;
 
@@ -33,4 +32,7 @@ export default function MyApp({ Component, pageProps }) {
             <ComponentToRender {...pageProps} />
         </Layout>
     )
+
+
+    // && cp -r ../Learning-Management-Frontend/.next/* ../Learning-Management-System/src/main/resources/public
 }

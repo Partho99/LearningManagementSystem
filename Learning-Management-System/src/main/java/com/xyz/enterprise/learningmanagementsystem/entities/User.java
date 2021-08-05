@@ -24,6 +24,10 @@ public class User extends AuditableEntity{
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
+    private List<Blog> blogs;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews;
 
     public Long getId() {
@@ -72,5 +76,13 @@ public class User extends AuditableEntity{
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }

@@ -2,6 +2,7 @@ package com.xyz.enterprise.learningmanagementsystem.service;
 
 import com.xyz.enterprise.learningmanagementsystem.entities.Review;
 import com.xyz.enterprise.learningmanagementsystem.repository.ReviewRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,5 +42,10 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public Optional<Review> findByName(String subjectName) {
         return Optional.empty();
+    }
+
+    @Override
+    public List<Review> findAllByCourse_Id(long id) {
+        return reviewRepository.findByCourseId(id);
     }
 }

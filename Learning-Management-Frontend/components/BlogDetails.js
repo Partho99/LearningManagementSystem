@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NewsDetails = () => {
+const BlogDetails = () => {
     return (
         <section className="blog-details">
             <div className="container">
@@ -223,4 +223,4 @@ const NewsDetails = () => {
     );
 };
 
-export default NewsDetails;
+export default BlogDetails;

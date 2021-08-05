@@ -1,13 +1,11 @@
 import axios from "axios";
+import authHeader from "./auth-header";
 
-const API_URL = "http://localhost:9001/oauth/token";
-const API_URL2 = "http://localhost:8080/api/user/register";
-
- const addReview = (comment, review= 0) => {
-    return axios.post(API_URL2, {
+const addReview = (comment, review = 0, id) => {
+    return axios.post(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/user/api/submit-review/${id}`, {
         comment,
         review,
-    });
+    }, {headers: authHeader()});
 };
 
 export default {addReview};

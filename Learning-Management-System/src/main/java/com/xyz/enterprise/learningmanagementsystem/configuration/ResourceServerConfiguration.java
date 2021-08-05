@@ -23,6 +23,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 
     private static final String[] AUTH_WHITELIST = {
             "/swagger-ui/**",
+            "forward:/swagger-ui/**",
             "/swagger-resources/**",
             "/swagger-ui.html",
             "/v2/api-docs",
@@ -52,6 +53,10 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .and()
                 .authorizeRequests()
                 .antMatchers("/category/api/**")
+                .permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/blog/api/**")
                 .permitAll()
                 .and()
                 .authorizeRequests()
