@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Courses from "../../../components/Courses";
-import {useRouter} from "next/router";
+import Courses from "../../../components/courses/Courses";
 
 const SubjectCoursesPage = () => {
     return <Courses />

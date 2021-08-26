@@ -53,7 +53,7 @@ const Courses = () => {
                                                 <div className="course-one__admin">
                                                     <img src="/assets/images/team-1-1.jpg" alt=""/>
                                                     by <Link
-                                                    href="/teacher-details"><a>{item.user.username}</a></Link>
+                                                    href="/teacher-details"><a>{item.user?.fullName}</a></Link>
                                                 </div>
                                                 <h2 className="course-one__title"><Link
                                                     href={"/courses/[course_details]"} as={`/courses/${item.id}`}><a>{item.name?.substring(0,24) + ' . . .'}</a></Link>
@@ -74,7 +74,7 @@ const Courses = () => {
                                                         Hours</a>
                                                     <a href="/course-details"><i
                                                         className="far fa-folder-open"></i> {item.sections.length} Lectures</a>
-                                                    <a href="/course-details">$18</a>
+                                                    <a href="/course-details">$180</a>
                                                 </div>
                                                 <Link href={"/courses/[course_details]"} as={`/courses/${item.id}`}><a
                                                     href="#"

@@ -1,16 +1,17 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {useRouter} from "next/router";
+import AuthService from "../../auth/auth.service";
+import ReviewService from "../../auth/review.service";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Link from "next/link";
-import ReviewService from "../auth/review.service";
-import {useRouter} from "next/router";
-import AuthService from "../auth/auth.service";
+import {AuthContext} from "../../context/auth.context";
 
-const Reviews = ({id}) => {
+const BlogReviews = ({id}) => {
 
 
     const router = useRouter();
-
+    const {authState} = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const [comment, setComment] = useState("");
     const [review, setReview] = useState(0);
@@ -19,15 +20,12 @@ const Reviews = ({id}) => {
     const [currentUser, setCurrentUser] = useState(undefined);
 
     useEffect(() => {
-        const user = AuthService.getCurrentUser();
-
-        setCurrentUser(user)
     }, [])
 
     useEffect(async () => {
         let controller = new AbortController();
         const reviewData = async () => {
-            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/user/api/reviews-details/${id}`)
+            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/user/api/blog-reviews-details/${id}`)
                 .then(response => response.json())
                 .then(data => setReviewItem(data));
         }
@@ -54,7 +52,7 @@ const Reviews = ({id}) => {
         setMessage("");
         setLoading(true);
 
-        ReviewService.addReview(comment, review, id).then(
+        ReviewService.addBlogReview(comment, review, id).then(
             () => {
                 setComment('');
                 setLoading(false);
@@ -80,35 +78,35 @@ const Reviews = ({id}) => {
                         <div className="course-details__progress-item">
                             <p className="course-details__progress-text">Excellent</p>
                             <div className="course-details__progress-bar">
-                                <span style={{width: `95%`}}></span>
+                                <span style={{width: `95%`}}/>
                             </div>
                             <p className="course-details__progress-count">5</p>
                         </div>
                         <div className="course-details__progress-item">
                             <p className="course-details__progress-text">Very Good</p>
                             <div className="course-details__progress-bar">
-                                <span style={{width: `65%`}}></span>
+                                <span style={{width: `65%`}}/>
                             </div>
                             <p className="course-details__progress-count">2</p>
                         </div>
                         <div className="course-details__progress-item">
                             <p className="course-details__progress-text">Average</p>
                             <div className="course-details__progress-bar">
-                                <span style={{width: `33%`}}></span>
+                                <span style={{width: `33%`}}/>
                             </div>
                             <p className="course-details__progress-count">1</p>
                         </div>
                         <div className="course-details__progress-item">
                             <p className="course-details__progress-text">Poor</p>
                             <div className="course-details__progress-bar">
-                                <span style={{width: `0%`}} className="no-bubble"></span>
+                                <span style={{width: `0%`}} className="no-bubble"/>
                             </div>
                             <p className="course-details__progress-count">0</p>
                         </div>
                         <div className="course-details__progress-item">
                             <p className="course-details__progress-text">Terrible</p>
                             <div className="course-details__progress-bar">
-                                <span style={{width: `0%`}} className="no-bubble"></span>
+                                <span style={{width: `0%`}} className="no-bubble"/>
                             </div>
                             <p className="course-details__progress-count">0</p>
                         </div>
@@ -119,25 +117,25 @@ const Reviews = ({id}) => {
                     <div className="course-details__review-box">
                         <p className="course-details__review-count">4.6</p>
                         <div className="course-details__review-stars">
-                            <i className="fas fa-star"></i>
-                            <i className="fas fa-star"></i>
-                            <i className="fas fa-star"></i>
-                            <i className="fas fa-star"></i>
-                            <i className="fas fa-star-half"></i>
+                            <i className="fas fa-star"/>
+                            <i className="fas fa-star"/>
+                            <i className="fas fa-star"/>
+                            <i className="fas fa-star"/>
+                            <i className="fas fa-star-half"/>
                         </div>
                         <p className="course-details__review-text">30 reviews</p>
                     </div>
                 </div>
             </div>
             <div className="course-details__comment">
-                {reviewItem?.map((r, id) => (
+                {reviewItem && reviewItem?.map((r, id) => (
                     <div className="course-details__comment-single" key={id}>
                         <div className="course-details__comment-top">
                             <div className="course-details__comment-img">
                                 <img src="/assets/images/team-1-1.jpg" alt=""/>
                             </div>
                             <div className="course-details__comment-right">
-                                <h2 className="course-details__comment-name">{r?.username}</h2>
+                                <h2 className="course-details__comment-name">{r?.fullName}</h2>
                                 <div className="course-details__comment-meta">
                                     <p className="course-details__comment-date">{r?.created_time}</p>
                                     <div className="course-details__comment-stars">
@@ -175,7 +173,7 @@ const Reviews = ({id}) => {
                             onChange={onChangeComment}
                             placeholder="comment"
                         />
-                        {currentUser ?
+                        {authState?.user?.fullName ?
                             <button type="submit"
                                     className="thm-btn course-details__comment-form-btn">Leave
                                 a
@@ -190,4 +188,4 @@ const Reviews = ({id}) => {
     );
 };
 
-export default Reviews;
+export default BlogReviews;

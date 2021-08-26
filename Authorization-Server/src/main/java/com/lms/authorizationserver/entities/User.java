@@ -18,8 +18,9 @@ public class User extends AuditableEntity implements UserDetails {
     private static Logger LOGGER = LoggerFactory.getLogger(User.class);
 
     private static final long serialVersionUID = 1L;
+    @Column(unique = true)
     private String email;
-    private String username;
+    private String fullName;
     private String password;
     private boolean enabled;
 
@@ -84,7 +85,7 @@ public class User extends AuditableEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     public String getEmail() {
@@ -93,6 +94,14 @@ public class User extends AuditableEntity implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public void setPassword(String password) {

@@ -1,11 +1,8 @@
 package com.xyz.enterprise.learningmanagementsystem.resources;
 
-import com.xyz.enterprise.learningmanagementsystem.entities.Course;
-import com.xyz.enterprise.learningmanagementsystem.entities.Review;
-import com.xyz.enterprise.learningmanagementsystem.entities.User;
-import com.xyz.enterprise.learningmanagementsystem.entities.UserPrincipal;
+import com.xyz.enterprise.learningmanagementsystem.entities.*;
 import com.xyz.enterprise.learningmanagementsystem.object_mapper.ReviewMapper;
-import com.xyz.enterprise.learningmanagementsystem.object_mapper.dto.CourseReviews;
+import com.xyz.enterprise.learningmanagementsystem.object_mapper.dto.ReviewsDto;
 import com.xyz.enterprise.learningmanagementsystem.service.ReviewService;
 import com.xyz.enterprise.learningmanagementsystem.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -39,20 +36,22 @@ public class UserResource {
 
     @PostMapping("submit-review/{id}")
     @PreAuthorize("hasAnyAuthority('role_admin','role_user','role_instructor')")
-    public Review postReviews(@RequestBody Review review, @PathVariable int id) {
+    public Review courseReviews(@RequestBody Review review, @PathVariable int id) {
 
         User user = new User();
         Course course = new Course();
         UserPrincipal principal = (UserPrincipal) SecurityContextHolder
                 .getContext().getAuthentication()
                 .getPrincipal();
-        if (userService.findByUsername(principal.getUsername()).isEmpty()) {
-            user.setUsername(principal.getUsername());
+
+        if (userService.findByEmail(principal.getEmail()).isEmpty()) {
+            user.setFullName(principal.getFullName());
+            user.setEmail(principal.getEmail());
             user.setEnabled(principal.isEnabled());
             user.setScope(principal.getScope());
             userService.saveUser(user);
-        } else if (userService.findByUsername(principal.getUsername()).get().getUsername().equals(principal.getUsername())) {
-            user.setId(userService.findByUsername(principal.getUsername()).get().getId());
+        } else if (userService.findByEmail(principal.getEmail()).get().getEmail().equals(principal.getEmail())) {
+            user.setId(userService.findByEmail(principal.getEmail()).get().getId());
         }
 
         user.setId(user.getId());
@@ -62,8 +61,40 @@ public class UserResource {
         return reviewService.save(review);
     }
 
-    @GetMapping("reviews-details/{id}")
-    public ResponseEntity<List<CourseReviews>> findByCourseId(@PathVariable int id) {
+    @PostMapping("submit-blog-review/{id}")
+    @PreAuthorize("hasAnyAuthority('role_admin','role_user','role_instructor')")
+    public Review blogReviews(@RequestBody Review review, @PathVariable int id) {
+
+        User user = new User();
+        Blog blog = new Blog();
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder
+                .getContext().getAuthentication()
+                .getPrincipal();
+
+        if (userService.findByEmail(principal.getEmail()).isEmpty()) {
+            user.setFullName(principal.getFullName());
+            user.setEmail(principal.getEmail());
+            user.setEnabled(principal.isEnabled());
+            user.setScope(principal.getScope());
+            userService.saveUser(user);
+        } else if (userService.findByEmail(principal.getEmail()).get().getEmail().equals(principal.getEmail())) {
+            user.setId(userService.findByEmail(principal.getEmail()).get().getId());
+        }
+
+        user.setId(user.getId());
+        blog.setId(id);
+        review.setBlog(blog);
+        review.setUser(user);
+        return reviewService.save(review);
+    }
+
+    @GetMapping("course-reviews-details/{id}")
+    public ResponseEntity<List<ReviewsDto>> findByCourseId(@PathVariable long id) {
         return new ResponseEntity<>(reviewMapper.modelsToDto(reviewService.findAllByCourse_Id(id)), HttpStatus.OK);
+    }
+
+    @GetMapping("blog-reviews-details/{id}")
+    public ResponseEntity<List<ReviewsDto>> findByBlogId(@PathVariable long id) {
+        return new ResponseEntity<>(reviewMapper.modelsToDto(reviewService.findAllByBlog_Id(id)), HttpStatus.OK);
     }
 }

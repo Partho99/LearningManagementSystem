@@ -32,6 +32,7 @@ public class Blog extends AuditableEntity {
     @OneToMany(mappedBy = "blog")
     private List<Tag> tags;
 
+
     public User getUser() {
         return user;
     }

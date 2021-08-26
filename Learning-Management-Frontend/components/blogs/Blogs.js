@@ -45,7 +45,7 @@ const Blogs = () => {
                                         <h2 className="blog-one__title">
                                             <Link href={"/blogs/[blog_details]"} as={`/blogs/${b.id}`}><a>{b.title?.substring(0,12) + ' . . .'}</a></Link>
                                         </h2>
-                                        <p className="blog-one__text">{b.details?.substring(0,88) + ' . . .'}</p>
+                                        <p className="blog-one__text">{b.details?.substring(0,88) + ' ...'}</p>
                                         <Link href={"/blogs/[blog_details]"} as={`/blogs/${b.id}`}><a className="blog-one__link">Read More</a></Link>
                                     </div>
                                 </div>

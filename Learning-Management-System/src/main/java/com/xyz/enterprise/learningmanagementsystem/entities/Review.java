@@ -1,9 +1,11 @@
 package com.xyz.enterprise.learningmanagementsystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
-public class Review extends AuditableEntity{
+public class Review extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +22,7 @@ public class Review extends AuditableEntity{
     @JoinTable(name = "user_review", joinColumns = {@JoinColumn(name = "review_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     private User user;
+
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinTable(name = "blog_review", joinColumns = {@JoinColumn(name = "review_id", referencedColumnName = "id")},

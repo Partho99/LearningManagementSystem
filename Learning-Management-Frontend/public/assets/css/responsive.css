@@ -355,7 +355,7 @@
     padding-right: 0;
   }
 }
-@media (max-width: 425px) {
+@media (max-width: 575px) {
   .header-navigation .container .right-side-box {
     display: none !important;
   }
@@ -732,7 +732,7 @@
     top: 10%;
   }
 }
-@media (max-width: 375px) {
+@media (max-width: 575px) {
   .header__social {
     display: none;
   }
@@ -921,10 +921,7 @@
   }
 
   .course-details__progress-bar {
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 10px 0;
   }
 
   .course-details__tab-content {

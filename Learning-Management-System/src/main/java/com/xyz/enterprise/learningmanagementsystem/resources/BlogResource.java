@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -37,13 +38,13 @@ public class BlogResource {
                 .getAuthentication()
                 .getPrincipal();
 
-        if (userService.findByUsername(principal.getUsername()).isEmpty()) {
-            user.setUsername(principal.getUsername());
+        if (userService.findByEmail(principal.getEmail()).isEmpty()) {
+            user.setEmail(principal.getEmail());
             user.setEnabled(principal.isEnabled());
             user.setScope(principal.getScope());
             userService.saveUser(user);
-        } else if (userService.findByUsername(principal.getUsername()).get().getUsername().equals(principal.getUsername())) {
-            user.setId(userService.findByUsername(principal.getUsername()).get().getId());
+        } else if (userService.findByEmail(principal.getEmail()).get().getEmail().equals(principal.getEmail())) {
+            user.setId(userService.findByEmail(principal.getEmail()).get().getId());
         }
 
         user.setId(user.getId());
@@ -66,5 +67,10 @@ public class BlogResource {
     public Page<Blog> showAllBlogsByPage(@PathVariable("page") int page) {
         Pageable pageable = PageRequest.of(page, 9);
         return blogService.findAll(pageable);
+    }
+
+    @GetMapping("show-one/{id}")
+    public Optional<Blog> showOne(@PathVariable long id) {
+        return blogService.findById(id);
     }
 }

@@ -1,13 +1,13 @@
 import React from 'react';
-import SliderTwo from "../components/SliderTwo";
-import CourseCatTwo from "../components/CourseCatTwo";
-import AboutOne from "../components/AboutOne";
-import CourseTwo from "../components/CourseTwo";
-import TeamOne from "../components/TeamOne";
-import Pricing from "../components/Pricing";
-import MeetingOne from "../components/MeetingOne";
-import CallToActionTwo from "../components/CallToActionTwo";
-import BlogThree from "../components/BlogThree";
+import SliderTwo from "../components/sliders/SliderTwo";
+import CourseCatTwo from "../components/courses/CourseCatTwo";
+import AboutOne from "../components/config/AboutOne";
+import CourseTwo from "../components/courses/CourseTwo";
+import TeamOne from "../components/config/TeamOne";
+import Pricing from "../components/config/Pricing";
+import MeetingOne from "../components/config/MeetingOne";
+import CallToActionTwo from "../components/config/CallToActionTwo";
+import BlogThree from "../components/blogs/BlogThree";
 
 const HomePageTwo = () => {
     return (

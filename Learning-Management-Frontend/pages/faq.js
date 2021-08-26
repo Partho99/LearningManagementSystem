@@ -1,11 +1,11 @@
 import React from 'react';
-import PageHeader from "../components/PageHeader";
-import Faq from "../components/Faq";
+import PageHeader from "../components/header/PageHeader";
+import Faq from "../components/config/Faq";
 
 const FaqPage = () => {
     return (
         <>
-            <PageHeader title="FAQ"/>
+            {/*<PageHeader title="FAQ"/>*/}
             <Faq/>
         </>
     );

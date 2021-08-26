@@ -1,45 +1,23 @@
 import axios from "axios";
+import {useRouter} from "next/router";
 
 const API_URL = "http://localhost:9001/oauth/token";
 const API_URL2 = "http://localhost:9001/api/user/register";
 
-const register = (username, email, password, enabled = true) => {
+const register = (fullName, email, password, enabled = true) => {
     return axios.post(API_URL2, {
-        username,
+        fullName,
         email,
         password,
         enabled
     });
 };
 
-/*
-const login = (username, password) => {
-    axios.get(API_URL + "login", {
-        method: 'GET',
-        body: JSON.stringify({
-            username: username,
-            password: password
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    })
-        .then((response) => {
-            console.log(response)
-            if (response.data.token) {
-                localStorage.setItem("user", JSON.stringify(response.data));
-            }
-
-            return response.data;
-        });
-}
-*/
-
-const login = async (username, password) => {
+const login = async (email, password) => {
     const formData = new FormData();
     const oauthData = {
         grant_type: "password",
-        username: username,
+        username: email,
         password: password
     }
 
@@ -51,7 +29,7 @@ const login = async (username, password) => {
         'Authorization': 'Basic VVNFUl9DTElFTlRfQVBQOnBhc3N3b3Jk',
     });
 
-    await fetch(API_URL, {
+    return await fetch(API_URL, {
         method: 'POST',
         body: formData,
         headers: myHeaders
@@ -60,55 +38,22 @@ const login = async (username, password) => {
             if (response.ok) {
                 return response.json()
             } else {
-                throw new Error("Username or Password is wrong try again.");
+                if (response.status === 401 || 403) {
+                    throw new Error("Email or Password is wrong try again.");
+                } else {
+                    throw new Error("Server Problem");
+                }
             }
         })
         .then(result => {
             if (result.access_token) {
-                localStorage.setItem("user", JSON.stringify(result));
+                return result;
             }
         })
 }
-
-
-/*
-const login = async (username, password) => {
-
-    const formData = new FormData();
-    const oauthData = {
-        grant_type: "password",
-        username: username,
-        password: password
-    }
-
-    for (const name in oauthData) {
-        formData.append(name, oauthData[name]);
-    }
-
-    const myHeaders = new Headers({
-        'Authorization': 'Basic VVNFUl9DTElFTlRfQVBQOnBhc3N3b3Jk',
-    });
-
-    return await axios
-        .post(API_URL, {
-            body: formData,
-            headers: myHeaders
-
-        })
-        .then((response) => {
-            console.log(response)
-            if (response.data.access_token) {
-                localStorage.setItem("user", JSON.stringify(response.data));
-            }
-
-            return response.data;
-        })
-};
-*/
-
 const logout = () => {
     localStorage.removeItem("user");
-    window.location.href = "/login";
+    window.location.href('/')
 };
 
 const getCurrentUser = () => {

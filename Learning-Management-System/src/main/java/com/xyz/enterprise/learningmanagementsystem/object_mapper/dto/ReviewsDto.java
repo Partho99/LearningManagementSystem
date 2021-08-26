@@ -7,11 +7,12 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.Optional;
 
-public class CourseReviews {
+public class ReviewsDto {
     private int id;
     private String comment;
     private String rating;
-    private String username;
+    private String email;
+    private String fullName;
 
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -42,12 +43,21 @@ public class CourseReviews {
         this.rating = rating;
     }
 
-    public String getUsername() {
-        return username;
+
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public Optional<Date> getCreated_time() {

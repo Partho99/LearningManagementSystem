@@ -42,13 +42,14 @@ public class CourseResource {
         Topic topic = new Topic();
         topic.setId(id);
         course.setTopic(topic);
-        if (userService.findByUsername(principal.getUsername()).isEmpty()) {
-            user.setUsername(principal.getUsername());
+
+        if (userService.findByEmail(principal.getEmail()).isEmpty()) {
+            user.setEmail(principal.getEmail());
             user.setEnabled(principal.isEnabled());
             user.setScope(principal.getScope());
             userService.saveUser(user);
-        } else if (userService.findByUsername(principal.getUsername()).get().getUsername().equals(principal.getUsername())) {
-            user.setId(userService.findByUsername(principal.getUsername()).get().getId());
+        } else if (userService.findByEmail(principal.getEmail()).get().getEmail().equals(principal.getEmail())) {
+            user.setId(userService.findByEmail(principal.getEmail()).get().getId());
         }
 
         user.setId(user.getId());

@@ -48,4 +48,9 @@ public class ReviewServiceImpl implements ReviewService{
     public List<Review> findAllByCourse_Id(long id) {
         return reviewRepository.findByCourseId(id);
     }
+
+    @Override
+    public List<Review> findAllByBlog_Id(long blogId) {
+        return reviewRepository.findByBlogId(blogId);
+    }
 }

@@ -1,36 +1,24 @@
+import React, {useContext} from "react";
 import '../node_modules/react-modal-video/scss/modal-video.scss';
-import Layout from "../components/Layout";
-import {useEffect, useState} from "react";
-import AuthService from "../auth/auth.service";
-import {useRouter} from "next/router";
-import Login from "./login";
+import Layout from "../layouts/Layout";
 import "../components/styles/register.css"
 import 'swiper/swiper.scss';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import {AuthProvider} from "../context/auth.provider";
+import {AuthContext} from "../context/auth.context";
+import {useRouter} from "next/router";
 
 
 export default function MyApp({Component, pageProps}) {
 
-    const router = useRouter();
-    let allowed = true;
-
-    const [currentUser, setCurrentUser] = useState(undefined);
-    useEffect(() => {
-        const user = AuthService.getCurrentUser();
-
-        setCurrentUser(user)
-    }, [])
-
-    const role = currentUser?.scope;
-
-    // if( router.pathname.startsWith("/courses") && role !== "role_admin role_user") {
-    //     allowed = false;
-    // }
-
-    const ComponentToRender = allowed ? Component : Login;
     return (
-        <Layout pageTitle={" Online Education Learning & LMS"}>
-            <ComponentToRender {...pageProps} />
-        </Layout>
+
+        <AuthProvider>
+            <Layout pageTitle={" Online Education Learning & LMS"}>
+                <CssBaseline/>
+                <Component {...pageProps} />
+            </Layout>
+        </AuthProvider>
     )
 
 

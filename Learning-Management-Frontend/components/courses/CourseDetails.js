@@ -1,17 +1,13 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Link from "next/link";
 import ModalVideo from "react-modal-video";
-import ReviewService from "../auth/review.service";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import AuthService from "../auth/auth.service";
-import {useRouter} from 'next/router'
-import Reviews from "./Reviews";
+import ReviewService from "../../auth/review.service";
+import AuthService from "../../auth/auth.service";
+import CourseReviews from "../reviews/CourseReviews";
 
-const CourseDetails = ({id}) => {
+const CourseDetails = ({id, name}) => {
 
-    const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     const [course, setCourse] = useState({});
     const [loading, setLoading] = useState(true);
@@ -41,7 +37,7 @@ const CourseDetails = ({id}) => {
             controller?.abort();
         }
 
-    }, [id])
+    }, [id,name])
 
     const openModal = () => {
         setIsOpen(!isOpen);
@@ -66,7 +62,7 @@ const CourseDetails = ({id}) => {
         // form.current.validateAll();
 
         // if (checkBtn.current.context._errors.length === 0) {
-        ReviewService.addReview(comment, review, id).then(
+        ReviewService.addCourseReview(comment, review, id).then(
             () => {
                 setLoading(false);
             }).catch((error) => {
@@ -95,21 +91,20 @@ const CourseDetails = ({id}) => {
                     <div className="row">
                         <div className="col-lg-8">
                             <div className="course-details__content">
-                                <p className="course-details__author">
-                                    <img src="/assets/images/team-1-1.jpg" alt=""/>
-                                    by <a href="#">{course.user?.username}</a>
-                                </p>
-
                                 <div className="course-details__top">
                                     <div className="course-details__top-left">
                                         <h2 className="course-details__title">{course.name?.replace(/-/g, " ")}</h2>
+                                        <p className="course-details__author">
+                                            <img src="/assets/images/team-1-1.jpg" alt=""/>
+                                            by <a href="#">{course.user?.fullName}</a>
+                                        </p>
                                         <div className="course-one__stars">
                                         <span className="course-one__stars-wrap">
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
+                                            <i className="fa fa-star"/>
+                                            <i className="fa fa-star"/>
+                                            <i className="fa fa-star"/>
+                                            <i className="fa fa-star"/>
+                                            <i className="fa fa-star"/>
                                         </span>
                                             <span className="course-one__count">4.8</span>
                                             <span className="course-one__stars-count">250</span>
@@ -125,7 +120,7 @@ const CourseDetails = ({id}) => {
                                 </div>
                                 <div className="course-one__image">
                                     <img src="" alt=""/>
-                                    <i className="far fa-heart"></i>
+                                    <i className="far fa-heart"/>
                                 </div>
 
                                 <ul className="course-details__tab-navs list-unstyled nav nav-tabs" role="tablist">
@@ -168,9 +163,9 @@ const CourseDetails = ({id}) => {
                                                         <li key={id}>
                                                             <div className="course-details__curriculum-list-left">
                                                                 <div className="course-details__meta-icon video-icon">
-                                                                    <i className="fas fa-play"></i>
+                                                                    <i className="fas fa-play"/>
                                                                 </div>
-                                                                <a onClick={() => {
+                                                                <a type="button" onClick={() => {
                                                                     openModal() , setVideoId('_I94-tJlovg')
                                                                 }}>{vid.name}</a>
                                                                 <span>Preview</span>
@@ -184,7 +179,7 @@ const CourseDetails = ({id}) => {
                                                     <li>
                                                         <div className="course-details__curriculum-list-left">
                                                             <div className="course-details__meta-icon quiz-icon">
-                                                                <i className="fas fa-comment"></i>
+                                                                <i className="fas fa-comment"/>
                                                             </div>
                                                             <a href="#">Quiz</a>
                                                         </div>
@@ -199,7 +194,7 @@ const CourseDetails = ({id}) => {
 
                                     </div>
                                     {/*here reviews are added */}
-                                    <Reviews id={id}/>
+                                    <CourseReviews id={id}/>
                                 </div>
                             </div>
                         </div>
@@ -214,37 +209,37 @@ const CourseDetails = ({id}) => {
                             <div className="course-details__meta">
                                 <a href="#" className="course-details__meta-link">
                                 <span className="course-details__meta-icon">
-                                    <i className="far fa-clock"></i>
+                                    <i className="far fa-clock"/>
                                 </span>
                                     Durations: <span>10 hours</span>
                                 </a>
                                 <a href="#" className="course-details__meta-link">
                                 <span className="course-details__meta-icon">
-                                    <i className="far fa-folder-open"></i>
+                                    <i className="far fa-folder-open"/>
                                 </span>
                                     Lectures: <span>6</span>
                                 </a>
                                 <a href="#" className="course-details__meta-link">
                                 <span className="course-details__meta-icon">
-                                    <i className="far fa-user-circle"></i>
+                                    <i className="far fa-user-circle"/>
                                 </span>
                                     Students: <span>Max 4</span>
                                 </a>
                                 <a href="#" className="course-details__meta-link">
                                 <span className="course-details__meta-icon">
-                                    <i className="fas fa-play"></i>
+                                    <i className="fas fa-play"/>
                                 </span>
                                     Video: <span>8 hours</span>
                                 </a>
                                 <a href="#" className="course-details__meta-link">
                                 <span className="course-details__meta-icon">
-                                    <i className="far fa-flag"></i>
+                                    <i className="far fa-flag"/>
                                 </span>
                                     Skill Level: <span>Advanced</span>
                                 </a>
                                 <a href="#" className="course-details__meta-link">
                                 <span className="course-details__meta-icon">
-                                    <i className="far fa-bell"></i>
+                                    <i className="far fa-bell"/>
                                 </span>
                                     Language: <span>English</span>
                                 </a>
@@ -261,11 +256,11 @@ const CourseDetails = ({id}) => {
                                            href="#">by <span>Lydia Byrd</span></a>
                                         <h3><a href="#">Marketing strategies</a></h3>
                                         <div className="course-details__list-stars">
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
                                             <span>4.8</span>
                                         </div>
                                     </div>
@@ -279,11 +274,11 @@ const CourseDetails = ({id}) => {
                                            href="#">by <span>Lydia Byrd</span></a>
                                         <h3><a href="#">Marketing strategies</a></h3>
                                         <div className="course-details__list-stars">
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
                                             <span>4.8</span>
                                         </div>
                                     </div>
@@ -297,11 +292,11 @@ const CourseDetails = ({id}) => {
                                            href="#">by <span>Lydia Byrd</span></a>
                                         <h3><a href="#">Marketing strategies</a></h3>
                                         <div className="course-details__list-stars">
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
-                                            <i className="fas fa-star"></i>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
+                                            <i className="fas fa-star"/>
                                             <span>4.8</span>
                                         </div>
                                     </div>

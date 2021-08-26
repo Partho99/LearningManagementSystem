@@ -19,5 +19,7 @@ spring:
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
       ddl-auto: validate
-
+  profiles:
+    include:
+      - google
 check-user-scopes: true

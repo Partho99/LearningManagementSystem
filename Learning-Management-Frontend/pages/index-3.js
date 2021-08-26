@@ -1,16 +1,16 @@
 import React from 'react';
-import Footer from "../components/Footer";
-import NavThree from "../components/NavThree";
-import SliderOne from "../components/SliderOne";
-import CourseCatThree from "../components/CourseCatThree";
-import CallToActionOne from "../components/CallToActionOne";
-import TeamTab from "../components/TeamTab";
-import CourseThree from "../components/CourseThree";
-import CallToActionSix from "../components/CallToActionSix";
-import TestimonialOne from "../components/TestimonialOne";
-import VideoThree from "../components/VideoThree";
-import BrandsTwo from "../components/BrandsTwo";
-import CallToActionFive from "../components/CallToActionFive";
+import Footer from "../components/footer/Footer";
+import NavThree from "../components/header/NavThree";
+import SliderOne from "../components/sliders/SliderOne";
+import CourseCatThree from "../components/courses/CourseCatThree";
+import CallToActionOne from "../components/config/CallToActionOne";
+import TeamTab from "../components/config/TeamTab";
+import CourseThree from "../components/courses/CourseThree";
+import CallToActionSix from "../components/config/CallToActionSix";
+import TestimonialOne from "../components/config/TestimonialOne";
+import VideoThree from "../components/config/VideoThree";
+import BrandsTwo from "../components/config/BrandsTwo";
+import CallToActionFive from "../components/config/CallToActionFive";
 
 
 const HomePageThree = () => {

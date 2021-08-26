@@ -22,6 +22,8 @@ public class UserResource {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private String noUses;
+
     public UserResource(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -31,7 +33,7 @@ public class UserResource {
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> registeringUser(@RequestBody User user) {
 
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -40,7 +42,7 @@ public class UserResource {
         System.out.println(role);
         List<Role> uRole = new ArrayList<>();
         for (Role userRole : role) {
-            if (userRole.getName().equalsIgnoreCase("role_instructor")) {
+            if (userRole.getName().equalsIgnoreCase("role_user")) {
                 uRole.add(userRole);
             }
         }

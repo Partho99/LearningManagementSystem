@@ -18,4 +18,6 @@ public interface ReviewService {
     Optional<Review> findByName(String subjectName);
 
     List<Review> findAllByCourse_Id(long id);
+
+    List<Review> findAllByBlog_Id(long blogId);
 }

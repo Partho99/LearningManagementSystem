@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserPrincipal implements Serializable {
 
-    private String username;
+    private String fullName;
     private String email;
     public String scope;
     public boolean enabled;
@@ -12,18 +12,18 @@ public class UserPrincipal implements Serializable {
     public UserPrincipal() {
     }
 
-    public UserPrincipal(String username, String email, String scope) {
-        this.username = username;
+    public UserPrincipal(String fullName, String email, String scope) {
+        this.fullName = fullName;
         this.email = email;
         this.scope = scope;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {

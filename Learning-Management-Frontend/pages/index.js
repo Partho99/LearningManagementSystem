@@ -1,14 +1,15 @@
-import SliderOne from "../components/SliderOne";
-import AboutTwo from "../components/AboutTwo";
-import CourseOne from "../components/CourseOne";
-import VideoTwo from "../components/VideoTwo";
-import CountdownKipso from "../components/CountdownKipso";
-import CourseCatOne from "../components/CourseCatOne";
-import CallToActionThree from "../components/CallToActionThree";
-import BrandsTwo from "../components/BrandsTwo";
-import BlogTwo from "../components/BlogTwo";
-import CallToActionFour from "../components/CallToActionFour";
-import SubscribeOne from "../components/SubscribeOne";
+import SliderOne from "../components/sliders/SliderOne";
+import AboutTwo from "../components/config/AboutTwo";
+import CourseOne from "../components/courses/CourseOne";
+import VideoTwo from "../components/config/VideoTwo";
+import CountdownKipso from "../components/config/CountdownKipso";
+import CourseCatOne from "../components/courses/CourseCatOne";
+import CallToActionThree from "../components/config/CallToActionThree";
+import BrandsTwo from "../components/config/BrandsTwo";
+import BlogTwo from "../components/blogs/BlogTwo";
+import CallToActionFour from "../components/config/CallToActionFour";
+import SubscribeOne from "../components/config/SubscribeOne";
+
 
 
 const HomePage = () => {

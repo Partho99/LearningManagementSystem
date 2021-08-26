@@ -6,14 +6,14 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class User extends AuditableEntity{
+public class User extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String fullName;
     @Column(unique = true)
-    private String username;
+    private String email;
     private String scope;
     private boolean enabled;
     private String imageUrl;
@@ -38,12 +38,20 @@ public class User extends AuditableEntity{
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getScope() {

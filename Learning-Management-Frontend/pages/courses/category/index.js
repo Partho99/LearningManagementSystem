@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Courses from "../../../components/Courses";
+import Courses from "../../../components/courses/Courses";
 
 const CategoryCoursesPage = () => {
     return <Courses />

@@ -1,7 +1,7 @@
 import React from 'react';
-import PageHeader from "../components/PageHeader";
-import BecomeTeacher from "../components/BecomeTeacher";
-import TeamOne from "../components/TeamOne";
+import PageHeader from "../components/header/PageHeader";
+import BecomeTeacher from "../components/config/BecomeTeacher";
+import TeamOne from "../components/config/TeamOne";
 
 
 const GalleryPage = () => {

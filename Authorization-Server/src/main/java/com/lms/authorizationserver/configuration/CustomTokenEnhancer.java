@@ -23,7 +23,7 @@ public class CustomTokenEnhancer extends JwtAccessTokenConverter {
         info.put("last_modified_date", user.getLastModifiedDate());
         info.put("created_date", user.getCreatedDate());
         info.put("image_url", user.getImageUrl());
-        info.put("username", user.getUsername());
+        info.put("fullName", user.getFullName());
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());

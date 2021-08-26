@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String email);
 
     @Query(value = "select * from user where scope = '[role_instructor]'", nativeQuery = true)
     List<User> findAllInstructor();

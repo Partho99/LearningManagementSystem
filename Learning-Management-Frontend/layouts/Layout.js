@@ -1,8 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
-import TopBar from "./TopBar";
-import NavOne from "./NavOne";
-import Footer from "./Footer";
+import TopBar from "../components/header/TopBar";
+import NavOne from "../components/header/NavOne";
+import Footer from "../components/footer/Footer";
 
 const Layout = (props) => {
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoryCourses from "../../../components/CategoryCourses";
+import CategoryCourses from "../../../components/courses/CategoryCourses";
 
 const Slug = () => {
     return <CategoryCourses />

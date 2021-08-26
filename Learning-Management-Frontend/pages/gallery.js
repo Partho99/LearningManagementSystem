@@ -1,6 +1,6 @@
 import React from 'react';
-import PageHeader from "../components/PageHeader";
-import Gallery from "../components/Gallery";
+import PageHeader from "../components/header/PageHeader";
+import Gallery from "../components/config/Gallery";
 
 const GalleryPage = () => {
     return (
