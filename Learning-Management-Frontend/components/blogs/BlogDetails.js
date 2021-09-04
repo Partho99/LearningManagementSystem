@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import CircularProgress from "@material-ui/core/CircularProgress";
-import BlogReviews from "../reviews/BlogReviews";
+import dynamic from "next/dynamic";
+
+const BlogReviews = dynamic(() => import('../reviews/BlogReviews').then(), {
+    ssr: false, loading: () =>
+            <div className='text-center'>
+                <CircularProgress size={40}/>
+        </div>
+});
 
 const BlogDetails = ({id}) => {
     const [loading, setLoading] = useState(true);
@@ -9,6 +16,7 @@ const BlogDetails = ({id}) => {
     useEffect(() => {
         let controller = new AbortController();
         const blogDetails = async () => {
+            setLoading(true)
             await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/blog/api/show-one/${id}`)
                 .then(response => response.json())
                 .then(data => setBlog(data))
@@ -25,9 +33,13 @@ const BlogDetails = ({id}) => {
 
     return (
         <section className="blog-details">
-            {loading ? <div className={"text-center"}>
-                    <CircularProgress size={100} disableShrink/>
-                </div> :
+            {loading ?
+                <div className='spinner_area'>
+                    <div className={"text-center"}>
+                        <CircularProgress size={100} disableShrink/>
+                    </div>
+                </div>
+                :
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-8">
@@ -39,11 +51,12 @@ const BlogDetails = ({id}) => {
                                 <div className="blog-one__content text-center">
                                     <div className="blog-one__meta">
                                         <a data-toggle="tooltip" data-placement="top" title="" href="#"
-                                           data-original-title="Posted On Jan 19"><i className="fa fa-calendar-alt"></i></a>
+                                           data-original-title="Posted On Jan 19"><i
+                                            className="fa fa-calendar-alt"/></a>
                                         <a data-toggle="tooltip" data-placement="top" title="" href="#"
-                                           data-original-title="No Comments"><i className="fa fa-comments"></i></a>
+                                           data-original-title="No Comments"><i className="fa fa-comments"/></a>
                                         <a data-toggle="tooltip" data-placement="top" title="" href="#"
-                                           data-original-title="Posted By Admin"><i className="fa fa-user"></i></a>
+                                           data-original-title="Posted By Admin"><i className="fa fa-user"/></a>
                                     </div>
                                     <h2 className="blog-one__title">{blog?.title}</h2>
                                     <p className="blog-one__text">{blog?.details}</p>
@@ -56,10 +69,10 @@ const BlogDetails = ({id}) => {
                                     </p>
                                 </div>
                                 <div className="social-block">
-                                    <a href="#"><i className="fab fa-twitter"></i></a>
-                                    <a href="#"><i className="fab fa-facebook-f"></i></a>
-                                    <a href="#"><i className="fab fa-instagram"></i></a>
-                                    <a href="#"><i className="fab fa-dribbble"></i></a>
+                                    <a href="#"><i className="fab fa-twitter"/></a>
+                                    <a href="#"><i className="fab fa-facebook-f"/></a>
+                                    <a href="#"><i className="fab fa-instagram"/></a>
+                                    <a href="#"><i className="fab fa-dribbble"/></a>
                                 </div>
                             </div>
                             <div className="blog-details__author">
@@ -83,7 +96,7 @@ const BlogDetails = ({id}) => {
                                 <div className="sidebar__single sidebar__search">
                                     <form action="#" className="sidebar__search-form">
                                         <input type="text" name="search" placeholder="Search here..."/>
-                                        <button type="submit"><i className="fa fa-search"></i></button>
+                                        <button type="submit"><i className="fa fa-search"/></button>
                                     </form>
                                 </div>
                                 <div className="sidebar__single sidebar__post">

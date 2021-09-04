@@ -40,6 +40,14 @@ public abstract class AuditableEntity implements Serializable {
     @Column(name = "ACTIVE_STATUS")
     protected Boolean activeStatus;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Optional<Date> getCreatedDate() {
         return Optional.ofNullable(createdDate);
     }

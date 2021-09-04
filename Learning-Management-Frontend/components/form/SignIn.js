@@ -1,9 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+import Link from "next/link";
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
@@ -12,8 +12,9 @@ import {useFormik} from "formik";
 import AuthService from "../../auth/auth.service";
 import dynamic from "next/dynamic";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import {useRouter} from "next/router";
 import {AuthContext} from "../../context/auth.context";
+import GoogleLogin from "react-google-login";
+import FacebookLogin from "react-facebook-login";
 
 const Avatar = dynamic(() => import('@material-ui/core/Avatar').then(), {ssr: false});
 
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1),
     },
     submit: {
-        margin: theme.spacing(3, 0, 10),
+        margin: theme.spacing(3, 0, 2),
     },
 }));
 
@@ -66,12 +67,13 @@ const validate = values => {
 
 const SignIn = () => {
 
-    const {authState, authDispatch} = useContext(AuthContext)
+    const gCid = '154270847541-vqipt4jg0v9umma7qj1ivaoj0nvi1cdt.apps.googleusercontent.com'
+
+    const {authDispatch} = useContext(AuthContext)
     const classes = useStyles();
-    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-    const [currentUser, setCurrentUser] = useState(undefined);
+
     const formik = useFormik({
         initialValues: initialValues,
         onSubmit: values => {
@@ -81,7 +83,6 @@ const SignIn = () => {
                     authDispatch({
                         type: 'SIGN_IN_SUCCESS', currentUser: response
                     })
-                    router.push('/').then(r => r)
                     setLoading(false)
                 }).catch((error) => {
                     const resMessage =
@@ -98,13 +99,95 @@ const SignIn = () => {
         validate: validate
     });
 
-    useEffect(() => {
-        authState?.isAuthenticated ? router.back() : router.push('/login')
-    }, [authState])
+    const responseGoogle = (r) => {
+        const password = r?.tokenId.slice(0, 10);
+        setLoading(true)
+        AuthService.registerGoogle(r.profileObj.name, r.profileObj.email, password, r.profileObj.imageUrl).then(
+            (response) => {
+                setLoading(true)
+                AuthService.login(r.profileObj.email, password).then(
+                    (response) => {
+                        authDispatch({
+                            type: 'SIGN_IN_SUCCESS', currentUser: response
+                        })
+                        setLoading(false)
+                    }).catch((error) => {
+                        const resMessage =
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                        setLoading(false);
+                        setMessage(resMessage);
+                    }
+                )
+            },
 
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                if (resMessage === 'Request failed with status code 400') {
+                    setMessage("User Already Exist!");
+                }
+                setLoading(false)
+            }
+        );
+    }
+
+    const componentClicked = (e) => {
+        console.log(e);
+    }
+    const responseFacebook = (e) => {
+        const password = e?.accessToken?.slice(0, 10);
+        // console.log(e?.email)
+        // console.log(e?.accessToken)
+        // console.log(e?.picture?.data?.url)
+        // console.log(e?.name)
+        setLoading(true)
+        AuthService.registerFacebook(e?.name, e?.email, password, e?.picture?.data?.url).then(
+            (response) => {
+                // setLoading(true)
+                AuthService.login(e?.email, password).then(
+                    (response) => {
+                        authDispatch({
+                            type: 'SIGN_IN_SUCCESS', currentUser: response
+                        })
+                        setLoading(false)
+                    }).catch((error) => {
+                        const resMessage =
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString();
+                        setLoading(false);
+                        setMessage(resMessage);
+                    }
+                )
+            },
+
+            (error) => {
+                const resMessage =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                if (resMessage === 'Request failed with status code 400') {
+                    setMessage("User Already Exist!");
+                }
+                setLoading(false)
+            }
+        );
+    };
     return (
         <>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" className='mb-4'>
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon/>
@@ -119,6 +202,33 @@ const SignIn = () => {
                             </div>
                         </div>
                     )}
+                    <div className='ml-4'>
+                        <GoogleLogin
+                            className='google-login'
+                            clientId={gCid}
+                            buttonText="LOGIN WITH GOOGLE"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            autoLoad={false}
+                        />
+                        <FacebookLogin
+                            buttonStyle={{
+                                width: '90%',
+                                marginTop: 10,
+                                paddingTop: 10,
+                                paddingBottom: 10,
+                                marginLeft: 6,
+                                fontWeight:100
+                            }}
+                            appId="430352225065391"
+                            // autoLoad={true}
+                            fields="name,email,picture"
+                            onClick={componentClicked}
+                            callback={responseFacebook}
+                            icon="fa-facebook"
+                        />
+                    </div>
+
                     <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>
 
                         <TextField
@@ -131,10 +241,11 @@ const SignIn = () => {
                             name="email"
                             value={formik.values.email}
                             onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             autoComplete="email"
-                            autoFocus
+                            // autoFocus
                         />
-                        {formik.errors.email ?
+                        {formik.touched.email && formik.errors.email ?
                             <div className="text-danger">{formik.errors.email}</div> : null}
 
                         <TextField
@@ -145,12 +256,13 @@ const SignIn = () => {
                             name="password"
                             value={formik.values.password}
                             onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
                             label="Password"
                             type="password"
                             id="password"
                             autoComplete="current-password"
                         />
-                        {formik.errors.password ?
+                        {formik.touched.password && formik.errors.password ?
                             <div className="text-danger">{formik.errors.password}</div> : null}
 
                         <FormControlLabel
@@ -165,27 +277,26 @@ const SignIn = () => {
                             className={classes.submit}
                         >
                             {loading ?
-                                <h1 className="spinner-border spinner-border-sm text-center"/>
+                                <span className="spinner-border spinner-border-sm text-center mb-1 mt-1"/>
                                 :
                                 <span>Sign In</span>
                             }
                         </Button>
-                        <Grid container>
+                        <Grid container className='mb-5'>
                             <Grid item xs>
-                                <Link href="" variant="body2">
+                                <Link href="#" variant="body2">
+                                    Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="">
-                                    <a>
-                                    </a>
+                                <Link href="/sign-up" variant="body2">
+                                    {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
                         </Grid>
                     </form>
                 </div>
             </Container>
-
         </>
     );
 }

@@ -34,60 +34,6 @@ public class UserResource {
         return userService.findAllInstructor();
     }
 
-    @PostMapping("submit-review/{id}")
-    @PreAuthorize("hasAnyAuthority('role_admin','role_user','role_instructor')")
-    public Review courseReviews(@RequestBody Review review, @PathVariable int id) {
-
-        User user = new User();
-        Course course = new Course();
-        UserPrincipal principal = (UserPrincipal) SecurityContextHolder
-                .getContext().getAuthentication()
-                .getPrincipal();
-
-        if (userService.findByEmail(principal.getEmail()).isEmpty()) {
-            user.setFullName(principal.getFullName());
-            user.setEmail(principal.getEmail());
-            user.setEnabled(principal.isEnabled());
-            user.setScope(principal.getScope());
-            userService.saveUser(user);
-        } else if (userService.findByEmail(principal.getEmail()).get().getEmail().equals(principal.getEmail())) {
-            user.setId(userService.findByEmail(principal.getEmail()).get().getId());
-        }
-
-        user.setId(user.getId());
-        course.setId(id);
-        review.setCourse(course);
-        review.setUser(user);
-        return reviewService.save(review);
-    }
-
-    @PostMapping("submit-blog-review/{id}")
-    @PreAuthorize("hasAnyAuthority('role_admin','role_user','role_instructor')")
-    public Review blogReviews(@RequestBody Review review, @PathVariable int id) {
-
-        User user = new User();
-        Blog blog = new Blog();
-        UserPrincipal principal = (UserPrincipal) SecurityContextHolder
-                .getContext().getAuthentication()
-                .getPrincipal();
-
-        if (userService.findByEmail(principal.getEmail()).isEmpty()) {
-            user.setFullName(principal.getFullName());
-            user.setEmail(principal.getEmail());
-            user.setEnabled(principal.isEnabled());
-            user.setScope(principal.getScope());
-            userService.saveUser(user);
-        } else if (userService.findByEmail(principal.getEmail()).get().getEmail().equals(principal.getEmail())) {
-            user.setId(userService.findByEmail(principal.getEmail()).get().getId());
-        }
-
-        user.setId(user.getId());
-        blog.setId(id);
-        review.setBlog(blog);
-        review.setUser(user);
-        return reviewService.save(review);
-    }
-
     @GetMapping("course-reviews-details/{id}")
     public ResponseEntity<List<ReviewsDto>> findByCourseId(@PathVariable long id) {
         return new ResponseEntity<>(reviewMapper.modelsToDto(reviewService.findAllByCourse_Id(id)), HttpStatus.OK);

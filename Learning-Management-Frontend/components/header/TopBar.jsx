@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Link from "next/link";
-import AuthService from "../../auth/auth.service";
 import {Button} from "@material-ui/core";
 import {AuthContext} from "../../context/auth.context";
+import {useRouter} from "next/router";
 
 const TopBar = () => {
 
+    const router = useRouter();
     const [open, setOpen] = React.useState(false);
     const {authState, authDispatch} = useContext(AuthContext);
     useEffect(() => {
@@ -21,6 +22,21 @@ const TopBar = () => {
     const handleClose = () => {
         setOpen(false);
     };
+    console.log(authState?.user?.image_url)
+
+    function onLogout() {
+        let cookies = document.cookie.split(";");
+
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i];
+            let eqPos = cookie.indexOf("=");
+            let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        }
+        authDispatch({type: 'SIGN_OUT', currentUser: undefined})
+        router.reload();
+    }
+
     return (
         <div className="topbar-one">
             <div className="container">
@@ -31,27 +47,24 @@ const TopBar = () => {
                 <div className="topbar-one__right">
 
                     {authState?.isAuthenticated ? <div className="dropdown text-white">
-
                             <div className='same_line'>
                                 <img
-                                    src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                    src={authState?.user?.image_url}
                                     className=" bg-light rounded-circle" id="dropdownMenuButton"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                     style={{width: '35px', height: '35px'}}
                                 />
                                 &nbsp;
-                                &nbsp;
                                 <p className='text-white font-weight-bold pt-2'>
-                                    Hello,&nbsp; {capitalizeFirstLetter(authState?.user?.fullName).substr(0, authState?.user?.fullName.indexOf(' '))}
+                                    Welcome,&nbsp;{capitalizeFirstLetter(authState?.user?.fullName).substr(0, authState?.user?.fullName.indexOf(' '))}
                                 </p>
-                                
                                 <div className="dropdown-menu custom_dropdown font-weight-bold"
                                      aria-labelledby="dropdownMenuButton">
                                     <Link href={"/user/[id]/[username]"}
                                           as={`/user/${123456}/${authState?.user?.fullName.replace(/ /g, "-").toLowerCase()}`}><a
                                         className="dropdown-item">
                                         <img
-                                            src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                            src={authState?.user?.image_url}
                                             className=" bg-light rounded-circle" id="dropdownMenuButton"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                             style={{width: '45px', height: '45px'}}
@@ -65,7 +78,7 @@ const TopBar = () => {
                                     <Link href="/teachers"><a className="dropdown-item">Stories</a></Link>
                                     <Link href="/teachers"><a className="dropdown-item">Become a member</a></Link>
                                     <Link href="/teachers"><a className="dropdown-item">Settings</a></Link>
-                                    <a onClick={() => authDispatch({type: 'SIGN_OUT', currentUser: undefined})}
+                                    <a onClick={onLogout}
                                        className="dropdown-item" type="button">Logout</a>
                                 </div>
                             </div>

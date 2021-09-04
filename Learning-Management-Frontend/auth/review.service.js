@@ -1,17 +1,17 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const addCourseReview = (comment, review = 0, id) => {
-    return axios.post(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/user/api/submit-review/${id}`, {
+const addCourseReview = (comment, rating = 0, id) => {
+    return axios.post(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/submit-course-review/${id}`, {
         comment,
-        review,
+        rating,
     }, {headers: authHeader()});
 };
 
-const addBlogReview = (comment, review = 0, id) => {
-    return axios.post(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/user/api/submit-blog-review/${id}`, {
+const addBlogReview = (comment, rating = 0, id) => {
+    return axios.post(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/blog/api/submit-blog-review/${id}`, {
         comment,
-        review,
+        rating,
     }, {headers: authHeader()});
 };
 

@@ -1,7 +1,5 @@
 package com.xyz.enterprise.learningmanagementsystem.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +9,7 @@ public class Review extends AuditableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String comment;
-    private double rating;
+    private int rating;
 
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinTable(name = "course_review", joinColumns = {@JoinColumn(name = "review_id", referencedColumnName = "id")},
@@ -45,11 +43,11 @@ public class Review extends AuditableEntity {
         this.comment = comment;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

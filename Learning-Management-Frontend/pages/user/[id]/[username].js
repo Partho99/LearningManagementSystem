@@ -28,7 +28,7 @@ const UserDetails = () => {
                                 <div className="account-settings">
                                     <div className="user-profile">
                                         <div className="user-avatar">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                            <img src={authState?.user?.image_url}
                                                  alt="Maxwell Admin"/>
                                         </div>
                                         <h5 className="user-name">{authState?.user?.fullName}</h5>

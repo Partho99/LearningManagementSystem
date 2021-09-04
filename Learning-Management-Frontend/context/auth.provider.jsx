@@ -6,7 +6,8 @@ const isBrowser = typeof window !== 'undefined';
 const INITIAL_STATE = {
     isAuthenticated: isBrowser && !!localStorage.getItem('user'),
     currentForm: 'signIn',
-    user: {}
+    user: {},
+    check_purchase: {purchase_status: false}
 };
 
 function reducer(state, action) {
@@ -25,7 +26,7 @@ function reducer(state, action) {
                 user: localStorage.removeItem("user"),
                 isAuthenticated: false,
             };
-        case 'SIGNUP':
+        case 'SIGNUP_SUCCESSFUL':
             return {
                 ...state,
                 currentForm: 'signUp',
@@ -35,12 +36,17 @@ function reducer(state, action) {
                 ...state,
                 currentForm: 'forgotPass',
             };
+        case 'PURCHASED_COURSE':
+            return {
+                ...state,
+                check_purchase: action.checkStatus,
+            };
         default:
             return state;
     }
 }
 
-export const AuthProvider = ({children}) => {
+export const AuthenticationProvider = ({children}) => {
     const [authState, authDispatch] = useReducer(reducer, INITIAL_STATE,
         () => {
             const userData = isBrowser ? window.localStorage.getItem('user') : null;

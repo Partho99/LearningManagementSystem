@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import AuthService from "../../auth/auth.service"
 import {useFormik} from "formik";
-import {useRouter} from "next/router";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -48,6 +47,9 @@ const validate = values => {
 
     if (!values.fullName) {
         errors.fullName = 'Full Name is required'
+    } else if (/^\s+$/.test(values.fullName)) {
+        // errors.fullName = 'Only Space not allowed'
+        errors.fullName = 'Full name must not be blank'
     }
 
     if (!values.password) {
@@ -56,6 +58,9 @@ const validate = values => {
 
     if (values.password != values.confirm_password) {
         errors.confirm_password = 'Password not match'
+    } else if (/^\s+$/.test(values.password)) {
+        // errors.fullName = 'Only Space not allowed'
+        errors.password = 'Only space not allowed!'
     }
 
     if (!values.email) {
@@ -69,11 +74,9 @@ const validate = values => {
 const Registration = () => {
 
     const classes = useStyles();
-    const router = useRouter();
-    const {authState} = useContext(AuthContext)
+    const {authDispatch} = useContext(AuthContext)
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-    const [currentUser, setCurrentUser] = useState(undefined);
     const [successful, setSuccessful] = useState(false);
 
     const formik = useFormik({
@@ -83,11 +86,24 @@ const Registration = () => {
             AuthService.register(values.fullName, values.email, values.password).then(
                 (response) => {
                     setMessage("your account is successfully created");
-                    setTimeout(function () {
-                        setLoading(false)
-                        setSuccessful(true);
-                        router.push("/login").then(r => r)
-                    }, 2000);
+                    setLoading(true)
+                    AuthService.login(values.email, values.password).then(
+                        (response) => {
+                            authDispatch({
+                                type: 'SIGN_IN_SUCCESS', currentUser: response
+                            })
+                            setLoading(false)
+                        }).catch((error) => {
+                            const resMessage =
+                                (error.response &&
+                                    error.response.data &&
+                                    error.response.data.message) ||
+                                error.message ||
+                                error.toString();
+                            setLoading(false);
+                            setMessage(resMessage);
+                        }
+                    )
                 },
 
                 (error) => {
@@ -108,119 +124,105 @@ const Registration = () => {
         validate: validate
     });
 
-    useEffect(() => {
-        authState?.isAuthenticated ? router.back() : router.push('/sign-up')
-    }, [authState])
-
-
-
     return (
-        <>
-            {authState?.isAuthenticated ? window.location.href = "/" :
-                <Container component="main" maxWidth="xs">
-                    <div className={classes.paper}>
-                        <Avatar className={classes.avatar}>
-                            <PermIdentityIcon/>
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Sign Up
-                        </Typography>
-                        {message && (
-                            <div className="form-group">
-                                <div className="text-danger" role="alert">
-                                    {message}
-                                </div>
-                            </div>
-                        )}
-                        <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>
+        <Container component="main" maxWidth="xs">
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <PermIdentityIcon/>
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Sign Up
+                </Typography>
+                {message && (
+                    <div className="form-group">
+                        <div className="text-danger" role="alert">
+                            {message}
+                        </div>
+                    </div>
+                )}
+                <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>
 
-                            <TextField
-                                variant="outlined"
-                                margin="normal"
-                                fullWidth
-                                id="fullName"
-                                label="Full Name *"
-                                name="fullName"
-                                value={formik.values.fullName}
-                                onChange={formik.handleChange}
-                                autoComplete="fullName"
-                                autoFocus
-                            />
-                            {formik.errors.fullName ?
-                                <div className="text-danger">{formik.errors.fullName}</div> : null}
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="fullName"
+                        label="Full Name *"
+                        name="fullName"
+                        {...formik.getFieldProps('fullName')}
+                        autoComplete="fullName"
+                        // autoFocus
+                    />
+                    {formik.touched.fullName && formik.errors.fullName ?
+                        <div className="text-danger">{formik.errors.fullName}</div> : null}
 
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        {...formik.getFieldProps('email')}
+                        autoComplete="email"
+                    />
+                    {formik.touched.email && formik.errors.email ?
+                        <div className="text-danger">{formik.errors.email}</div> : null}
+
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                value={formik.values.email}
-                                onChange={formik.handleChange}
-                                autoComplete="email"
+                                name="password"
+                                {...formik.getFieldProps('password')}
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
                             />
-                            {formik.errors.email ?
-                                <div className="text-danger">{formik.errors.email}</div> : null}
-
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        name="password"
-                                        value={formik.values.password}
-                                        onChange={formik.handleChange}
-                                        label="Password"
-                                        type="password"
-                                        id="password"
-                                        autoComplete="current-password"
-                                    />
-                                    {formik.errors.password ?
-                                        <div className="text-danger">{formik.errors.password}</div> : null}
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        variant="outlined"
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        name="confirm_password"
-                                        value={formik.values.confirm_password}
-                                        onChange={formik.handleChange}
-                                        label="Confirm Password"
-                                        type="password"
-                                        id="confirm_password"
-                                        autoComplete="current-password"
-                                    />
-                                    {formik.errors.confirm_password ?
-                                        <div className="text-danger">{formik.errors.confirm_password}</div> : null}
-                                </Grid>
-
-                            </Grid>
-
-
-                            <Button
-                                type="submit"
+                            {formik.touched.password && formik.errors.password ?
+                                <div className="text-danger">{formik.errors.password}</div> : null}
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
                                 fullWidth
-                                variant="contained"
-                                color="primary"
-                                className={classes.submit}
-                            >
-                                {loading ?
-                                    <span className="spinner-border spinner-border-sm text-center"/>
-                                    :
-                                    <span>Sign Up</span>
-                                }
-                            </Button>
-                        </form>
-                    </div>
-                </Container>
-            }
-        </>
+                                name="confirm_password"
+                                {...formik.getFieldProps('confirm_password')}
+                                label="Confirm Password"
+                                type="password"
+                                id="confirm_password"
+                                autoComplete="current-password"
+                            />
+                            {formik.touched.confirm_password && formik.errors.confirm_password ?
+                                <div className="text-danger">{formik.errors.confirm_password}</div> : null}
+                        </Grid>
+
+                    </Grid>
+
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        {loading ?
+                            <span className="spinner-border spinner-border-sm text-center mb-1 mt-1"/>
+                            :
+                            <span>Sign Up</span>
+                        }
+                    </Button>
+                </form>
+            </div>
+        </Container>
     );
 };
 

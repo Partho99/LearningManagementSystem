@@ -14,7 +14,7 @@ public class AuditorAwareBean implements AuditorAware<String> {
         UserPrincipal principal = (UserPrincipal) SecurityContextHolder
                 .getContext().getAuthentication()
                 .getPrincipal();
-        String user = principal != null ? principal.getEmail() : "System";
+        String user = principal != null ? principal.getFullName() : "System";
         return Optional.ofNullable(user);
     }
 }

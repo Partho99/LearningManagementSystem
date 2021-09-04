@@ -1,8 +1,9 @@
 import axios from "axios";
-import {useRouter} from "next/router";
 
 const API_URL = "http://localhost:9001/oauth/token";
 const API_URL2 = "http://localhost:9001/api/user/register";
+const API_URL3 = "http://localhost:9001/api/user/register-google-user";
+const API_URL4 = "http://localhost:9001/api/user/register-facebook-user";
 
 const register = (fullName, email, password, enabled = true) => {
     return axios.post(API_URL2, {
@@ -12,6 +13,28 @@ const register = (fullName, email, password, enabled = true) => {
         enabled
     });
 };
+
+const registerGoogle = (fullName, email, password,imageUrl, enabled = true) => {
+    return axios.post(API_URL3, {
+        fullName,
+        email,
+        password,
+        imageUrl,
+        enabled
+    });
+};
+
+const registerFacebook = (fullName, email, password,imageUrl, enabled = true) => {
+    return axios.post(API_URL4, {
+        fullName,
+        email,
+        password,
+        imageUrl,
+        enabled
+    });
+};
+
+
 
 const login = async (email, password) => {
     const formData = new FormData();
@@ -62,6 +85,8 @@ const getCurrentUser = () => {
 
 export default {
     register,
+    registerGoogle,
+    registerFacebook,
     login,
     logout,
     getCurrentUser,

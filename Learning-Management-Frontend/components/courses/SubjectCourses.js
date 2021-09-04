@@ -31,9 +31,13 @@ const SubjectCourses = () => {
 
     return (
         <section className="course-one course-page">
-            {loading ? <div className={"text-center"}>
-                    <CircularProgress size={100} disableShrink/>
-                </div> :
+            {loading ?
+                <div className='spinner_area'>
+                    <div className={"text-center"}>
+                        <CircularProgress size={100} disableShrink/>
+                    </div>
+                </div>
+                :
                 <div className="container">
                     <div className="row">
                         {courses.content?.map(item => (
@@ -60,14 +64,22 @@ const SubjectCourses = () => {
                                         </h2>
                                         <div className="course-one__stars">
                                     <span className="course-one__stars-wrap">
-                                        <i className="fa fa-star"/>
-                                        <i className="fa fa-star"/>
-                                        <i className="fa fa-star"/>
-                                        <i className="fa fa-star"/>
-                                        <i className="fa fa-star"/>
+                                        {Array(Math.floor((item?.rating_details?.rating_sum / item?.rating_details?.total_user)))
+                                            .fill()
+                                            .map((_, i) => (
+                                                <>
+                                                    <i className="fa fa-star"/>
+                                                </>
+                                            ))
+                                        }
+                                        {(item?.rating_details?.rating_sum /
+                                            item?.rating_details?.total_user).toFixed(1) % 1 ? <i
+                                            className="fa fa-star-half"/> : null}
                                     </span>
-                                            <span className="course-one__count">4.8</span>
-                                            <span className="course-one__stars-count">250</span>
+                                            <span
+                                                className="course-one__count">{(item?.rating_details?.rating_sum / item?.rating_details?.total_user).toFixed(1)}</span>
+                                            <span
+                                                className="course-one__stars-count">{item?.rating_details?.total_user}</span>
                                         </div>
                                         <div className="course-one__meta">
                                             <a href="/course-details"><i className="far fa-clock"/> 10 Hours</a>

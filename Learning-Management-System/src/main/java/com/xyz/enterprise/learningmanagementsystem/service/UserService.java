@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface UserService {
 
-    public Optional<User> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-    public User saveUser(User user);
+    User saveUser(User user);
 
     List<User> findAllInstructor();
 }

@@ -1,6 +1,7 @@
 package com.xyz.enterprise.learningmanagementsystem.repository;
 
 import com.xyz.enterprise.learningmanagementsystem.entities.Course;
+import com.xyz.enterprise.learningmanagementsystem.object_mapper.dto.RatingDetailsDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,8 +1,8 @@
 package com.xyz.enterprise.learningmanagementsystem.service;
 
 import com.xyz.enterprise.learningmanagementsystem.entities.Review;
+import com.xyz.enterprise.learningmanagementsystem.object_mapper.dto.RatingDetailsDto;
 import com.xyz.enterprise.learningmanagementsystem.repository.ReviewRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,11 +46,21 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public List<Review> findAllByCourse_Id(long id) {
-        return reviewRepository.findByCourseId(id);
+        return reviewRepository.findByCourseIdOrderByCreatedDateDesc(id);
     }
 
     @Override
     public List<Review> findAllByBlog_Id(long blogId) {
-        return reviewRepository.findByBlogId(blogId);
+        return reviewRepository.findByBlogIdOrderByCreatedDateDesc(blogId);
+    }
+
+    @Override
+    public RatingDetailsDto findByBlogIdAndRatingSum(long blogId) {
+        return reviewRepository.findByBlogIdAndRatingSum(blogId);
+    }
+
+    @Override
+    public Optional<RatingDetailsDto> findByCourseIdAndRatingSum(long courseId) {
+        return reviewRepository.findByCourseIdAndRatingSum(courseId);
     }
 }

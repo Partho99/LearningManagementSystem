@@ -87,8 +87,8 @@ const CreateBlog = () => {
     const handleChangeImage = event => {
         setImageData(URL.createObjectURL(event.target.files[0]))
     }
-    console.log(val)
-    console.log(imageData)
+    // console.log(val)
+    // console.log(imageData)
 
 
     const formik = useFormik({});

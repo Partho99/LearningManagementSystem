@@ -1,26 +1,23 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Link from "next/link";
 import ReviewService from "../../auth/review.service";
-import {useRouter} from "next/router";
-import AuthService from "../../auth/auth.service";
 import {AuthContext} from "../../context/auth.context";
 
 const CourseReviews = ({id}) => {
 
-
-    const router = useRouter();
     const {authState} = useContext(AuthContext);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [comment, setComment] = useState("");
-    const [review, setReview] = useState(0);
+    const [rating, setRating] = useState(0);
     const [reviewItem, setReviewItem] = useState([]);
     const [message, setMessage] = useState('');
-    const [currentUser, setCurrentUser] = useState(undefined);
     const [width, setWidth] = useState(0);
+    const [courseReview, setCourseReview] = useState({})
 
-    useEffect(() => {}, [])
+    useEffect(() => {
+    }, [])
 
     useEffect(async () => {
         let controller = new AbortController();
@@ -29,7 +26,16 @@ const CourseReviews = ({id}) => {
                 .then(response => response.json())
                 .then(data => setReviewItem(data));
         }
+
+        const reviewDetails = async () => {
+            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-course-rating-details/${id}`)
+                .then(response => response.json())
+                .then(data => setCourseReview(data));
+        }
+
         reviewData().then(r => r);
+        reviewDetails().then(r => r);
+
 
         return () => {
             controller?.abort();
@@ -38,37 +44,44 @@ const CourseReviews = ({id}) => {
 
     const onChangeComment = (e) => {
         const comment = e.target.value;
-        setWidth(e.target.value.length);
         setComment(comment);
     };
 
-    const onChangeReview = (e) => {
-        const review = e.target.value;
-        setReview(review);
+    const onChangeRating = (e, v) => {
+        e.preventDefault();
+        setRating(v);
     };
 
-    const handleLogin = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        setMessage("");
-        setLoading(true);
+        if (/^\s+$/.test(comment)) {
+            setMessage('Please enter a valid comment!')
+        } else if (rating === 0) {
+            setMessage('Please rate this course!')
+        } else {
 
-        ReviewService.addCourseReview(comment, review, id).then(
-            () => {
-                setComment('');
-                setLoading(false);
-            }).catch((error) => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+            setMessage("");
+            setLoading(true);
 
-                setLoading(false);
-                setMessage(resMessage);
-            }
-        )
+            ReviewService.addCourseReview(comment, rating, id).then(
+                () => {
+                    setComment('');
+                    setLoading(false);
+                    setRating(0);
+                }).catch((error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+
+                    setLoading(false);
+                    setMessage(resMessage);
+                }
+            )
+        }
     };
 
     return (
@@ -116,7 +129,7 @@ const CourseReviews = ({id}) => {
                 <div
                     className="col-xl-5 justify-content-xl-end justify-content-sm-center d-flex">
                     <div className="course-details__review-box">
-                        <p className="course-details__review-count">4.6</p>
+                        <p className="course-details__review-count">{(courseReview?.rating_sum / courseReview?.total_user).toFixed(1)}</p>
                         <div className="course-details__review-stars">
                             <i className="fas fa-star"/>
                             <i className="fas fa-star"/>
@@ -124,7 +137,7 @@ const CourseReviews = ({id}) => {
                             <i className="fas fa-star"/>
                             <i className="fas fa-star-half"/>
                         </div>
-                        <p className="course-details__review-text">30 reviews</p>
+                        <p className="course-details__review-text">{courseReview?.total_user} Reviews</p>
                     </div>
                 </div>
             </div>
@@ -140,11 +153,12 @@ const CourseReviews = ({id}) => {
                                 <div className="course-details__comment-meta">
                                     <p className="course-details__comment-date">{r?.created_time}</p>
                                     <div className="course-details__comment-stars">
-                                        <i className="fa fa-star"/>
-                                        <i className="fa fa-star"/>
-                                        <i className="fa fa-star"/>
-                                        <i className="fa fa-star"/>
-                                        <i className="fa fa-star star-disabled"/>
+                                        {Array(Math.round(r?.rating))
+                                            .fill()
+                                            .map((_, i) => (
+                                                <i className="fa fa-star"/>
+                                            ))
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -154,15 +168,15 @@ const CourseReviews = ({id}) => {
                 ))}
             </div>
 
-            <Form onSubmit={handleLogin} className="course-details__comment-form">
+            <Form onSubmit={handleSubmit} className="course-details__comment-form">
                 <h2 className="course-details__title">Add a
                     review</h2>
                 <p className="course-details__comment-form-text">Rate this Course?
-                    <a href="#" className="fas fa-star"/>
-                    <a href="#" className="fas fa-star"/>
-                    <a href="#" className="fas fa-star"/>
-                    <a href="#" className="fas fa-star"/>
-                    <a href="#" className="fas fa-star"/>
+                    <a href='' onClick={(e) => onChangeRating(e, 1)} className="fas fa-star"/>
+                    <a href='' onClick={(e) => onChangeRating(e, 2)} className="fas fa-star"/>
+                    <a href='' onClick={(e) => onChangeRating(e, 3)} className="fas fa-star"/>
+                    <a href='' onClick={(e) => onChangeRating(e, 4)} className="fas fa-star"/>
+                    <a href='' onClick={(e) => onChangeRating(e, 5)} className="fas fa-star"/>
                 </p>
                 <div className="row">
                     <div className="col-lg-12">
@@ -173,13 +187,19 @@ const CourseReviews = ({id}) => {
                             value={comment}
                             onChange={onChangeComment}
                             placeholder="comment"
+                            required
                         />
-                        {authState?.user?.fullName ?
-                            <button type="submit"
-                                    className="thm-btn course-details__comment-form-btn">Leave
-                                a
-                                Review
-                            </button> : <Link href={'/login'}>You have to login first</Link>
+                        <p className='text-primary font-weight-bold'>{message}</p>
+                        {authState.isAuthenticated ?
+                            <button type="submit" className="thm-btn-course course-details__comment-form-btn">
+                                {loading ?
+                                    <span className="ml-5 mr-5 text-primary spinner-border text-center"/>
+                                    :
+                                    <span>Leave a Review</span>
+                                }
+                            </button>
+                            :
+                            <Link href={'/login'}>You have to login first</Link>
                         }
                     </div>
                 </div>

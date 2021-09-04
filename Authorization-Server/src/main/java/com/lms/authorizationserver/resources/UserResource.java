@@ -51,6 +51,80 @@ public class UserResource {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/register-google-user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> registeringGoogleUser(@RequestBody User user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            user.setId(userRepository.findByEmail(user.getEmail()).getId());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setFullName(user.getFullName());
+            user.setImageUrl(user.getImageUrl());
+            user.setActiveStatus(true);
+            List<Role> role = roleRepository.findAll();
+            System.out.println(role);
+            List<Role> uRole = new ArrayList<>();
+            for (Role userRole : role) {
+                if (userRole.getName().equalsIgnoreCase("role_user")) {
+                    uRole.add(userRole);
+                }
+            }
+            user.setRoles(uRole);
+            User savedUser = userRepository.save(user);
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setFullName(user.getFullName());
+        user.setImageUrl(user.getImageUrl());
+        user.setActiveStatus(true);
+        List<Role> role = roleRepository.findAll();
+        System.out.println(role);
+        List<Role> uRole = new ArrayList<>();
+        for (Role userRole : role) {
+            if (userRole.getName().equalsIgnoreCase("role_user")) {
+                uRole.add(userRole);
+            }
+        }
+        user.setRoles(uRole);
+        User savedUser = userRepository.save(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/register-facebook-user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> registeringFacebookUser(@RequestBody User user) {
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            user.setId(userRepository.findByEmail(user.getEmail()).getId());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setFullName(user.getFullName());
+            user.setImageUrl(user.getImageUrl());
+            user.setActiveStatus(true);
+            List<Role> role = roleRepository.findAll();
+            System.out.println(role);
+            List<Role> uRole = new ArrayList<>();
+            for (Role userRole : role) {
+                if (userRole.getName().equalsIgnoreCase("role_user")) {
+                    uRole.add(userRole);
+                }
+            }
+            user.setRoles(uRole);
+            User savedUser = userRepository.save(user);
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setFullName(user.getFullName());
+        user.setImageUrl(user.getImageUrl());
+        user.setActiveStatus(true);
+        List<Role> role = roleRepository.findAll();
+        System.out.println(role);
+        List<Role> uRole = new ArrayList<>();
+        for (Role userRole : role) {
+            if (userRole.getName().equalsIgnoreCase("role_user")) {
+                uRole.add(userRole);
+            }
+        }
+        user.setRoles(uRole);
+        User savedUser = userRepository.save(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
     @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updatingUser(@RequestBody User user) {
         User principal = (User) SecurityContextHolder

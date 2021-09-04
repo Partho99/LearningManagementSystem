@@ -30,7 +30,7 @@ const Teachers = () => {
                                         <img src="/assets/images/team-1-1.jpg" alt=""/>
                                     </div>
                                     <div className="team-one__content">
-                                        <h2 className="team-one__name"><Link href="/teacher-details"><a>{i.username}</a></Link>
+                                        <h2 className="team-one__name"><Link href="/teacher-details"><a>{i.fullName}</a></Link>
                                         </h2>
                                         <p className="team-one__designation">{i.scope.replace(/[\[\]']+/g, '').replace(/role_/g, '')}</p>
                                         <p className="team-one__text">There are many varia of passages of lorem.</p>

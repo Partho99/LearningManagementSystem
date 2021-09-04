@@ -1,26 +1,20 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {useRouter} from "next/router";
-import AuthService from "../../auth/auth.service";
 import ReviewService from "../../auth/review.service";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Link from "next/link";
 import {AuthContext} from "../../context/auth.context";
 
+
 const BlogReviews = ({id}) => {
 
-
-    const router = useRouter();
     const {authState} = useContext(AuthContext);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [comment, setComment] = useState("");
-    const [review, setReview] = useState(0);
+    const [rating, setRating] = useState(0);
     const [reviewItem, setReviewItem] = useState([]);
     const [message, setMessage] = useState('');
-    const [currentUser, setCurrentUser] = useState(undefined);
-
-    useEffect(() => {
-    }, [])
+    const [blogReview, setBlogReview] = useState({})
 
     useEffect(async () => {
         let controller = new AbortController();
@@ -29,7 +23,14 @@ const BlogReviews = ({id}) => {
                 .then(response => response.json())
                 .then(data => setReviewItem(data));
         }
+
+        const reviewDetails = async () => {
+            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/blog/api/show-blog-rating-details/${id}`)
+                .then(response => response.json())
+                .then(data => setBlogReview(data));
+        }
         reviewData().then(r => r);
+        reviewDetails().then(r => r);
 
         return () => {
             controller?.abort();
@@ -41,33 +42,41 @@ const BlogReviews = ({id}) => {
         setComment(comment);
     };
 
-    const onChangeReview = (e) => {
-        const review = e.target.value;
-        setReview(review);
+    const onChangeRating = (e, v) => {
+        e.preventDefault();
+        setRating(v);
     };
 
-    const handleLogin = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        setMessage("");
-        setLoading(true);
+        if (/^\s+$/.test(comment)) {
+            setMessage('Only space not allowed!')
+        } else if (rating === 0) {
+            setMessage('Please rate this article')
+        } else {
 
-        ReviewService.addBlogReview(comment, review, id).then(
-            () => {
-                setComment('');
-                setLoading(false);
-            }).catch((error) => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+            setMessage("");
+            setLoading(true);
 
-                setLoading(false);
-                setMessage(resMessage);
-            }
-        )
+            ReviewService.addBlogReview(comment, rating, id).then(
+                () => {
+                    setComment('');
+                    setLoading(false);
+                    setRating(0);
+                }).catch((error) => {
+                    const resMessage =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+
+                    setLoading(false);
+                    setMessage(resMessage);
+                }
+            )
+        }
     };
 
     return (
@@ -83,39 +92,32 @@ const BlogReviews = ({id}) => {
                             <p className="course-details__progress-count">5</p>
                         </div>
                         <div className="course-details__progress-item">
-                            <p className="course-details__progress-text">Very Good</p>
+                            <p className="course-details__progress-text">Good</p>
                             <div className="course-details__progress-bar">
-                                <span style={{width: `65%`}}/>
+                                <span style={{width: `75%`}}/>
                             </div>
-                            <p className="course-details__progress-count">2</p>
+                            <p className="course-details__progress-count">4</p>
                         </div>
                         <div className="course-details__progress-item">
                             <p className="course-details__progress-text">Average</p>
                             <div className="course-details__progress-bar">
-                                <span style={{width: `33%`}}/>
+                                <span style={{width: `53%`}}/>
                             </div>
-                            <p className="course-details__progress-count">1</p>
+                            <p className="course-details__progress-count">3</p>
                         </div>
                         <div className="course-details__progress-item">
                             <p className="course-details__progress-text">Poor</p>
                             <div className="course-details__progress-bar">
                                 <span style={{width: `0%`}} className="no-bubble"/>
                             </div>
-                            <p className="course-details__progress-count">0</p>
-                        </div>
-                        <div className="course-details__progress-item">
-                            <p className="course-details__progress-text">Terrible</p>
-                            <div className="course-details__progress-bar">
-                                <span style={{width: `0%`}} className="no-bubble"/>
-                            </div>
-                            <p className="course-details__progress-count">0</p>
+                            <p className="course-details__progress-count">1</p>
                         </div>
                     </div>
                 </div>
                 <div
                     className="col-xl-5 justify-content-xl-end justify-content-sm-center d-flex">
                     <div className="course-details__review-box">
-                        <p className="course-details__review-count">4.6</p>
+                        <p className="course-details__review-count">{(blogReview?.rating_sum / blogReview.total_user).toFixed(1)}</p>
                         <div className="course-details__review-stars">
                             <i className="fas fa-star"/>
                             <i className="fas fa-star"/>
@@ -123,10 +125,47 @@ const BlogReviews = ({id}) => {
                             <i className="fas fa-star"/>
                             <i className="fas fa-star-half"/>
                         </div>
-                        <p className="course-details__review-text">30 reviews</p>
+                        <p className="course-details__review-text">{blogReview?.total_user} Reviews</p>
                     </div>
                 </div>
             </div>
+            <Form onSubmit={handleSubmit} className="course-details__comment-form">
+                <h2 className="course-details__title">Add a
+                    review</h2>
+                <p className="course-details__comment-form-text">Rate this Course?
+                    <a href='' onClick={(e) => onChangeRating(e, 1)} className="fas fa-star"/>
+                    <a href='' onClick={(e) => onChangeRating(e, 2)} className="fas fa-star"/>
+                    <a href='' onClick={(e) => onChangeRating(e, 3)} className="fas fa-star"/>
+                    <a href='' onClick={(e) => onChangeRating(e, 4)} className="fas fa-star"/>
+                    <a href='' onClick={(e) => onChangeRating(e, 5)} className="fas fa-star"/>
+                </p>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <Input
+                            type="text"
+                            className="form__input"
+                            name="comment"
+                            value={comment}
+                            onChange={onChangeComment}
+                            placeholder="comment"
+                            required
+                        />
+                        <p className='text-primary font-weight-bold'>{message}</p>
+                        {authState.isAuthenticated ?
+
+                            <button type="submit" className="thm-btn course-details__comment-form-btn">
+                                {loading ?
+                                    <span className="ml-5 mr-5 text-primary spinner-border text-center"/>
+                                    :
+                                    <span>Leave a Review</span>
+                                }
+                            </button>
+                            :
+                            <Link href={'/login'}>You have to login first</Link>
+                        }
+                    </div>
+                </div>
+            </Form>
             <div className="course-details__comment">
                 {reviewItem && reviewItem?.map((r, id) => (
                     <div className="course-details__comment-single" key={id}>
@@ -139,11 +178,12 @@ const BlogReviews = ({id}) => {
                                 <div className="course-details__comment-meta">
                                     <p className="course-details__comment-date">{r?.created_time}</p>
                                     <div className="course-details__comment-stars">
-                                        <i className="fa fa-star"></i>
-                                        <i className="fa fa-star"></i>
-                                        <i className="fa fa-star"></i>
-                                        <i className="fa fa-star"></i>
-                                        <i className="fa fa-star star-disabled"></i>
+                                        {Array(Math.round(r?.rating))
+                                            .fill()
+                                            .map((_, i) => (
+                                                <i className="fa fa-star"/>
+                                            ))
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -153,36 +193,6 @@ const BlogReviews = ({id}) => {
                 ))}
             </div>
 
-            <Form onSubmit={handleLogin} className="course-details__comment-form">
-                <h2 className="course-details__title">Add a
-                    review</h2>
-                <p className="course-details__comment-form-text">Rate this Course?
-                    <a href="#" className="fas fa-star"></a>
-                    <a href="#" className="fas fa-star"></a>
-                    <a href="#" className="fas fa-star"></a>
-                    <a href="#" className="fas fa-star"></a>
-                    <a href="#" className="fas fa-star"></a>
-                </p>
-                <div className="row">
-                    <div className="col-lg-12">
-                        <Input
-                            type="text"
-                            className="form__input"
-                            name="comment"
-                            value={comment}
-                            onChange={onChangeComment}
-                            placeholder="comment"
-                        />
-                        {authState?.user?.fullName ?
-                            <button type="submit"
-                                    className="thm-btn course-details__comment-form-btn">Leave
-                                a
-                                Review
-                            </button> : <Link href={'/login'}>You have to login first</Link>
-                        }
-                    </div>
-                </div>
-            </Form>
 
         </div>
     );

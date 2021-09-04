@@ -10,7 +10,7 @@ import java.util.Optional;
 public class ReviewsDto {
     private int id;
     private String comment;
-    private String rating;
+    private int rating;
     private String email;
     private String fullName;
 
@@ -35,14 +35,13 @@ public class ReviewsDto {
         this.comment = comment;
     }
 
-    public String getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
-
 
     public String getEmail() {
         return email;

@@ -37,13 +37,13 @@
 .kipso-icon-manager:before {
   content: "\e914";
 }
-.kipso-icon-web-programming:before {
+.kipso-icon-development:before {
   content: "\e900";
 }
 .kipso-icon-training:before {
   content: "\e901";
 }
-.kipso-icon-targeting:before {
+.kipso-icon-marketing:before {
   content: "\e902";
 }
 .kipso-icon-strategy:before {
@@ -82,7 +82,7 @@
 .kipso-icon-email:before {
   content: "\e90b";
 }
-.kipso-icon-desktop:before {
+.kipso-icon-itsoftware:before {
   content: "\e90c";
 }
 .kipso-icon-camera:before {

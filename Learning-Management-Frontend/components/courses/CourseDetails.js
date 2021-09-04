@@ -1,13 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import CircularProgress from "@material-ui/core/CircularProgress";
+import authHeader from "../../auth/auth-header"
 import Link from "next/link";
 import ModalVideo from "react-modal-video";
 import ReviewService from "../../auth/review.service";
-import AuthService from "../../auth/auth.service";
+import CourseService from "../../auth/course.service";
 import CourseReviews from "../reviews/CourseReviews";
+import {AuthContext} from "../../context/auth.context";
 
 const CourseDetails = ({id, name}) => {
 
+    const {authState, authDispatch} = useContext(AuthContext);
     const [isOpen, setIsOpen] = useState(false);
     const [course, setCourse] = useState({});
     const [loading, setLoading] = useState(true);
@@ -15,13 +18,8 @@ const CourseDetails = ({id, name}) => {
     const [comment, setComment] = useState("");
     const [review, setReview] = useState(0);
     const [message, setMessage] = useState('');
-    const [currentUser, setCurrentUser] = useState(undefined);
+    const [isPurchased, setIsPurchased] = useState(authState?.check_purchase);
 
-
-    useEffect(() => {
-        const user = AuthService.getCurrentUser();
-        setCurrentUser(user)
-    }, [])
 
     useEffect(() => {
         let controller = new AbortController();
@@ -32,12 +30,24 @@ const CourseDetails = ({id, name}) => {
             setLoading(false);
         }
 
+        const checkPurchaseStatus = async () => {
+            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/check-course-purchase-status/${id}`,
+                {
+                    method: 'GET',
+                    headers: authHeader()
+                })
+                .then(response => response.json())
+                .then(data => setIsPurchased(data))
+            setLoading(false);
+        }
+
         courseDetails().then(r => r);
+        checkPurchaseStatus().then(r => r)
         return () => {
             controller?.abort();
         }
 
-    }, [id,name])
+    }, [id, name])
 
     const openModal = () => {
         setIsOpen(!isOpen);
@@ -82,6 +92,27 @@ const CourseDetails = ({id, name}) => {
         // }
     };
 
+    function purchaseCourse(id) {
+        CourseService.purchaseCourse(id).then(response => {
+            authDispatch({
+                type: 'PURCHASED_COURSE', checkStatus: response
+            })
+            setIsPurchased(authState?.check_purchase)
+            setLoading(false);
+        }).catch(error => {
+            const resMessage =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            setLoading(false);
+            setMessage(resMessage);
+        });
+    }
+
+    console.log('CHECK COURSE PURCHASE DETAILS : ', isPurchased)
     return (
         <section className="course-details">
             {loading ? <div className={"text-center"}>
@@ -165,10 +196,17 @@ const CourseDetails = ({id, name}) => {
                                                                 <div className="course-details__meta-icon video-icon">
                                                                     <i className="fas fa-play"/>
                                                                 </div>
-                                                                <a type="button" onClick={() => {
-                                                                    openModal() , setVideoId('_I94-tJlovg')
-                                                                }}>{vid.name}</a>
-                                                                <span>Preview</span>
+                                                                {isPurchased?.purchase_status ?
+                                                                    <a type="button" onClick={() => {
+                                                                        openModal() , setVideoId('_I94-tJlovg')
+                                                                    }}>
+                                                                        {vid.name}
+                                                                    </a> :
+                                                                    <a>{vid.name}</a>
+
+                                                                }
+
+                                                                <span>Play</span>
                                                             </div>
                                                             <div className="course-details__curriculum-list-right">16
                                                                 minutes
@@ -200,10 +238,21 @@ const CourseDetails = ({id, name}) => {
                         </div>
                         <div className="col-lg-4">
                             <div className="course-details__price">
-                                <p className="course-details__price-text">Course
-                                    price </p>
-                                <p className="course-details__price-amount">$18.00</p>
-                                <a href="#" className="thm-btn course-details__price-btn">Buy This Course</a>
+                                {!isPurchased?.purchase_status ?
+                                    <>
+                                        <p className="course-details__price-text">Course price </p>
+                                        <a href="#" className="thm-btn course-details__price-btn"
+                                           onClick={() => purchaseCourse(id)}>Enroll Now</a>
+                                    </>
+                                    :
+                                    <>
+                                        {/*<p className="course-details__price-amount">$18.00</p>*/}
+
+                                        <p className="thm-btn course-details__price-btn">Enrolled</p>
+                                    </>
+
+                                }
+
                             </div>
 
                             <div className="course-details__meta">
