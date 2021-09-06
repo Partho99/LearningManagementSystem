@@ -8,14 +8,16 @@ public class UserPrincipal implements Serializable {
     private String email;
     public String scope;
     public boolean enabled;
+    public String imageUrl;
 
     public UserPrincipal() {
     }
 
-    public UserPrincipal(String fullName, String email, String scope) {
+    public UserPrincipal(String fullName, String email, String scope, String imageUrl) {
         this.fullName = fullName;
         this.email = email;
         this.scope = scope;
+        this.imageUrl = imageUrl;
     }
 
     public String getFullName() {
@@ -48,5 +50,13 @@ public class UserPrincipal implements Serializable {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

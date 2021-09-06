@@ -47,13 +47,14 @@ const BlogReviews = ({id}) => {
         setRating(v);
     };
 
+    console.log(reviewItem)
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (/^\s+$/.test(comment)) {
-            setMessage('Only space not allowed!')
+            setMessage('Please enter a valid comment 🙏')
         } else if (rating === 0) {
-            setMessage('Please rate this article')
+            setMessage('Your rating is precious for us 🙏')
         } else {
 
             setMessage("");
@@ -129,6 +130,32 @@ const BlogReviews = ({id}) => {
                     </div>
                 </div>
             </div>
+            <div className="course-details__comment">
+                {reviewItem && reviewItem?.map((r, id) => (
+                    <div className="course-details__comment-single" key={id}>
+                        <div className="course-details__comment-top">
+                            <div className="course-details__comment-img">
+                                <img src={r?.imageUrl} alt="image"/>
+                            </div>
+                            <div className="course-details__comment-right">
+                                <h2 className="course-details__comment-name">{r?.fullName}</h2>
+                                <div className="course-details__comment-meta">
+                                    <p className="course-details__comment-date">{r?.created_time}</p>
+                                    <div className="course-details__comment-stars">
+                                        {Array(Math.round(r?.rating))
+                                            .fill()
+                                            .map((_, i) => (
+                                                <i className="fa fa-star"/>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p className="course-details__comment-text">{r.comment}</p>
+                    </div>
+                ))}
+            </div>
             <Form onSubmit={handleSubmit} className="course-details__comment-form">
                 <h2 className="course-details__title">Add a
                     review</h2>
@@ -161,38 +188,11 @@ const BlogReviews = ({id}) => {
                                 }
                             </button>
                             :
-                            <Link href={'/login'}>You have to login first</Link>
+                            <Link href={'/login'}>You need to login first to comment this blog 💍 </Link>
                         }
                     </div>
                 </div>
             </Form>
-            <div className="course-details__comment">
-                {reviewItem && reviewItem?.map((r, id) => (
-                    <div className="course-details__comment-single" key={id}>
-                        <div className="course-details__comment-top">
-                            <div className="course-details__comment-img">
-                                <img src="/assets/images/team-1-1.jpg" alt=""/>
-                            </div>
-                            <div className="course-details__comment-right">
-                                <h2 className="course-details__comment-name">{r?.fullName}</h2>
-                                <div className="course-details__comment-meta">
-                                    <p className="course-details__comment-date">{r?.created_time}</p>
-                                    <div className="course-details__comment-stars">
-                                        {Array(Math.round(r?.rating))
-                                            .fill()
-                                            .map((_, i) => (
-                                                <i className="fa fa-star"/>
-                                            ))
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p className="course-details__comment-text">{r.comment}</p>
-                    </div>
-                ))}
-            </div>
-
 
         </div>
     );

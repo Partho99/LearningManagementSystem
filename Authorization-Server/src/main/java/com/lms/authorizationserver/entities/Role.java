@@ -33,7 +33,13 @@ public class Role extends AuditableEntity {
     @Override
     public String toString() {
         return "Role{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", createdDate=" + createdDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastModifiedBy='" + lastModifiedBy + '\'' +
+                ", lastModifiedDate=" + lastModifiedDate +
+                ", activeStatus=" + activeStatus +
+                ", name='" + name + '\'' +
                 ", permissions=" + permissions +
                 '}';
     }

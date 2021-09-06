@@ -14,26 +14,21 @@ const register = (fullName, email, password, enabled = true) => {
     });
 };
 
-const registerGoogle = (fullName, email, password,imageUrl, enabled = true) => {
+const registerGoogle = (idTokenString) => {
     return axios.post(API_URL3, {
-        fullName,
-        email,
-        password,
-        imageUrl,
-        enabled
+        idTokenString
     });
 };
 
-const registerFacebook = (fullName, email, password,imageUrl, enabled = true) => {
+const registerFacebook = (fullName, email, password, imageUrl, accessToken) => {
     return axios.post(API_URL4, {
         fullName,
         email,
         password,
         imageUrl,
-        enabled
+        accessToken
     });
 };
-
 
 
 const login = async (email, password) => {

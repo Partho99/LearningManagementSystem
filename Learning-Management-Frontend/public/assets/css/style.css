@@ -7336,7 +7336,7 @@ html {
 
 .google-login {
     width: 90%;
-    margin-top: 30px;
+    margin-top: 10px;
     /*padding-top: 10px;*/
     padding-bottom: 0px;
     padding-left: 35px !important;
@@ -7344,12 +7344,13 @@ html {
     height: 50px;
     text-align: center;
     font-size: large !important;
+    outline: none !important;
 }
 
 @media (max-width: 575px) {
     .google-login {
         width: 90%;
-        margin-top: 30px;
+        margin-top: 10px;
         /*padding-top: 10px;*/
         padding-bottom: 0px;
         margin-left: 6px;
@@ -7357,6 +7358,7 @@ html {
         text-align: center;
         padding-left: 15px !important;
         font-size: medium !important;
+        outline: none !important;
     }
 
 }

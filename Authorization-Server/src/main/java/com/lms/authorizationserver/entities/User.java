@@ -68,10 +68,10 @@ public class User extends AuditableEntity implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 
-        roles.forEach(r -> {
-            authorities.add(new SimpleGrantedAuthority(r.getName()));
-            r.getPermissions().forEach(p -> {
-                authorities.add(new SimpleGrantedAuthority(p.getName()));
+        roles.forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+            role.getPermissions().forEach(permission -> {
+                authorities.add(new SimpleGrantedAuthority(permission.getName()));
             });
         });
 
@@ -118,5 +118,27 @@ public class User extends AuditableEntity implements UserDetails {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", createdDate=" + createdDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", lastModifiedBy='" + lastModifiedBy + '\'' +
+                ", lastModifiedDate=" + lastModifiedDate +
+                ", activeStatus=" + activeStatus +
+                ", email='" + email + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", accountNonLocked=" + accountNonLocked +
+                ", accountNonExpired=" + accountNonExpired +
+                ", credentialsNonExpired=" + credentialsNonExpired +
+                ", roles=" + roles +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }

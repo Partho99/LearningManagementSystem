@@ -16,6 +16,7 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
 
     private final String SCOPE = "scope";
     private final String FULLNAME = "fullName";
+    private final String IMAGEURL = "image_url";
 
     private Collection<? extends GrantedAuthority> defaultAuthorities;
 
@@ -39,7 +40,8 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(USERNAME))
             return new UsernamePasswordAuthenticationToken(
-                    new UserPrincipal(map.get(FULLNAME).toString(), map.get(USERNAME).toString(), map.get(SCOPE).toString()), "N/A",
+                    new UserPrincipal(map.get(FULLNAME).toString(), map.get(USERNAME).toString(), map.get(SCOPE).toString(),
+                            map.get(IMAGEURL) != null ? map.get(IMAGEURL).toString() : "xyz"), "N/A",
                     getAuthorities(map));
         return null;
     }

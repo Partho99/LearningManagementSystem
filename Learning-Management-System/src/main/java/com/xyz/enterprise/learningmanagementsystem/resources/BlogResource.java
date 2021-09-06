@@ -48,6 +48,7 @@ public class BlogResource {
             user.setEmail(principal.getEmail());
             user.setEnabled(principal.isEnabled());
             user.setScope(principal.getScope());
+            user.setImageUrl(user.getImageUrl());
             userService.saveUser(user);
         } else if (userService.findByEmail(principal.getEmail()).get().getEmail().equals(principal.getEmail())) {
             user.setId(userService.findByEmail(principal.getEmail()).get().getId());
@@ -95,6 +96,7 @@ public class BlogResource {
             user.setEmail(principal.getEmail());
             user.setEnabled(principal.isEnabled());
             user.setScope(principal.getScope());
+            user.setImageUrl(principal.getImageUrl());
             userService.saveUser(user);
         } else if (userService.findByEmail(principal.getEmail()).get().getEmail().equals(principal.getEmail())) {
             user.setId(userService.findByEmail(principal.getEmail()).get().getId());

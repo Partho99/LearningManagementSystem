@@ -23,7 +23,6 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-security'
 	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.3.3.RELEASE'
 
-	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-jose
 	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.3.3.RELEASE'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
@@ -32,6 +31,8 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.0'
 	implementation group: 'dnsjava', name: 'dnsjava', version: '3.3.1'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.9'
+
+	implementation group: 'com.google.api-client', name: 'google-api-client', version: '1.31.5'
 
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {

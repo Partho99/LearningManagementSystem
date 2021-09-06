@@ -217,6 +217,12 @@ public class CourseResource {
         return new ResponseEntity<>(checkStatus, HttpStatus.OK);
     }
 
+    @GetMapping("heaven")
+    @PreAuthorize("hasAnyAuthority('role_admin','role_user','role_instructor')")
+    public String Hell() {
+        return "HELLO!!!!!!!!!!!!";
+    }
+
     private ResponseEntity<?> getCoursesByPage(Pageable pageable, Page<Course> coursePage) {
         List<CoursePageDto> coursePageDtoList = new ArrayList<>();
         for (Course course : coursePage) {

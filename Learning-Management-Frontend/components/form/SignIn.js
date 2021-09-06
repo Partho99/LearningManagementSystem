@@ -100,28 +100,15 @@ const SignIn = () => {
     });
 
     const responseGoogle = (r) => {
-        const password = r?.tokenId.slice(0, 10);
+        console.log(r)
+        let password = r?.tokenId.slice(0, 10);
         setLoading(true)
-        AuthService.registerGoogle(r.profileObj.name, r.profileObj.email, password, r.profileObj.imageUrl).then(
+        AuthService.registerGoogle(r?.tokenId).then(
             (response) => {
-                setLoading(true)
-                AuthService.login(r.profileObj.email, password).then(
-                    (response) => {
-                        authDispatch({
-                            type: 'SIGN_IN_SUCCESS', currentUser: response
-                        })
-                        setLoading(false)
-                    }).catch((error) => {
-                        const resMessage =
-                            (error.response &&
-                                error.response.data &&
-                                error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        setLoading(false);
-                        setMessage(resMessage);
-                    }
-                )
+                authDispatch({
+                    type: 'SIGN_IN_SUCCESS', currentUser: response.data.user
+                })
+                setLoading(false)
             },
 
             (error) => {
@@ -140,37 +127,18 @@ const SignIn = () => {
     }
 
     const componentClicked = (e) => {
-        console.log(e);
+        // console.log(e);
     }
     const responseFacebook = (e) => {
         const password = e?.accessToken?.slice(0, 10);
-        // console.log(e?.email)
-        // console.log(e?.accessToken)
-        // console.log(e?.picture?.data?.url)
-        // console.log(e?.name)
         setLoading(true)
-        AuthService.registerFacebook(e?.name, e?.email, password, e?.picture?.data?.url).then(
+        AuthService.registerFacebook(e?.name, e?.email, password, e?.picture?.data?.url, e?.accessToken).then(
             (response) => {
-                // setLoading(true)
-                AuthService.login(e?.email, password).then(
-                    (response) => {
-                        authDispatch({
-                            type: 'SIGN_IN_SUCCESS', currentUser: response
-                        })
-                        setLoading(false)
-                    }).catch((error) => {
-                        const resMessage =
-                            (error.response &&
-                                error.response.data &&
-                                error.response.data.message) ||
-                            error.message ||
-                            error.toString();
-                        setLoading(false);
-                        setMessage(resMessage);
-                    }
-                )
+                authDispatch({
+                    type: 'SIGN_IN_SUCCESS', currentUser: response.data.user
+                })
+                setLoading(false)
             },
-
             (error) => {
                 const resMessage =
                     (error.response &&
@@ -203,14 +171,6 @@ const SignIn = () => {
                         </div>
                     )}
                     <div className='ml-4'>
-                        <GoogleLogin
-                            className='google-login'
-                            clientId={gCid}
-                            buttonText="LOGIN WITH GOOGLE"
-                            onSuccess={responseGoogle}
-                            onFailure={responseGoogle}
-                            autoLoad={false}
-                        />
                         <FacebookLogin
                             buttonStyle={{
                                 width: '90%',
@@ -218,7 +178,8 @@ const SignIn = () => {
                                 paddingTop: 10,
                                 paddingBottom: 10,
                                 marginLeft: 6,
-                                fontWeight:100
+                                fontWeight: 100,
+                                outline: 'none'
                             }}
                             appId="430352225065391"
                             // autoLoad={true}
@@ -227,6 +188,16 @@ const SignIn = () => {
                             callback={responseFacebook}
                             icon="fa-facebook"
                         />
+
+                        <GoogleLogin
+                            className='google-login'
+                            clientId={gCid}
+                            buttonText="LOGIN WITH GOOGLE"
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            autoLoad={false}
+                        />
+
                     </div>
 
                     <form onSubmit={formik.handleSubmit} className={classes.form} noValidate>

@@ -146,7 +146,7 @@ const CourseReviews = ({id}) => {
                     <div className="course-details__comment-single" key={id}>
                         <div className="course-details__comment-top">
                             <div className="course-details__comment-img ">
-                                <img className='rounded-circle' src="/assets/images/team-1-1.jpg" alt=""/>
+                                <img className='rounded-circle' src={r?.imageUrl} alt=""/>
                             </div>
                             <div className="course-details__comment-right">
                                 <h2 className="course-details__comment-name">{r?.fullName}</h2>

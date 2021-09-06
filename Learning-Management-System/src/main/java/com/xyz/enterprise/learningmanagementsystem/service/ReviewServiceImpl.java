@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
 
@@ -46,12 +46,12 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public List<Review> findAllByCourse_Id(long id) {
-        return reviewRepository.findByCourseIdOrderByCreatedDateDesc(id);
+        return reviewRepository.findByCourseIdOrderByCreatedDateAsc(id);
     }
 
     @Override
     public List<Review> findAllByBlog_Id(long blogId) {
-        return reviewRepository.findByBlogIdOrderByCreatedDateDesc(blogId);
+        return reviewRepository.findByBlogIdOrderByCreatedDateAsc(blogId);
     }
 
     @Override

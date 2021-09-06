@@ -15,9 +15,9 @@ import java.util.Optional;
 @Transactional
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
-    List<Review> findByCourseIdOrderByCreatedDateDesc(long courseId);
+    List<Review> findByCourseIdOrderByCreatedDateAsc(long courseId);
 
-    List<Review> findByBlogIdOrderByCreatedDateDesc(long blogId);
+    List<Review> findByBlogIdOrderByCreatedDateAsc(long blogId);
 
     @Query(value = "select count(*) total_user, sum(r.rating) rating_sum  from review r inner join blog_review br on r.id = br.review_id" +
             " right join blog b on  br.blog_id = b.id where b.id = :blogId", nativeQuery = true)

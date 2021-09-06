@@ -16,6 +16,7 @@ public interface ReviewMapper {
     ReviewMapper INSTANCE = Mappers.getMapper(ReviewMapper.class);
 
     @Mapping(source = "review.user.email", target = "email")
+    @Mapping(source = "review.user.imageUrl", target = "imageUrl")
     @Mapping(source = "review.user.fullName", target = "fullName")
     @Mapping(source = "review.createdDate", target = "created_time")
     ReviewsDto modelToDto(Review review);

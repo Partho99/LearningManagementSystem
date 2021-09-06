@@ -22,11 +22,9 @@ const TopBar = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    console.log(authState?.user?.image_url)
 
     function onLogout() {
         let cookies = document.cookie.split(";");
-
         for (let i = 0; i < cookies.length; i++) {
             let cookie = cookies[i];
             let eqPos = cookie.indexOf("=");

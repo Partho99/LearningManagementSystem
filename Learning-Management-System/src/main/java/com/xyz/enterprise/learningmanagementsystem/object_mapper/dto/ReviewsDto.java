@@ -13,6 +13,7 @@ public class ReviewsDto {
     private int rating;
     private String email;
     private String fullName;
+    private String imageUrl;
 
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -65,5 +66,13 @@ public class ReviewsDto {
 
     public void setCreated_time(Optional<Date> created_time) {
         this.created_time = created_time;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
