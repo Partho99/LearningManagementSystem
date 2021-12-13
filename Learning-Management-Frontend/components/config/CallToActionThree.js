@@ -7,13 +7,13 @@ class CallToActionThree extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-6 clearfix">
-                            <img src="/assets/images/cta-1.jpg" className="cta-three__image" alt="" />
+                            <img src="/assets/images/learn-benefits5.jpg" className="cta-three__image" alt=""/>
                         </div>
                         <div className="col-lg-6">
                             <div className="cta-three__content">
                                 <div className="block-title text-left">
                                     <h2 className="block-title__title">Benefits of learning
-                                        with kipso</h2>
+                                        with Us</h2>
                                 </div>
                                 <p className="cta-three__text">There cursus massa at urnaaculis estie. Sed aliquamellus
                                     vitae ultrs

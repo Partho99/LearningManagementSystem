@@ -9,8 +9,23 @@ const TopBar = () => {
     const router = useRouter();
     const [open, setOpen] = React.useState(false);
     const {authState, authDispatch} = useContext(AuthContext);
+
     useEffect(() => {
-    }, [])
+         /*if (authState?.isAuthenticated) {
+            setTimeout(() => {
+                let cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i];
+                    let eqPos = cookie.indexOf("=");
+                    let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+                authDispatch({type: 'SIGN_OUT', currentUser: undefined})
+                router.reload();
+            }, 30000)
+        }*/
+
+    }, [authState])
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -72,10 +87,10 @@ const TopBar = () => {
                                     <Link href="/teachers"><a className="dropdown-item">Instructor</a></Link>
                                     <Link href="/blog/create-new-article"><a className="dropdown-item">Create
                                         Article</a></Link>
-                                    <Link href="/teachers"><a className="dropdown-item">Create Course</a></Link>
                                     <Link href="/teachers"><a className="dropdown-item">Stories</a></Link>
                                     <Link href="/teachers"><a className="dropdown-item">Become a member</a></Link>
                                     <Link href="/teachers"><a className="dropdown-item">Settings</a></Link>
+                                    <Link href="/create-course"><a className="dropdown-item">Create Course</a></Link>
                                     <a onClick={onLogout}
                                        className="dropdown-item" type="button">Logout</a>
                                 </div>

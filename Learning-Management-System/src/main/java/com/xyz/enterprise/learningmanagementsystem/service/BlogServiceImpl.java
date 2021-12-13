@@ -55,4 +55,9 @@ public class BlogServiceImpl implements BlogService {
     public void deleteById(long id) {
         blogRepository.deleteById(id);
     }
+
+    @Override
+    public Blog findPopularBlog() {
+        return null;
+    }
 }

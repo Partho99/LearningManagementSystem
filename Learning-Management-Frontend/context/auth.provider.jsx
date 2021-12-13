@@ -47,6 +47,7 @@ function reducer(state, action) {
 }
 
 export const AuthenticationProvider = ({children}) => {
+
     const [authState, authDispatch] = useReducer(reducer, INITIAL_STATE,
         () => {
             const userData = isBrowser ? window.localStorage.getItem('user') : null;

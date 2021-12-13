@@ -56,9 +56,9 @@ const CourseReviews = ({id}) => {
         e.preventDefault();
 
         if (/^\s+$/.test(comment)) {
-            setMessage('Please enter a valid comment!')
+            setMessage('Please enter a valid comment 🙏')
         } else if (rating === 0) {
-            setMessage('Please rate this course!')
+            setMessage('Your rating is precious for us 💍')
         } else {
 
             setMessage("");
@@ -146,7 +146,8 @@ const CourseReviews = ({id}) => {
                     <div className="course-details__comment-single" key={id}>
                         <div className="course-details__comment-top">
                             <div className="course-details__comment-img ">
-                                <img className='rounded-circle' src={r?.imageUrl} alt=""/>
+                                <img className='rounded-circle'
+                                     src={r?.imageUrl ? r?.imageUrl : "/assets/images/team-1-1.jpg"} alt=""/>
                             </div>
                             <div className="course-details__comment-right">
                                 <h2 className="course-details__comment-name">{r?.fullName}</h2>
@@ -189,7 +190,7 @@ const CourseReviews = ({id}) => {
                             placeholder="comment"
                             required
                         />
-                        <p className='text-primary font-weight-bold'>{message}</p>
+                        <p className='text-info font-weight-bold'>{message}</p>
                         {authState.isAuthenticated ?
                             <button type="submit" className="thm-btn-course course-details__comment-form-btn">
                                 {loading ?
@@ -199,7 +200,7 @@ const CourseReviews = ({id}) => {
                                 }
                             </button>
                             :
-                            <Link href={'/login'}>You have to login first</Link>
+                            <Link href={'/login'}>You need to login first to comment this course 🙏</Link>
                         }
                     </div>
                 </div>

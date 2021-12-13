@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import dynamic from "next/dynamic";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import HashLoader from "react-spinners/HashLoader";
 import {AuthContext} from "../context/auth.context";
 import {useRouter} from "next/router";
 
@@ -11,7 +11,7 @@ const Registration = dynamic(() => import('../components/form/registration').the
     loading: () =>
         <div className='spinner_area'>
             <div className='container text-center'>
-                <CircularProgress size={60}/>
+                <HashLoader color={'#9934eb'} size={60}/>
             </div>
         </div>
 });

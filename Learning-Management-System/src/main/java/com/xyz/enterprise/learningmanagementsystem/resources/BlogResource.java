@@ -10,6 +10,7 @@ import com.xyz.enterprise.learningmanagementsystem.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -112,5 +113,10 @@ public class BlogResource {
     @GetMapping("show-blog-rating-details/{id}")
     public ResponseEntity<?> showBlogRatingDetails(@PathVariable("id") long id) {
         return new ResponseEntity<>(reviewService.findByBlogIdAndRatingSum(id), HttpStatus.OK);
+    }
+
+    @GetMapping("show-popular-blog")
+    public ResponseEntity<?> showPopularBlog() {
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 }

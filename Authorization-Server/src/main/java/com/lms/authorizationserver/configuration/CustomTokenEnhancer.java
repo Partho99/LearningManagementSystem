@@ -29,7 +29,7 @@ public class CustomTokenEnhancer extends JwtAccessTokenConverter {
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
-        cal.add(Calendar.HOUR, 8);
+        cal.add(Calendar.MONTH, 12);
         cal.getTime();
 
         DefaultOAuth2AccessToken customAccessToken = new DefaultOAuth2AccessToken(accessToken);

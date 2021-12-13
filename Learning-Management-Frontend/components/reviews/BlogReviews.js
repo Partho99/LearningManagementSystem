@@ -54,7 +54,7 @@ const BlogReviews = ({id}) => {
         if (/^\s+$/.test(comment)) {
             setMessage('Please enter a valid comment 🙏')
         } else if (rating === 0) {
-            setMessage('Your rating is precious for us 🙏')
+            setMessage('Your rating is precious for us 💍')
         } else {
 
             setMessage("");
@@ -135,7 +135,7 @@ const BlogReviews = ({id}) => {
                     <div className="course-details__comment-single" key={id}>
                         <div className="course-details__comment-top">
                             <div className="course-details__comment-img">
-                                <img src={r?.imageUrl} alt="image"/>
+                                <img src={r?.imageUrl ? r?.imageUrl : "/assets/images/team-1-1.jpg"} alt="image"/>
                             </div>
                             <div className="course-details__comment-right">
                                 <h2 className="course-details__comment-name">{r?.fullName}</h2>
@@ -188,7 +188,7 @@ const BlogReviews = ({id}) => {
                                 }
                             </button>
                             :
-                            <Link href={'/login'}>You need to login first to comment this blog 💍 </Link>
+                            <Link href={'/login'}>You need to login first to comment this blog 🙏 </Link>
                         }
                     </div>
                 </div>

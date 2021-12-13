@@ -637,7 +637,7 @@
     }
 
     .block-title__title {
-        font-size: 40px;
+        font-size: 25px;
         line-height: 46px;
     }
 
@@ -1016,4 +1016,8 @@
         margin-top: 20px;
     }
 }
-
+@media (max-width: 1250px) {
+    .custom_dropdown{
+        margin-right: 270px;
+    }
+}

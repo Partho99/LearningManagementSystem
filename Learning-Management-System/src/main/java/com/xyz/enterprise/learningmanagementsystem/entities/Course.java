@@ -13,7 +13,7 @@ public class Course extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
+    private String courseName;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "overview_id")
@@ -23,7 +23,7 @@ public class Course extends AuditableEntity {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Section> sections;
 
-    @ManyToOne(optional = false,cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private User user;
 
     @JsonIgnore
@@ -33,6 +33,12 @@ public class Course extends AuditableEntity {
     @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "topic_id", nullable = false)
     private Topic topic;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
+
+    @Transient
+    private String courseImage;
 
     public Topic getTopic() {
         return topic;
@@ -50,12 +56,12 @@ public class Course extends AuditableEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public CourseOverview getOverview() {
@@ -88,5 +94,21 @@ public class Course extends AuditableEntity {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public String getCourseImage() {
+        return courseImage;
+    }
+
+    public void setCourseImage(String courseImage) {
+        this.courseImage = courseImage;
     }
 }

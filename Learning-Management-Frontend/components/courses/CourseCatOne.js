@@ -1,6 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Swiper from 'react-id-swiper';
-import SwiperCore, {Autoplay} from 'swiper';
 
 const CourseCatOne = () => {
 
@@ -32,6 +31,9 @@ const CourseCatOne = () => {
         }
     }
 
+    useEffect(() => {
+
+    }, [])
     return (
         <section className="thm-gray-bg course-category-one">
             <div className="container-fluid text-center">
@@ -44,7 +46,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-1">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-itsoftware"></i>
+                                    <i className="kipso-icon-itsoftware"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">IT & Software</a></h3>
                             </div>
@@ -52,7 +54,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-2">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-development"></i>
+                                    <i className="kipso-icon-development"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">Development</a></h3>
                             </div>
@@ -60,7 +62,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-3">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-music-player"></i>
+                                    <i className="kipso-icon-music-player"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">Music</a></h3>
                             </div>
@@ -68,7 +70,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-4">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-camera"></i>
+                                    <i className="kipso-icon-camera"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">Photography</a></h3>
                             </div>
@@ -76,7 +78,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-5">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-marketing"></i>
+                                    <i className="kipso-icon-marketing"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">Marketing</a></h3>
                             </div>
@@ -84,7 +86,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-6">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-health"></i>
+                                    <i className="kipso-icon-health"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">Health & Fitness</a></h3>
                             </div>
@@ -92,7 +94,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-1">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-itsoftware"></i>
+                                    <i className="kipso-icon-itsoftware"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">IT & Software</a></h3>
                             </div>
@@ -100,7 +102,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-2">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-development"></i>
+                                    <i className="kipso-icon-development"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">Development</a></h3>
                             </div>
@@ -108,7 +110,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-3">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-music-player"></i>
+                                    <i className="kipso-icon-music-player"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">Music</a></h3>
                             </div>
@@ -116,7 +118,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-4">
                                 <div className="course-category-one__icon">
-                                    <i className="kipso-icon-camera"></i>
+                                    <i className="kipso-icon-camera"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">Photography</a></h3>
                             </div>
@@ -124,7 +126,7 @@ const CourseCatOne = () => {
                         <div className="item">
                             <div className="course-category-one__single color-4">
                                 <div className="course-category-one__icon">
-                                    <i className="far fa-chart-bar"></i>
+                                    <i className="far fa-chart-bar"/>
                                 </div>
                                 <h3 className="course-category-one__title"><a href="#">Business</a></h3>
                             </div>

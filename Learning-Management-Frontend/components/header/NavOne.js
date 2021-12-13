@@ -92,7 +92,8 @@ const NavOne = () => {
                     <div className="logo-box clearfix">
                         <Link href="/">
                             <a className="navbar-brand">
-                                <img src="/assets/images/lms.png" className="main-logo" width="100"
+                                <img src="/assets/images/lms.png" className="main-logo"
+                                     width="130" height='70'
                                      alt="Awesome Image"/>
                             </a>
                         </Link>
@@ -108,23 +109,21 @@ const NavOne = () => {
                                     <Link href="/courses/category/[slug]"
                                           as={`/courses/category/${category.name?.replace(/ /g, "-").toLowerCase()}`}>
                                         <a onClick={removeBlock}
-                                           className='text-info font-weight-bold'>{category.name}</a>
+                                           className='underline'>{category.name}</a>
                                     </Link>
                                     <ul className="sub-menu">
                                         {category.subjects?.map((subject, id) => (
                                             <li key={id}>
                                                 <Link href="/courses/subjects/[slug]"
                                                       as={`/courses/subjects/${subject.name?.replace(/ /g, "-").toLowerCase()}`}>
-                                                    <a onClick={removeBlock}
-                                                       className='font-weight-bold'>{`${subject.name}`}</a>
+                                                    <a onClick={removeBlock}>{`${subject.name}`}</a>
                                                 </Link>
                                                 <ul className="sub-menu">
                                                     {subject.topics?.map((topic, id) => (
                                                         <li key={id}>
                                                             <Link href="/courses/topics/[slug]"
                                                                   as={`/courses/topics/${topic.name?.replace(/ /g, "-").toLowerCase()}`}>
-                                                                <a onClick={removeBlock}
-                                                                   className='font-weight-bold'>{topic.name}</a>
+                                                                <a onClick={removeBlock}>{topic.name}</a>
                                                             </Link>
                                                         </li>
                                                     ))}
@@ -137,7 +136,7 @@ const NavOne = () => {
                             ))}
 
                             <li className="">
-                                <Link href="/"><a onClick={removeBlock} className='text-info font-weight-bold'>More</a></Link>
+                                <Link href="/"><a onClick={removeBlock} className='underline'>More</a></Link>
                                 <ul className="sub-menu ">
                                     <li>
                                         <Link href="/teachers">
@@ -167,11 +166,6 @@ const NavOne = () => {
                                     <li>
                                         <Link href="/courses">
                                             <a onClick={removeBlock} className='font-weight-bold'>Courses</a>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/blog/create-new-article">
-                                            <a onClick={removeBlock} className='font-weight-bold'>Create Article</a>
                                         </Link>
                                     </li>
                                 </ul>

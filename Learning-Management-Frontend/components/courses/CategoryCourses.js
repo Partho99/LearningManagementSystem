@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {createRef, useEffect, useRef, useState} from 'react';
 import Link from "next/link";
 import {useRouter} from "next/router";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import HashLoader from "react-spinners/HashLoader";
 
 const CategoryCourses = ({categoryName}) => {
 
+    // const myRef = useRef(null)
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(0);
@@ -14,6 +15,8 @@ const CategoryCourses = ({categoryName}) => {
     const realSlug = slug?.replace(/-/g, " ");
 
     useEffect(async () => {
+        // myRef.current.scrollIntoView()
+        window.scrollTo(0, 0);
         const categoryData = async () => {
             setLoading(true)
             await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-course-by-category/${realSlug}/${page}`)
@@ -24,7 +27,21 @@ const CategoryCourses = ({categoryName}) => {
 
         categoryData().then(r => r);
 
-    }, [slug, page])
+    }, [page])
+
+    useEffect(async () => {
+        // myRef.current.scrollIntoView()
+        window.scrollTo(0, 0);
+        const categoryData = async () => {
+            setLoading(true)
+            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-course-by-category/${realSlug}/${page}`)
+                .then(response => response.json())
+                .then(data => setCourses(data))
+            setPage(0)
+            setLoading(false);
+        }
+        categoryData().then(r => r);
+    }, [slug])
 
     const handleClick = (page) => {
         setPage(page)
@@ -35,7 +52,7 @@ const CategoryCourses = ({categoryName}) => {
             {loading ?
                 <div className='spinner_area'>
                     <div className={"text-center"}>
-                        <CircularProgress size={90} disableShrink/>
+                        <HashLoader color={'#034c7a'} loading={loading} size={80}/>
                     </div>
                 </div>
                 :
@@ -43,27 +60,54 @@ const CategoryCourses = ({categoryName}) => {
                     <div className="row">
                         {courses.content?.map(item => (
                             <div className="col-lg-4" key={item.id}>
-                                <div className="course-one__single">
-                                    <div className="course-one__image">
-                                        <img src="/assets/images/course-1-1.jpg" alt=""/>
-                                        <i className="far fa-heart "/>
-                                    </div>
-                                    <div className="course-one__content">
-                                        <Link href="/courses/topics/[slug]"
-                                              as={`/courses/topics/${item?.topic?.name}`}>
-                                            <a href="#" className="course-one__category">{item.topic.name}</a>
+                                <Link href={"/courses/[name]/[id]/[course_details]"}
+                                      as={`/courses/${item.topic?.name?.replace(/ /g, "-")
+                                          .toLowerCase()}/${item.id}/${item.courseName
+                                          ?.replace(/ /g, "-").toLowerCase()}`}>
+                                    <div className="course-one__single">
+                                        <Link href={"/courses/[name]/[id]/[course_details]"}
+                                              as={`/courses/${item.topic?.name?.replace(/ /g, "-")
+                                                  .toLowerCase()}/${item.id}/${item.courseName
+                                                  ?.replace(/ /g, "-").toLowerCase()}`}>
+                                            <div className="course-one__image">
+                                                <img
+                                                    src={item?.imageUrl ? item?.imageUrl : "/assets/images/course-1-1.jpg"}
+                                                    height="200" width='150' alt=""/>
+                                                <i className="far fa-heart "/>
+                                            </div>
                                         </Link>
-                                        <div className="course-one__admin">
-                                            <img src="/assets/images/team-1-1.jpg" alt=""/>
-                                            by <Link href="/teacher-details"><a>{item.user?.fullName}</a></Link>
-                                        </div>
-                                        <h2 className="course-one__title">
-                                            <Link href={"/courses/[name]/[id]/[course_details]"}
-                                                  as={`/courses/${item.topic?.name?.replace(/ /g, "-").toLowerCase()}/${item.id}/${item.name?.replace(/ /g, "-").toLowerCase()}`}>
-                                                <a>{item.name.length > 26 ? item.name?.substring(0, 26) + ' ...' : item.name}</a>
+                                        <div className="course-one__content">
+                                            <Link href="/courses/topics/[slug]"
+                                                  as={`/courses/topics/${item?.topic?.name}`}>
+                                                <a href="#" className="course-one__category">{item.topic.name}</a>
                                             </Link>
-                                        </h2>
-                                        <div className="course-one__stars">
+                                            <h2 className="course-one__title">
+                                                <Link href={"/courses/[name]/[id]/[course_details]"}
+                                                      as={`/courses/${item.topic?.name?.replace(/ /g, "-")
+                                                          .toLowerCase()}/${item.id}/${item.courseName
+                                                          ?.replace(/ /g, "-")
+                                                          .toLowerCase()}`}>
+                                                    <a>{item.courseName?.length > 33 ? item.courseName
+                                                        ?.substring(0, 33) + ' ...' : item.courseName}</a>
+                                                </Link>
+                                            </h2>
+                                            <div className="course-one__admin">
+                                                <img
+                                                    src={item?.user?.imageUrl ? item?.user?.imageUrl : "/assets/images/team-1-1.jpg"}
+                                                    alt=""/>
+                                                by <Link
+                                                href="/teacher-details"><a>{item.user?.fullName.charAt(0)
+                                                .toUpperCase() + item.user?.fullName.slice(1)}</a></Link>
+                                            </div>
+
+                                            <div className="course-one__meta">
+                                                <a href="/course-details"><i
+                                                    className="far fa-clock"/>{Math.floor(item.sections.length * 1.5)} Hours</a>
+                                                <a href="/course-details"><i
+                                                    className="far fa-folder-open"/> {item.sections.length} Lectures</a>
+                                                <a href="/course-details" className='text-info'>Free</a>
+                                            </div>
+                                            <div className="course-one__stars">
                                     <span className="course-one__stars-wrap">
                                         {Array(Math.floor((item?.rating_details?.rating_sum / item?.rating_details?.total_user)))
                                             .fill()
@@ -78,51 +122,44 @@ const CategoryCourses = ({categoryName}) => {
                                             className="fa fa-star-half"/> : null}
 
                                     </span>
-                                            <span
-                                                className="course-one__count">{(item?.rating_details?.rating_sum / item?.rating_details?.total_user).toFixed(1)}</span>
-                                            <span
-                                                className="course-one__stars-count">{item?.rating_details?.total_user}</span>
+                                                <span
+                                                    className="course-one__count">
+                                                    {(item?.rating_details?.rating_sum / item?.rating_details?.total_user)
+                                                        .toFixed(1)}</span>
+                                                <span
+                                                    className="course-one__stars-count">{item?.rating_details?.total_user}</span>
+                                            </div>
                                         </div>
-                                        <div className="course-one__meta">
-                                            <a href="/course-details"><i className="far fa-clock"/> 10 Hours</a>
-                                            <a href="/course-details"><i
-                                                className="far fa-folder-open"/> {item.sections.length} Lectures</a>
-                                            <a href="/course-details">$18</a>
-                                        </div>
-                                        <Link href={"/courses/[name]/[id]/[course_details]"}
-                                              as={`/courses/${item.topic?.name?.replace(/ /g, "-").toLowerCase()}/${item.id}/${item.name?.replace(/ /g, "-").toLowerCase()}`}>
-                                            <a href="#" className="course-one__link">See Preview</a>
-                                        </Link>
-
                                     </div>
-                                </div>
+                                </Link>
                             </div>
+
                         ))}
 
                     </div>
                     <div className="post-pagination">
+
+                        {/**another way of doing pagination*/}
                         {/*{*/}
                         {/*    Array.from({ length: courses.totalPages }, (_, k) => (*/}
                         {/*        <a className="active" href="#" onClick={() => handleClick(k)}>{k+1}</a>*/}
                         {/*    ))*/}
                         {/*}*/}
 
-                        {page <= 0 ?
-                            <div/>
-                            :
-                            <a className={'bg-warning'} href="#" onClick={() => handleClick(page - 1)}>
-                                <i className="fa fa-angle-double-left text-primary"/></a>
+                        {page <= 0 ? null :
+                            <>
+                                <p className={''} onClick={() => handleClick(page - 1)}>
+                                    <i className="fa fa-angle-double-left"/></p>
+                            </>
                         }
-
-                        {page + 1 >= courses.totalPages ?
-                            <div/>
-                            :
-                            <a className={'bg-warning'} href="#" onClick={() => handleClick(page + 1)}>
-                                <i className="fa fa-angle-double-right text-primary"/></a>
+                        <h6 className={'font-weight-bold mb-3'}>{` #${page + 1}`}</h6>
+                        &nbsp;
+                        {page + 1 >= courses.totalPages ? null :
+                            <p className={''} onClick={() => handleClick(page + 1)}>
+                                <i className="fa fa-angle-double-right"/></p>
                         }
 
                     </div>
-
                 </div>
             }
         </section>

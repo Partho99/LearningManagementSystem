@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import CircularProgress from "@material-ui/core/CircularProgress";
+import PropagateLoader from "react-spinners/PropagateLoader";
 import authHeader from "../../auth/auth-header"
 import Link from "next/link";
 import ModalVideo from "react-modal-video";
@@ -18,11 +18,15 @@ const CourseDetails = ({id, name}) => {
     const [comment, setComment] = useState("");
     const [review, setReview] = useState(0);
     const [message, setMessage] = useState('');
+    const [newCourseSuggestion, setNewCourseSuggestion] = useState([]);
     const [isPurchased, setIsPurchased] = useState(authState?.check_purchase);
 
+    const realName = name?.replace(/-/g, " ");
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         let controller = new AbortController();
+        setLoading(true)
         const courseDetails = async () => {
             await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-one/${id}`)
                 .then(response => response.json())
@@ -31,6 +35,7 @@ const CourseDetails = ({id, name}) => {
         }
 
         const checkPurchaseStatus = async () => {
+            setLoading(true)
             await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/check-course-purchase-status/${id}`,
                 {
                     method: 'GET',
@@ -41,14 +46,23 @@ const CourseDetails = ({id, name}) => {
             setLoading(false);
         }
 
+        const showNewCourseSuggestion = async () => {
+
+            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-new-courses/${realName}`)
+                .then(response => response.json())
+                .then(data => setNewCourseSuggestion(data))
+            setLoading(false);
+
+        }
         courseDetails().then(r => r);
         checkPurchaseStatus().then(r => r)
+        showNewCourseSuggestion().then(r => r)
         return () => {
             controller?.abort();
         }
 
     }, [id, name])
-
+    console.log('PURCHASED STAT', isPurchased)
     const openModal = () => {
         setIsOpen(!isOpen);
     }
@@ -115,18 +129,24 @@ const CourseDetails = ({id, name}) => {
     console.log('CHECK COURSE PURCHASE DETAILS : ', isPurchased)
     return (
         <section className="course-details">
-            {loading ? <div className={"text-center"}>
-                    <CircularProgress size={100} disableShrink/>
-                </div> :
+            {loading ?
+                <div className='spinner_area'>
+                    <div className={"text-center"}>
+                        <PropagateLoader size={15} disableShrink color={'#034c7a'}/>
+                    </div>
+                </div>
+                :
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-8">
                             <div className="course-details__content">
                                 <div className="course-details__top">
                                     <div className="course-details__top-left">
-                                        <h2 className="course-details__title">{course.name?.replace(/-/g, " ")}</h2>
+                                        <h2 className="course-details__title">{course.courseName?.replace(/-/g, " ")}</h2>
                                         <p className="course-details__author">
-                                            <img src="/assets/images/team-1-1.jpg" alt=""/>
+                                            <img
+                                                src={course?.user?.imageUrl ? course?.user?.imageUrl : "/assets/images/team-1-1.jpg"}
+                                                alt=""/>
                                             by <a href="#">{course.user?.fullName}</a>
                                         </p>
                                         <div className="course-one__stars">
@@ -185,9 +205,10 @@ const CourseDetails = ({id, name}) => {
                                     <div className="tab-pane  animated fadeInUp" role="tabpanel" id="curriculum">
                                         {course?.sections?.map((item, id) => (
                                             <>
-                                                <h3 key={id} className="course-details__tab-title">{item.name}</h3>
+                                                <h3 key={id}
+                                                    className="course-details__tab-title">{item.sectionName}</h3>
                                                 <br/>
-                                                <p className="course-details__tab-text">{item.overview}</p>
+                                                <p className="course-details__tab-text">{item.sectionOverview}</p>
                                                 <br/>
                                                 <ul className="course-details__curriculum-list list-unstyled">
                                                     {item?.videoContents?.map((vid, id) => (
@@ -200,9 +221,9 @@ const CourseDetails = ({id, name}) => {
                                                                     <a type="button" onClick={() => {
                                                                         openModal() , setVideoId('_I94-tJlovg')
                                                                     }}>
-                                                                        {vid.name}
+                                                                        {vid.videoName}
                                                                     </a> :
-                                                                    <a>{vid.name}</a>
+                                                                    <a>{vid.videoName}</a>
 
                                                                 }
 
@@ -238,19 +259,33 @@ const CourseDetails = ({id, name}) => {
                         </div>
                         <div className="col-lg-4">
                             <div className="course-details__price">
-                                {!isPurchased?.purchase_status ?
+                                {loading ? <PropagateLoader size={20} disableShrink color={'#34eb95'}/> :
                                     <>
-                                        <p className="course-details__price-text">Course price </p>
-                                        <a href="#" className="thm-btn course-details__price-btn"
-                                           onClick={() => purchaseCourse(id)}>Enroll Now</a>
+                                        {isPurchased?.purchase_status ?
+                                            <>
+                                                <p className="course-details__price-text">Course price </p>
+                                                <p className="course-details__price-amount">Paid</p>
+                                                {loading ?
+                                                    <span
+                                                        className="spinner-border spinner-border-sm text-center mb-1 mt-1"/>
+                                                    :
+                                                    <p className="thm-btn course-details__price-btn bg-success">Enrolled</p>
+                                                }
+                                            </>
+                                            :
+                                            <>
+                                                <p className="course-details__price-text">Course price </p>
+                                                <p className="course-details__price-amount">$18.00</p>
+                                                {loading ?
+                                                    <span
+                                                        className="spinner-border spinner-border-sm text-center mb-1 mt-1"/>
+                                                    :
+                                                    <a className="thm-btn course-details__price-btn"
+                                                       onClick={() => purchaseCourse(id)}>Enroll Now</a>
+                                                }
+                                            </>
+                                        }
                                     </>
-                                    :
-                                    <>
-                                        {/*<p className="course-details__price-amount">$18.00</p>*/}
-
-                                        <p className="thm-btn course-details__price-btn">Enrolled</p>
-                                    </>
-
                                 }
 
                             </div>
@@ -296,60 +331,47 @@ const CourseDetails = ({id, name}) => {
                             <div className="course-details__list">
                                 <h2 className="course-details__list-title">New
                                     Courses</h2>
-                                <div className="course-details__list-item">
-                                    <div className="course-details__list-img">
-                                        <img src="/assets/images/lc-1-1.jpg" alt=""/>
-                                    </div>
-                                    <div className="course-details__list-content">
-                                        <a className="course-details__list-author"
-                                           href="#">by <span>Lydia Byrd</span></a>
-                                        <h3><a href="#">Marketing strategies</a></h3>
-                                        <div className="course-details__list-stars">
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <span>4.8</span>
+                                {newCourseSuggestion?.map(item => (
+                                    <div className="course-details__list-item" key={item.id}>
+                                        <div className="course-details__list-img">
+                                            <img src={item?.imageUrl ? item?.imageUrl : "/assets/images/course-1-1.jpg"}
+                                                 height='70' alt=""/>
+                                        </div>
+                                        <div className="course-details__list-content">
+                                            <a className="course-details__list-author"
+                                               href="#">by <span>{item?.user?.fullName}</span></a>
+                                            <h6>
+                                                <Link href={"/courses/[name]/[id]/[course_details]"}
+                                                      as={`/courses/${item.topic?.name.replace(/ /g, "-")
+                                                          .toLowerCase()}/${item?.id}/${item.courseName?.replace(/ /g, "-")
+                                                          .toLowerCase()}`}>
+                                                    <a className='text-dark'>{item.courseName?.length > 20 ? item.courseName?.substring(0, 20) +
+                                                        ' ...' : item?.courseName}</a>
+                                                </Link>
+                                            </h6>
+                                            <div className="course-details__list-stars">
+                                                {Array.from({
+                                                    length: Math.floor((item?.rating_details?.rating_sum /
+                                                        item?.rating_details?.total_user))
+                                                })
+                                                    .fill()
+                                                    .map((_, i) => (
+                                                        <>
+                                                            <i className="fa fa-star"/>
+                                                        </>
+                                                    ))
+                                                }
+                                                {(item?.rating_details?.rating_sum /
+                                                    item?.rating_details?.total_user).toFixed(1) % 1 ? <i
+                                                    className="fa fa-star-half"/> : null}
+                                                <span
+                                                    className="course-one__count">{(item?.rating_details?.rating_sum /
+                                                    item?.rating_details?.total_user).toFixed(1)}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="course-details__list-item">
-                                    <div className="course-details__list-img">
-                                        <img src="/assets/images/lc-1-2.jpg" alt=""/>
-                                    </div>
-                                    <div className="course-details__list-content">
-                                        <a className="course-details__list-author"
-                                           href="#">by <span>Lydia Byrd</span></a>
-                                        <h3><a href="#">Marketing strategies</a></h3>
-                                        <div className="course-details__list-stars">
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <span>4.8</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="course-details__list-item">
-                                    <div className="course-details__list-img">
-                                        <img src="/assets/images/lc-1-3.jpg" alt=""/>
-                                    </div>
-                                    <div className="course-details__list-content">
-                                        <a className="course-details__list-author"
-                                           href="#">by <span>Lydia Byrd</span></a>
-                                        <h3><a href="#">Marketing strategies</a></h3>
-                                        <div className="course-details__list-stars">
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <i className="fas fa-star"/>
-                                            <span>4.8</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
+
                             </div>
                         </div>
                         <div className="col-lg-5 d-flex justify-content-lg-end justify-content-sm-start">

@@ -41,4 +41,9 @@ public class TopicServiceImpl implements TopicService {
     public Optional<Topic> findByName(String topicName) {
         return topicRepository.findByName(topicName);
     }
+
+    @Override
+    public List<Topic> findTopicByCategoryName(String categoryName) {
+        return topicRepository.findTopicByCategoryName(categoryName);
+    }
 }

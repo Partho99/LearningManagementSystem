@@ -22,4 +22,6 @@ public interface BlogService {
     Optional<Blog> findByTitle(String blogTitle);
 
     void deleteById(long id);
+
+    Blog findPopularBlog();
 }

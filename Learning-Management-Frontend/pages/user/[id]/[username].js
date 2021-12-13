@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Button} from "@material-ui/core";
 import {useRouter} from "next/router";
 import {AuthContext} from "../../../context/auth.context";
+import CategoryCourses from "../../../components/courses/CategoryCourses";
+import OwnedCourses from "../../../components/courses/OwnedCourses";
 
 const isBrowser = typeof window !== 'undefined';
 
@@ -16,7 +18,6 @@ const UserDetails = () => {
             :
             router.push('/login')
     }, [authState])
-
 
     return (
         <>
@@ -124,6 +125,10 @@ const UserDetails = () => {
                         </div>
                     </div>
                 </div>
+                <OwnedCourses
+                    email={authState?.user?.email}
+                    fullName={authState?.user?.fullName}
+                />
             </div>
         </>
     )

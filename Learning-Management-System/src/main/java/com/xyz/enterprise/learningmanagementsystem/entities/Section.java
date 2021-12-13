@@ -4,18 +4,18 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Section extends AuditableEntity{
+public class Section extends AuditableEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private String sectionName;
 
     @Lob
-    private String overview;
+    private String sectionOverview;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<VideoContent> videoContents;
 
     public int getId() {
@@ -26,20 +26,20 @@ public class Section extends AuditableEntity{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSectionName() {
+        return sectionName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSectionName(String sectionName) {
+        this.sectionName = sectionName;
     }
 
-    public String getOverview() {
-        return overview;
+    public String getSectionOverview() {
+        return sectionOverview;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
+    public void setSectionOverview(String sectionOverview) {
+        this.sectionOverview = sectionOverview;
     }
 
     public List<VideoContent> getVideoContents() {

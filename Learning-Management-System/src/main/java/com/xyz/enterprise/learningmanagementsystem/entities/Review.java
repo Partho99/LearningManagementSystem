@@ -1,5 +1,9 @@
 package com.xyz.enterprise.learningmanagementsystem.entities;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +12,7 @@ public class Review extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Lob
     private String comment;
     private int rating;
 

@@ -15,4 +15,8 @@ public interface BlogRepository extends JpaRepository<Blog, Long> {
     Optional<Blog> findByTitle(String blogTitle);
 
     Page<Blog> findAll(Pageable pageable);
+
+    default Blog findPopularBlog() {
+        return null;
+    }
 }

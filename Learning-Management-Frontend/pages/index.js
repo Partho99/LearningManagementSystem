@@ -11,16 +11,15 @@ import CallToActionFour from "../components/config/CallToActionFour";
 import SubscribeOne from "../components/config/SubscribeOne";
 
 
-
 const HomePage = () => {
 
     return (
         <>
-            <SliderOne/>
-            <AboutTwo/>
-            <CourseOne/>
+
+            {/*<AboutTwo/>*/}
             <VideoTwo/>
             <CountdownKipso/>
+            <CourseOne/>
             <CourseCatOne/>
             <CallToActionThree/>
             <BrandsTwo/>

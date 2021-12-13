@@ -19,16 +19,17 @@ const AboutTwo = () => {
                     <div className="col-xl-6">
                         <div className="about-two__content">
                             <div className="block-title text-left">
-                                <h2 className="block-title__title">Welcome to online <br/>
-                                    learning center</h2>
+                                <h2 className="block-title__title">Online learning is rapidly becoming
+                                    one of the most cost-effective ways to educate the
+                                    world’s rapidly expanding workforce</h2>
                             </div>
-                            <p className="about-two__text">There are many variations of passages of lorem ipsum
-                                available but the
-                                majority have suffered alteration in some form by injected humour or randomised
-                                words which
-                                don't look.</p>
+                            <p className="about-two__text">“The students of the future will demand the learning support
+                                that
+                                is appropriate for their situation or context. Nothing more, nothing less. And they want
+                                it at the moment the need arises. Not sooner, not later. Mobile devices will be a
+                                key technology for providing that learning support.” - Dr. Marcus Specht</p>
                             <div className="about-two__single-wrap">
-                                <div className="about-two__single">
+                                <div className="about-two__single mb-5">
                                     <div className="about-two__single-icon">
                                         <i className="kipso-icon-professor"></i>
                                     </div>
@@ -37,7 +38,7 @@ const AboutTwo = () => {
                                             our experts</p>
                                     </div>
                                 </div>
-                                <div className="about-two__single">
+                                <div className="about-two__single mb-5">
                                     <div className="about-two__single-icon">
                                         <i className="kipso-icon-knowledge"></i>
                                     </div>
@@ -53,7 +54,7 @@ const AboutTwo = () => {
                     <div className="col-xl-6 d-flex justify-content-xl-end justify-content-sm-center">
                         <div className="about-two__image">
                             <span className="about-two__image-dots"></span>
-                            <img src="/assets/images/about-1-1.jpg" alt=""/>
+                            <img src="/assets/images/main-page4.jpg" height='529' width='529' alt=""/>
                             <div className="about-two__count">
                                 <div className="about-two__count-text">Trusted by
                                     <span className="counter">

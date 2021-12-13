@@ -100,8 +100,6 @@ const SignIn = () => {
     });
 
     const responseGoogle = (r) => {
-        console.log(r)
-        let password = r?.tokenId.slice(0, 10);
         setLoading(true)
         AuthService.registerGoogle(r?.tokenId).then(
             (response) => {

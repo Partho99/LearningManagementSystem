@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import 'react-quill/dist/quill.snow.css'
 import dynamic from "next/dynamic";
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from "@material-ui/core/Button";
 import Select from 'react-select'
 import {Form, useFormik} from "formik";
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
@@ -16,15 +15,37 @@ import ShareIcon from '@material-ui/icons/Share';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import EditIcon from '@material-ui/icons/Edit';
 import {Image} from "@material-ui/icons";
+import {TextField} from "@material-ui/core";
+import HashLoader from "react-spinners/HashLoader";
 
 const ReactQuill = dynamic(() => import('react-quill').then(), {
     ssr: false, loading: () => <div className='spinner_area'>
         <div className='container text-center'>
-            <CircularProgress size={100}/>
+            <HashLoader size={70} color={'#9934eb'}/>
         </div>
     </div>
 });
 
+const colourStyles = {
+    option: (styles, {isFocused, isSelected}) => ({
+        ...styles,
+        background: isFocused
+            ? 'hsla(291, 64%, 42%, 0.5)'
+            : isSelected
+                ? 'hsla(291, 64%, 42%, 1)'
+                : undefined,
+        zIndex: 1
+    }),
+    menu: base => ({
+        ...base,
+        zIndex: 100,
+    }),
+    control: base => ({
+        ...base,
+        height: 53,
+        minHeight: 35
+    })
+}
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,12 +61,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const actions = [
-    { icon: <FileCopyIcon />, name: 'Copy' },
-    { icon: <SaveIcon />, name: 'Save' },
-    { icon: <PrintIcon />, name: 'Print' },
-    { icon: <ShareIcon />, name: 'Share' },
-    { icon: <FavoriteIcon />, name: 'Like' },
-    { icon: <Image />, name: 'Add Image' },
+    {icon: <FileCopyIcon/>, name: 'Copy'},
+    {icon: <SaveIcon/>, name: 'Save'},
+    {icon: <PrintIcon/>, name: 'Print'},
+    {icon: <ShareIcon/>, name: 'Share'},
+    {icon: <FavoriteIcon/>, name: 'Like'},
+    {icon: <Image/>, name: 'Add Image'},
 ];
 
 
@@ -132,6 +153,7 @@ const CreateBlog = () => {
             classNamePrefix="select"
             value={val}
             onChange={handleChange}
+            styles={colourStyles}
         />
     )
     return (
@@ -139,13 +161,32 @@ const CreateBlog = () => {
         <div className='container mt-4 mb-4'>
 
             <h5>Enter Blog Title : </h5>
-            <input className='mb-2 in-max' required/>
+            <TextField
+                name="videoUrl"
+                label="Enter Video Url"
+                variant="outlined"
+                style={{width: '100%'}}
+                required={true}
+            />
 
             <h5 className='mt-4'>Add Tags : </h5>
             <MyComponent/>
             <h5 className='mt-4'>Add Image : </h5>
-            <input type="file" onChange={handleChangeImage} className='mb-4'/>
-            <img src={imageData} className='img-fluid img-thumbnail mb-4'/>
+            <div className='mt-3 mb-3'>
+                <TextField
+                    name="courseImage"
+                    variant="outlined"
+                    onChange={event => handleChangeImage(event)}
+                    style={{width: '25%'}}
+                    required={true}
+                    type='file'
+                />
+                {imageData ? <img src={imageData} className='img-fluid img-thumbnail mb-4 ml-5'
+                                  style={{width: '600px', height: '400px'}}/>
+                    : null
+                }
+                <Button className='text-dark bg-light float-right mb-4 mt-4' type='submit'>Post Blog</Button>
+            </div>
 
             <h5>Add Blog Details : </h5>
             <ReactQuill
@@ -156,12 +197,12 @@ const CreateBlog = () => {
                 onChange={handleBlog}
             />
 
-            <div className={classes.root} >
+            <div className={classes.root}>
                 <SpeedDial
                     ariaLabel="SpeedDial openIcon example"
                     className={classes.speedDial}
                     hidden={hidden}
-                    icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+                    icon={<SpeedDialIcon openIcon={<EditIcon/>}/>}
                     onClose={handleClose}
                     onOpen={handleOpen}
                     open={open}

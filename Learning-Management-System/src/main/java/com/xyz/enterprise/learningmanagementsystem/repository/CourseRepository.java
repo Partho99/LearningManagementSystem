@@ -1,7 +1,6 @@
 package com.xyz.enterprise.learningmanagementsystem.repository;
 
 import com.xyz.enterprise.learningmanagementsystem.entities.Course;
-import com.xyz.enterprise.learningmanagementsystem.object_mapper.dto.RatingDetailsDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +16,7 @@ import java.util.Optional;
 @Transactional
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-    Optional<Course> findByName(String subjectName);
+    Optional<Course> findByCourseName(String subjectName);
 
     Page<Course> findAll(Pageable pageable);
 
@@ -43,4 +42,9 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query(value = "select * from course c inner join topic t on c.topic_id = t.id where t.name = :topicName", nativeQuery = true)
     Page<Course> findByTopicByPage(@Param("topicName") String topicName, Pageable pageable);
+
+    @Query(value = "SELECT * FROM course c inner join topic t on c.topic_id = t.id where t.name =:topicName ORDER BY c.created_date DESC LIMIT 3", nativeQuery = true)
+    List<Course> findNewCourses(String topicName);
+
+    Page<Course> findCourseByUserEmail(String userEmail, Pageable pageable);
 }

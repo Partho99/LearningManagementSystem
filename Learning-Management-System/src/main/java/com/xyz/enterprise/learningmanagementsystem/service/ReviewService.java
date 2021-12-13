@@ -12,6 +12,8 @@ public interface ReviewService {
 
     Optional<Review> findById(int id);
 
+    void deleteAllByCourseId(Long id);
+
     Review save(Review review);
 
     void saveAll(List<Review> subjects);

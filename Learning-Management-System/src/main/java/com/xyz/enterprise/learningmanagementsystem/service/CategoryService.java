@@ -17,4 +17,6 @@ public interface CategoryService {
     Optional<Category> findByName(String categoryName);
 
     void deleteById(int id);
+
+    Long findPopularCourseIdByCategory(String categoryName);
 }

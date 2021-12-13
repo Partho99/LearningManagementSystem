@@ -21,7 +21,6 @@ const SliderOne = () => {
     return (
         <div className="banner-wrapper">
             <section className="banner-one banner-carousel__one no-dots">
-
                 <Swiper getSwiper={setSwiper}>
                     <div className="banner-one__slide banner-one__slide-one">
                         <div className="container">
@@ -29,14 +28,14 @@ const SliderOne = () => {
                             <div className="banner-one__bubble-2"></div>
                             <div className="banner-one__bubble-3"></div>
                             <img src="/assets/images/slider-1-scratch.png" alt="" className="banner-one__scratch" />
-                            <img src="/assets/images/slider-1-person-1.png" className="banner-one__person" alt="" />
+                            {/*<img src="/assets/images/larrypage.jpg" className="banner-one__person" alt="" />*/}
                             <div className="row no-gutters">
                                 <div className="col-xl-12">
                                     <h3 className="banner-one__title banner-one__light-color">We Can <br />
-                                        Teach You</h3>
+                                        Educate You</h3>
                                     <p className="banner-one__tag-line">are you ready to
                                         learn?</p>
-                                    <a href="#" className="thm-btn banner-one__btn">Learn More</a>
+                                    <a href="#" className="thm-btn banner-one__btn  mb-5">Learn More</a>
                                 </div>
                             </div>
                         </div>

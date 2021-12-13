@@ -1,6 +1,7 @@
 package com.xyz.enterprise.learningmanagementsystem.service;
 
 import com.xyz.enterprise.learningmanagementsystem.entities.Course;
+import com.xyz.enterprise.learningmanagementsystem.object_mapper.dto.AllCourse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
@@ -34,4 +35,9 @@ public interface CourseService {
     List<Course> findByTopic(@Param("topicName") String topicName);
 
     Page<Course> findByTopicByPage(@Param("topicName") String topicName, Pageable pageable);
+
+    List<Course> findNewCourses(String topicName);
+
+    Page<Course> findCourseByUserEmail(String userEmail, Pageable pageable);
+
 }

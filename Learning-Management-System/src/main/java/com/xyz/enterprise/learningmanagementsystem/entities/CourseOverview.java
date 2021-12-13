@@ -10,7 +10,7 @@ public class CourseOverview extends AuditableEntity {
     private int id;
 
     @Lob
-    private String overview;
+    private String courseOverview;
 
     @Lob
     private String learningFromThisCourse;
@@ -29,12 +29,12 @@ public class CourseOverview extends AuditableEntity {
         this.id = id;
     }
 
-    public String getOverview() {
-        return overview;
+    public String getCourseOverview() {
+        return courseOverview;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
+    public void setCourseOverview(String courseOverview) {
+        this.courseOverview = courseOverview;
     }
 
     public String getLearningFromThisCourse() {

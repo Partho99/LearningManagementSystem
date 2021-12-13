@@ -11,6 +11,7 @@ import com.lms.authorizationserver.entities.Role;
 import com.lms.authorizationserver.entities.User;
 import com.lms.authorizationserver.repository.RoleRepository;
 import com.lms.authorizationserver.repository.UserRepository;
+import com.lms.authorizationserver.utils.AuthMetaData;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,12 +32,6 @@ public class UserResource {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final OAuth2Configuration oAuth2Configuration;
-
-    private static final String CLIENT_ID = "154270847541-vqipt4jg0v9umma7qj1ivaoj0nvi1cdt.apps.googleusercontent.com";
-    private static final String fbUrl = "https://graph.facebook.com/me?access_token=";
-
-    RestTemplate restTemplate = new RestTemplate();
-
 
     public UserResource(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder,
                         OAuth2Configuration oAuth2Configuration) {
@@ -69,7 +64,7 @@ public class UserResource {
     public ResponseEntity<?> registeringGoogleUser(@RequestBody Object idTokenString) throws GeneralSecurityException, IOException {
         JSONObject obj = new JSONObject((Map<String, ?>) idTokenString);
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
-                .setAudience(Collections.singletonList(CLIENT_ID))
+                .setAudience(Collections.singletonList(AuthMetaData.CLIENT_ID))
                 .build();
 
         GoogleIdToken idToken = verifier.verify((String) obj.get("idTokenString"));
@@ -91,7 +86,7 @@ public class UserResource {
                 userRepository.save(loadUser);
 
                 currentUser.put("email", loadUser.getEmail());
-                currentUser.put("role", String.valueOf(loadUser.getAuthorities()));
+                currentUser.put("scope", String.valueOf(loadUser.getAuthorities()));
                 currentUser.put("fullName", loadUser.getFullName());
                 currentUser.put("image_url", loadUser.getImageUrl());
                 currentUser.put("access_token", String.valueOf(oAuth2Configuration.token(loadUser)));
@@ -118,7 +113,7 @@ public class UserResource {
                 User savedUser = userRepository.save(user);
 
                 currentUser.put("email", savedUser.getEmail());
-                currentUser.put("role", String.valueOf(savedUser.getAuthorities()));
+                currentUser.put("scope", String.valueOf(savedUser.getAuthorities()));
                 currentUser.put("fullName", savedUser.getFullName());
                 currentUser.put("image_url", savedUser.getImageUrl());
                 currentUser.put("access_token", String.valueOf(oAuth2Configuration.token(savedUser)));
@@ -135,7 +130,8 @@ public class UserResource {
     @PostMapping(value = "/register-facebook-user", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> registeringFacebookUser(@RequestBody Object fbObject) {
         JSONObject obj = new JSONObject((Map<String, ?>) fbObject);
-        Object facebookObject = restTemplate.getForObject(fbUrl + obj.getAsString("accessToken"), Object.class);
+        RestTemplate restTemplate = new RestTemplate();
+        Object facebookObject = restTemplate.getForObject(AuthMetaData.fbUrl + obj.getAsString("accessToken"), Object.class);
         JSONObject checkFbAuth = new JSONObject((Map<String, ?>) facebookObject);
         String fbTokenUserFullName = checkFbAuth.getAsString("name");
 
@@ -159,7 +155,7 @@ public class UserResource {
                 User savedUser = userRepository.save(user);
 
                 currentUser.put("email", savedUser.getEmail());
-                currentUser.put("role", String.valueOf(savedUser.getAuthorities()));
+                currentUser.put("scope", String.valueOf(savedUser.getAuthorities()));
                 currentUser.put("fullName", savedUser.getFullName());
                 currentUser.put("image_url", savedUser.getImageUrl());
                 currentUser.put("access_token", String.valueOf(oAuth2Configuration.token(savedUser)));
@@ -188,7 +184,7 @@ public class UserResource {
                 User savedUser = userRepository.save(user);
 
                 currentUser.put("email", savedUser.getEmail());
-                currentUser.put("role", String.valueOf(savedUser.getAuthorities()));
+                currentUser.put("scope", String.valueOf(savedUser.getAuthorities()));
                 currentUser.put("fullName", savedUser.getFullName());
                 currentUser.put("image_url", savedUser.getImageUrl());
                 currentUser.put("access_token", String.valueOf(oAuth2Configuration.token(savedUser)));

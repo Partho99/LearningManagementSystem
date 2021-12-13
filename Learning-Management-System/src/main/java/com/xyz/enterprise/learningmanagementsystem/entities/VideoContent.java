@@ -11,7 +11,7 @@ public class VideoContent extends AuditableEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private String videoName;
     private long size;
     private String videoUrl;
     private double duration;
@@ -24,12 +24,12 @@ public class VideoContent extends AuditableEntity{
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getVideoName() {
+        return videoName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setVideoName(String videoName) {
+        this.videoName = videoName;
     }
 
     public long getSize() {

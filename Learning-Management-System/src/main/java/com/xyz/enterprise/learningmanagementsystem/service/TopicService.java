@@ -16,4 +16,6 @@ public interface TopicService {
     void saveAll(List<Topic> topics);
 
     Optional<Topic> findByName(String topicName);
+
+    List<Topic> findTopicByCategoryName(String categoryName);
 }

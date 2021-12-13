@@ -17,6 +17,8 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     List<Review> findByCourseIdOrderByCreatedDateAsc(long courseId);
 
+    void deleteAllByCourseId(Long id);
+
     List<Review> findByBlogIdOrderByCreatedDateAsc(long blogId);
 
     @Query(value = "select count(*) total_user, sum(r.rating) rating_sum  from review r inner join blog_review br on r.id = br.review_id" +
@@ -24,6 +26,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     RatingDetailsDto findByBlogIdAndRatingSum(@Param("blogId") long id);
 
     @Query(value = "select count(*) total_user, sum(r.rating) rating_sum from review r inner join course_review cr on " +
-            "r.id = cr.review_id right join course c on  cr.course_id = c.id where c.id =:courseId",nativeQuery = true)
+            "r.id = cr.review_id right join course c on  cr.course_id = c.id where c.id =:courseId", nativeQuery = true)
     Optional<RatingDetailsDto> findByCourseIdAndRatingSum(@Param("courseId") long courseId);
 }

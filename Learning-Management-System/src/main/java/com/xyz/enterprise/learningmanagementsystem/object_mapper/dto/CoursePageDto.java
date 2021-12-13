@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class CoursePageDto {
     private long id;
-    private String name;
+    private String courseName;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Optional<Date> created_time;
@@ -21,6 +21,8 @@ public class CoursePageDto {
     private Optional<RatingDetailsDto> rating_details;
     private Topic topic;
     private User user;
+
+   private Optional<String> imageUrl;
 
     public List<Section> getSections() {
         return sections;
@@ -40,12 +42,12 @@ public class CoursePageDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public Optional<Date> getCreated_time() {
@@ -86,5 +88,13 @@ public class CoursePageDto {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Optional<String> getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(Optional<String> imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class CourseDto {
     private long id;
-    private String name;
+    private String courseName;
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Optional<Date> created_time;
@@ -26,14 +26,13 @@ public class CourseDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
-
 
     public Optional<Date> getCreated_time() {
         return created_time;

@@ -30,6 +30,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public void deleteAllByCourseId(Long id) {
+        reviewRepository.deleteAllByCourseId(id);
+    }
+
+
+    @Override
     public Review save(Review review) {
         return reviewRepository.save(review);
     }

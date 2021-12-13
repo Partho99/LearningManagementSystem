@@ -8,6 +8,7 @@ import {useRouter} from "next/router";
 import {AuthContext} from "./auth.context";
 import Unauthorized from "../pages/unauthorized";
 
+
 const isBrowser = typeof window !== 'undefined';
 const AuthStateContext = createContext();
 
@@ -28,9 +29,13 @@ const AuthorizationProvider = ({children}) => {
     if (router.pathname.startsWith("/teacher") && role !== "role_instructor") {
         allowed = false;
     }
-    if (router.pathname.startsWith("/blog/create-new-article") && role !== "role_admin role_user") {
-        allowed = false;
-    }
+
+    /*    if (router.pathname.startsWith("/user/[id]/[username]") && !authState?.isAuthenticated) {
+
+        }*/
+    // if (router.pathname.startsWith("/blog/create-new-article") && role !== "role_admin role_user") {
+    //     allowed = false;
+    // }
 
     useEffect(() => {
         /**role = authState?.user?.scope;

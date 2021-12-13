@@ -25,8 +25,8 @@ public class TopicResource {
     public void saveTopic(@RequestBody Topic topic) {
         List<Subject> subjects = subjectService.findAll();
 
-        for(Subject s : subjects){
-            if(s.getId() == 1){
+        for (Subject s : subjects) {
+            if (s.getId() == 1) {
                 topic.setSubject(s);
             }
         }
@@ -36,5 +36,10 @@ public class TopicResource {
     @GetMapping("all-topics")
     public List<Topic> showAllTopics() {
         return topicService.findAll();
+    }
+
+    @GetMapping("find-all-topic-by-category/{categoryName}")
+    public List<Topic> showTopicByCategory(@PathVariable String categoryName) {
+        return topicService.findTopicByCategoryName(categoryName);
     }
 }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useRouter} from "next/router";
 import Link from "next/link";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import HashLoader from "react-spinners/HashLoader";
 
 const SubjectCourses = () => {
 
@@ -34,7 +34,7 @@ const SubjectCourses = () => {
             {loading ?
                 <div className='spinner_area'>
                     <div className={"text-center"}>
-                        <CircularProgress size={100} disableShrink/>
+                        <HashLoader color={'#034c7a'} size={80} disableShrink/>
                     </div>
                 </div>
                 :
@@ -58,8 +58,8 @@ const SubjectCourses = () => {
                                         </div>
                                         <h2 className="course-one__title">
                                             <Link href={"/courses/[name]/[id]/[course_details]"}
-                                                  as={`/courses/${item.topic?.name?.replace(/ /g, "-").toLowerCase()}/${item.id}/${item.name?.replace(/ /g, "-").toLowerCase()}`}>
-                                                <a>{item.name.length > 26 ? item.name?.substring(0, 26) + ' ...' : item.name}</a>
+                                                  as={`/courses/${item.topic?.name?.replace(/ /g, "-").toLowerCase()}/${item.id}/${item.courseName?.replace(/ /g, "-").toLowerCase()}`}>
+                                                <a>{item.courseName?.length > 26 ? item.courseName?.substring(0, 26) + ' ...' : item.courseName}</a>
                                             </Link>
                                         </h2>
                                         <div className="course-one__stars">
@@ -88,7 +88,7 @@ const SubjectCourses = () => {
                                             <a href="/course-details">$18</a>
                                         </div>
                                         <Link href={"/courses/[name]/[id]/[course_details]"}
-                                              as={`/courses/${item.topic?.name?.replace(/ /g, "-").toLowerCase()}/${item.id}/${item.name?.replace(/ /g, "-").toLowerCase()}`}>
+                                              as={`/courses/${item.topic?.name?.replace(/ /g, "-").toLowerCase()}/${item.id}/${item.courseName?.replace(/ /g, "-").toLowerCase()}`}>
                                             <a href="#" className="course-one__link">See Preview</a>
                                         </Link>
 

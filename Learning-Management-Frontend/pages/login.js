@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import dynamic from "next/dynamic";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import HashLoader from "react-spinners/HashLoader";
 import {useRouter} from "next/router";
 import {AuthContext} from "../context/auth.context";
 
@@ -9,13 +9,13 @@ const SignIn = dynamic(() => import('../components/form/SignIn').then(), {
     ssr: false, loading: () =>
         <div className='spinner_area'>
             <div className='container text-center'>
-                <CircularProgress size={60}/>
+                <HashLoader color={'#9934eb'} size={60}/>
             </div>
         </div>
 });
 const Login = () => {
     let sourceString = 'IT & Software'
-    var outString = sourceString.replace(/[`~!@#$%^&*()_|+\-=?;:'"' ',.<>\{\}\[\]\\\/]/gi, '');
+    let outString = sourceString.replace(/[`~!@#$%^&*()_|+\-=?;:'"' ',.<>\{\}\[\]\\\/]/gi, '');
 
     // console.log(outString)
     const {authState} = useContext(AuthContext);
