@@ -1,5 +1,6 @@
 package com.xyz.enterprise.learningmanagementsystem.resources;
 
+import com.xyz.enterprise.learningmanagementsystem.annotations.CustomPathVariable;
 import com.xyz.enterprise.learningmanagementsystem.entities.*;
 import com.xyz.enterprise.learningmanagementsystem.object_mapper.CourseMapper;
 import com.xyz.enterprise.learningmanagementsystem.object_mapper.dto.AllCourse;
@@ -92,17 +93,18 @@ public class CourseResource {
         do {
             sourceName = imageFile.getOriginalFilename();
             sourceExt = FilenameUtils.getExtension(sourceName);
+            assert sourceExt != null;
             destFileName = RandomStringUtils.randomAlphabetic(18).concat(".").concat(sourceExt);
             destFile = new File(uploadPath.concat(destFileName));
         }
         while (destFile.exists());
         imageFile.transferTo(destFile);
-        return "/assets/images/course-images/" + destFileName;
+        return "/assets/images/" + destFileName;
     }
 
     @DeleteMapping("delete/{id}")
     @PreAuthorize("hasAnyAuthority('role_admin','role_user')")
-    public String deleteCourseById(@PathVariable Long id) {
+    public String deleteCourseById(@CustomPathVariable Long id) {
 
         if (reviewService.findAllByCourse_Id(id) != null) {
             reviewService.deleteAllByCourseId(id);

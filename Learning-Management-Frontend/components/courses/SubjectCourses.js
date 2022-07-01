@@ -63,7 +63,7 @@ const SubjectCourses = () => {
                                             </Link>
                                         </h2>
                                         <div className="course-one__stars">
-                                    <span className="course-one__stars-wrap">
+                                    <span className="course-one__stars-wrap i">
                                         {Array(Math.floor((item?.rating_details?.rating_sum / item?.rating_details?.total_user)))
                                             .fill()
                                             .map((_, i) => (

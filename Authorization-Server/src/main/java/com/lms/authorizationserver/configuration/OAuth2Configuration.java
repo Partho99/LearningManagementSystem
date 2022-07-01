@@ -41,7 +41,7 @@ import java.util.*;
 @EnableAuthorizationServer
 public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(OAuth2Configuration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2Configuration.class);
 
 
     @Value("${check-user-scopes}")
@@ -142,7 +142,7 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
         Set<String> responseType = new HashSet<String>();
         responseType.add("password");
 
-        Set<String> scopes = new HashSet<String>();
+        Set<String> scopes = new HashSet<>();
         scopes.add("read");
         scopes.add("write");
 

@@ -3,6 +3,16 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import HashLoader from "react-spinners/HashLoader";
 
+
+export async function getServerSideProps(realSlug,page) {
+
+  const res =  await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-course-by-category/${realSlug}/${page}`)
+  const data = await res.json()
+  return {
+    props: {data}, // will be passed to the page component as props
+  }
+}
+
 const CategoryCourses = ({categoryName}) => {
 
     // const myRef = useRef(null)
@@ -19,9 +29,10 @@ const CategoryCourses = ({categoryName}) => {
         window.scrollTo(0, 0);
         const categoryData = async () => {
             setLoading(true)
-            await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-course-by-category/${realSlug}/${page}`)
-                .then(response => response.json())
-                .then(data => setCourses(data))
+            // await fetch(`${process.env.NEXT_PUBLIC_REST_API_ENDPOINT}/course/api/show-course-by-category/${realSlug}/${page}`)
+            //     .then(response => response.json())
+            //     .then(data => setCourses(data))
+          getServerSideProps(realSlug,page).then(r => setCourses(r.props.data))
             setLoading(false);
         }
 
@@ -47,12 +58,13 @@ const CategoryCourses = ({categoryName}) => {
         setPage(page)
     }
 
+
     return (
         <section className="course-one course-page">
             {loading ?
                 <div className='spinner_area'>
                     <div className={"text-center"}>
-                        <HashLoader color={'#034c7a'} loading={loading} size={80}/>
+                        <HashLoader color={'#d90465'} loading={loading} size={80}/>
                     </div>
                 </div>
                 :
@@ -94,7 +106,7 @@ const CategoryCourses = ({categoryName}) => {
                                             <div className="course-one__admin">
                                                 <img
                                                     src={item?.user?.imageUrl ? item?.user?.imageUrl : "/assets/images/team-1-1.jpg"}
-                                                    alt=""/>
+                                                    alt="nothing"/>
                                                 by <Link
                                                 href="/teacher-details"><a>{item.user?.fullName.charAt(0)
                                                 .toUpperCase() + item.user?.fullName.slice(1)}</a></Link>
@@ -127,7 +139,7 @@ const CategoryCourses = ({categoryName}) => {
                                                     {(item?.rating_details?.rating_sum / item?.rating_details?.total_user)
                                                         .toFixed(1)}</span>
                                                 <span
-                                                    className="course-one__stars-count">{item?.rating_details?.total_user}</span>
+                                                    className="course-one__stars-count">Comment - {item?.rating_details?.total_user}</span>
                                             </div>
                                         </div>
                                     </div>

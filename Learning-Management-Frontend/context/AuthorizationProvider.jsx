@@ -23,6 +23,7 @@ const AuthorizationProvider = ({children}) => {
 
     const router = useRouter();
     let role = authState?.user?.scope;
+    console.log(role)
     let allowed = true;
     const prevUrl = isBrowser ? window.history.length : undefined;
 
@@ -32,10 +33,10 @@ const AuthorizationProvider = ({children}) => {
 
     /*    if (router.pathname.startsWith("/user/[id]/[username]") && !authState?.isAuthenticated) {
 
-        }*/
-    // if (router.pathname.startsWith("/blog/create-new-article") && role !== "role_admin role_user") {
-    //     allowed = false;
-    // }
+  //       }*/
+  // if (router.pathname.startsWith("/create-course") && role !== "role_instructor") {
+  //   allowed = false;
+  // }
 
     useEffect(() => {
         /**role = authState?.user?.scope;
